@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MenuItem;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,26 @@ class MenuItemSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        MenuItem::insert([
+            ['name'=>'Mesano meso', 
+            'meal_description'=>'cevapcici, leskovacki ustipak, pileci file, dimljena vesalica, kobasica, pomfrit, crni luk /450g',
+            'price'=>990.00,
+            'menu_id'=>'1'],
+
+            ['name'=>'Sindjelic pljeskavica', 
+            'meal_description'=>'kackavalj, beli luk, crni luk, ljuta paprika, kajmak, slanina, pomfrit',
+            'price'=>850.00,
+            'menu_id'=>'1'],
+
+            ['name'=>'Leskovacki ustipci', 
+            'meal_description'=>'kackavalj, slanina, crni luk, beli luk, sunka, tucana paprika, pomfrit',
+            'price'=>810.00,
+            'menu_id'=>'1'],
+
+            ['name'=>'Uzicki medaljoni', 
+            'meal_description'=>'svinjski file, pecurke, slanina, krompir, kajmak',
+            'price'=>950.00,
+            'menu_id'=>'1'],
+        ]);
     }
 }
