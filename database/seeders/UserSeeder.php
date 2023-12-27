@@ -32,6 +32,12 @@ class UserSeeder extends Seeder
             'password'=>'sara12345',
             'address'=>'Takovska 15',
             'role_id'=>'2'],
+
+            ['name'=>'Zeljana', 
+            'email'=>'zeljanapetric@gmail.com',
+            'password'=>'zeljana12345',
+            'address'=> '',
+            'role_id'=>'3']
         ]);
 
     }
