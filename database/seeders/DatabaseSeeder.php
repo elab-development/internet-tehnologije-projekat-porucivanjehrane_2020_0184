@@ -20,8 +20,9 @@ class DatabaseSeeder extends Seeder
            CategorySeeder::class,
             MenuSeeder::class,
             MenuItemSeeder::class,
-            RestaurantSeeder::class
-            
+            RestaurantSeeder::class,
+            RoleSeeder::class,
+            UserSeeder::class
         ]);
     }
 }
