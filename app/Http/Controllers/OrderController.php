@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Models\MenuItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -14,7 +16,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::all();
+        return OrderResource::collection($orders);
     }
 
     /**
@@ -30,7 +33,24 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id', //u tabeli users, kolona id
+            'restoran_id'=> 'required|exists:restorani,id',
+            'napomena'=>'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $order = Order::create([
+            'user_id' => $request->user_id,
+            'restoran_id' => $request->restoran_id,
+            'napomena' => $request->napomena,
+        ]);
+
+        return response()->json(['Narudzbina je sacuvana', new OrderResource($order)]);
+
     }
 
     /**
@@ -65,43 +85,7 @@ class OrderController extends Controller
         //
     }
 
-    public function addOrderItem(Request $request)
-{
-    // find the MenuItem 
-    $menuItem = MenuItem::find($request->menu_item_id);
-
-    // Checking if the Order that contains an OrderItem with the specified menu_item_id already exists
-    $order = Order::whereHas('orderItems', function ($query) use ($menuItem) {
-        $query->where('menu_item_id', $menuItem->id);
-    })->first();
-
-    // If the Order exists, update it
-    if ($order) {
-        $order->item_count += $request->quantity;
-        $order->price_total += $menuItem->price * $request->quantity;
-        $order->save();
-    } else {
-        // If it doesn't already exist, then create it
-        $order = Order::create([
-            'order_number' => uniqid(),  
-            'status' => 'pending',  
-            'item_count' => $request->quantity,
-            'price_total' => $menuItem->price * $request->quantity,
-            'is_paid' => false,  
-            'payment_method' => 'cash_on_delivery',  
-            'user_id' => auth()->user()->id,  
-        ]);
-
-        // Connect Order with OrderItem
-        $orderItem = OrderItem::create([
-            'quantity' => $request->quantity,
-            'menu_item_id' => $menuItem->id,
-            'order_id' => $order->id,
-        ]);
-    }
-
-    return response()->json(['message' => 'OrderItem dodat uspešno.']);
-}
+    
     
 
 }

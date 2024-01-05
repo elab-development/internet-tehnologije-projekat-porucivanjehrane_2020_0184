@@ -2,18 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Users;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class UsersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        User::insert([
+        Users::insert([
             ['name'=>'Ana', 
             'email'=>'pavlovicana256@gmail.com',
             'password'=>'ana123456',
@@ -39,6 +39,5 @@ class UserSeeder extends Seeder
             'address'=> '',
             'role_id'=>'3']
         ]);
-
     }
 }

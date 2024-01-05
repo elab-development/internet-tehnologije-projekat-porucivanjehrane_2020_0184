@@ -18,8 +18,6 @@ class RestaurantSeeder extends Seeder
             'description'=>'Restoran sa dugogodisnjom tradicijom. Mozete dobiti da jedete sve sto zamislite.Hrana je veoma ukusna. Prijatno mesto sa dobrom muzikom uzivo u vecernjim satima. Osoblje je savrseno, pazljivo i ljubazno.',
             'address'=>'Vojislava Ilica 86, Beograd 11050',
             'contact_phone_number'=>'+381 11 3087067',
-            'category_id'=>'4',
-            'menu_id'=>'1',
             'contact-email-address'=>'info@restoransindjelic.com'
         ]);
     }

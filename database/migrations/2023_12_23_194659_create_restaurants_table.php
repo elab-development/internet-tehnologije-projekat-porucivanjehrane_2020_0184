@@ -17,8 +17,6 @@ return new class extends Migration
             $table->text('description');
             $table->string('address');
             $table->string('contact_phone_number');
-            $table->foreignId('category_id');
-            $table->foreignId('menu_id');
             $table->timestamps();
         });
     }

@@ -15,11 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('order_number')->unique();
             $table->enum('status', ['pending', 'processing', 'completed', 'decline'])->default('pending');
-            $table->integer('item_count');
-            $table->float('price_total');
             $table->boolean('is_paid')->default(false);
             $table->enum('payment_method', ['cash_on_delivery'])->default('cash_on_delivery');
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
             $table->timestamps();
         });
     }

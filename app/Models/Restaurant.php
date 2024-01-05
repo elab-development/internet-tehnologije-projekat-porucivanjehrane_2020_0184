@@ -14,17 +14,14 @@ class Restaurant extends Model
         'description',
         'address',
         'contact_phone_number',
-        'category_id',
-        'menu_id',
+        'contact-email-address',
     ];
 
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
+    public function categories() {
+        return $this->belongsToMany(Category::class, 'restaurant_category');
     }
 
-    public function author()
-    {
-        return $this->belongsTo(Menu::class);
+    public function orders(){         
+        return $this->hasMany(Order::class);     
     }
 }

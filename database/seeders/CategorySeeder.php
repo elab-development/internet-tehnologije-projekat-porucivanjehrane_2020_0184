@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::insert([
-            ['name' => 'internacionalna']
+            ['name' => 'rostilj']
         ]);
     }
 }

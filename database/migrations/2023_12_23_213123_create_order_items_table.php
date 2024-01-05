@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
-            $table->foreignId('menu_item_id');
-            $table->foreignId('order_id');
+            $table->foreignId('item_id')->references('id')->on('items')->onDelete('cascade');
+            $table->foreignId('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->timestamps();
         });
     }
