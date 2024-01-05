@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\OrderResource;
-use App\Models\MenuItem;
 use App\Models\Order;
-use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,9 +32,9 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|exists:users,id', //u tabeli users, kolona id
-            'restoran_id'=> 'required|exists:restorani,id',
-            'napomena'=>'required',
+            'user_id' => 'required|exists:users,id', 
+            'restaurant_id'=> 'required|exists:restaurants,id',
+            'payment_method'=>'required',
         ]);
 
         if($validator->fails()){
@@ -45,26 +43,26 @@ class OrderController extends Controller
 
         $order = Order::create([
             'user_id' => $request->user_id,
-            'restoran_id' => $request->restoran_id,
-            'napomena' => $request->napomena,
+            'restaurant_id' => $request->restaurant_id,
+            'payment_method' => $request->payment_method,
         ]);
 
-        return response()->json(['Narudzbina je sacuvana', new OrderResource($order)]);
+        return response()->json(['Order has been saved.', new OrderResource($order)]);
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(OrderItem $orderItem)
+    public function show(Order $order)
     {
-        //
+        return new OrderResource($order);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OrderItem $orderItem)
+    public function edit(Order $order)
     {
         //
     }
@@ -72,17 +70,39 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OrderItem $orderItem)
+    public function update(Request $request, $order_id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id',
+            'restaurant_id'=> 'required|exists:restaurants,id',
+            'payment_method'=>'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors());
+        }
+
+        $order = Order::find($order_id);
+     
+        $order->user_id = $request->user_id;
+        $order->restaurant_id = $request->restaurant_id;
+        $order->payment_method = $request->payment_method;
+        
+
+        $order->save();
+     
+        return response()->json(['Order has been updated.', new OrderResource($order)]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrderItem $orderItem)
+    public function destroy($order_id)
     {
-        //
+        $order = Order::find($order_id);
+        $order->delete();
+
+        return response()->json(['Order has been successfully deleted.', 204]);
     }
 
     

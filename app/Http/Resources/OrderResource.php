@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Resources;
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,10 +17,9 @@ class OrderResource extends JsonResource
         'id' => $this->resource->id, 
         'order_number' => $this->resource->order_number,
         'status' => $this->resource->status,
-        'item_count' => $this->resource->item_count,
-        'price_total' => $this->resource->price_total,
-        'payment_method' => $this->resource->napomena,
+        'payment_method' => $this->resource->payment_method,
         'user_id' => $this->resource->user_id,
+        'restaurant_id' => $this->resource->restaurant_id
         ];
     }
 }
