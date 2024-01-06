@@ -21,7 +21,7 @@ class Item extends Model
         return $this->belongsToMany(Order::class,'order_items');
     }
 
-    public function kategorija(){
+    public function category(){
         return $this->belongsTo(Category::class);
     }
 }

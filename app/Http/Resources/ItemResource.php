@@ -12,6 +12,7 @@ class ItemResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+    public static $wrap = 'item';
     public function toArray(Request $request): array
     {
         return [
@@ -19,7 +20,7 @@ class ItemResource extends JsonResource
             'name' => $this->resource->name,
             'meal_description' => $this->resource->meal_description, 
             'price' => $this->resource->price,
-            'category' => $this->resource->category,
+            'category' => $this->resource->category->name,
            ];
     }
 }

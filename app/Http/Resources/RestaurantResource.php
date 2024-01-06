@@ -12,6 +12,8 @@ class RestaurantResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+    public static $wrap = 'restaurant';
+
     public function toArray(Request $request): array
     {
         return [

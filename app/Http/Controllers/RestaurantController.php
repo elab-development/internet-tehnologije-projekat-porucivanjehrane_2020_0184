@@ -35,8 +35,8 @@ class RestaurantController extends Controller
             'name' => 'required|string|max:100',
             'description'=>'required|string|max:255',
             'address'=> 'required|string|max:100',
-            'contact_phone_number'=>'required|string|max:9',
-            'contact_email_address'=>'required|string|email|max:100|unique:users',
+            'contact_phone_number'=>'required|string|max:11',
+            'contact_email_address'=>'required|string|email|max:100',
         ]);
 
         if($validator->fails()){

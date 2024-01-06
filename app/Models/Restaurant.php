@@ -14,7 +14,7 @@ class Restaurant extends Model
         'description',
         'address',
         'contact_phone_number',
-        'contact-email-address',
+        'contact_email_address',
     ];
 
     public function categories() {

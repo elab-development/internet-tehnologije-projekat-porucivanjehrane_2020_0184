@@ -12,6 +12,9 @@ class UsersResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+
+     public static $wrap ='user';
+
     public function toArray(Request $request): array
     {
         return [
@@ -19,7 +22,7 @@ class UsersResource extends JsonResource
             'name' => $this->resource->name,
             'email' => $this->resource->email,
             'address' => $this->resource->address,
-            'role_id' => $this->resource->role_id,
+            'role' => $this->resource->role->role_name
            ];
     }
 }

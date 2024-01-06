@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Users;
+use App\Models\Role;
 use App\Http\Resources\UsersResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -23,7 +24,6 @@ class UsersController extends Controller
      */
     public function create()
     {
-        return response()->json([], 204);
     }
 
     /**
@@ -33,32 +33,47 @@ class UsersController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
-            'email'=> 'required|string|email|max:100|unique:users',
-            'password'=>'required|string|min:8',
-            'address'=> 'required|string|max:100',
-            'role_id' => 'required'
+            'email' => 'required|string|email|max:100|unique:users',
+            'password' => 'required|string|min:8',
+            'address' => 'required|string|max:100',
+            'role_name' => 'required|string' // Add validation for role_name
         ]);
-
-        if($validator->fails()){
+    
+        if ($validator->fails()) {
             return response()->json($validator->errors());
         }
-
+    
+        // Find the role by name
+        $role = Role::where('role_name', $request->role_name)->first();
+    
+        if (!$role) {
+            return response()->json(['error' => 'Role not found.'], 404);
+        }
+    
+        // Create a new user
         $user = Users::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
             'address' => $request->address,
-            'role_id' => $request->role_id,
+            'role_id' => $role->id // Use the retrieved role_id
         ]);
-
-        return response()->json(['User has been saved.', new UsersResource($user)]); 
+    
+        return response()->json(['User has been saved.', new UsersResource($user)]);
+    
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Users $user)
+    public function show($user_id)
     {
+        $user=Users::find($user_id);
+
+        if(is_null($user))
+        {
+            return response()->json("User doesn't exist.");
+        }
         return new UsersResource($user);
     }
 
@@ -75,29 +90,23 @@ class UsersController extends Controller
      */
     public function update(Request $request, $user_id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100',
-            'email'=> 'required|string|email|max:100|unique:users',
-            'password'=>'required|string|min:8',
-            'address'=> 'required|string|max:100',
-            'role_id' => 'required'
+        // Pronalaženje korisnika po ID-u
+        $user = Users::findOrFail($user_id);
+
+        // Validacija prosleđenih podataka - prilagodite prema potrebama
+        $request->validate([
+            'column' => 'required', // Validacija kolone koju želite da ažurirate
+            'value' => 'required',  // Nova vrednost kolone
         ]);
+       
+        $column = $request->input('column');
+        $value = $request->input('value');
 
-        if($validator->fails()){
-            return response()->json($validator->errors());
-        }
-
-        $user = Users::find($user_id);
-     
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->address = $request->address;
-        $user->role_id = $request->role_id;
-
+        $user->$column = $value;
         $user->save();
-     
-        return response()->json(['User has been updated.', new UsersResource($user)]);
+
+        return redirect()->back()->with('success', 'Podaci korisnika su uspešno ažurirani.');
+
     }
 
     /**
