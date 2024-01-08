@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Users;
+use App\Models\User;
 use App\Models\Role;
-use App\Http\Resources\UsersResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = Users::all();
-        return UsersResource::collection($users);
+        $users = User::all();
+        return UserResource::collection($users);
     }
 
     /**
@@ -51,7 +51,7 @@ class UsersController extends Controller
         }
     
         // Create a new user
-        $user = Users::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
@@ -59,7 +59,7 @@ class UsersController extends Controller
             'role_id' => $role->id // Use the retrieved role_id
         ]);
     
-        return response()->json(['User has been saved.', new UsersResource($user)]);
+        return response()->json(['User has been saved.', new UserResource($user)]);
     
     }
 
@@ -68,19 +68,19 @@ class UsersController extends Controller
      */
     public function show($user_id)
     {
-        $user=Users::find($user_id);
+        $user=User::find($user_id);
 
         if(is_null($user))
         {
             return response()->json("User doesn't exist.");
         }
-        return new UsersResource($user);
+        return new UserResource($user);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Users $users)
+    public function edit(User $users)
     {
         //
     }
@@ -91,7 +91,7 @@ class UsersController extends Controller
     public function update(Request $request, $user_id)
     {
         // Pronalaženje korisnika po ID-u
-        $user = Users::findOrFail($user_id);
+        $user = User::findOrFail($user_id);
 
         // Validacija prosleđenih podataka - prilagodite prema potrebama
         $request->validate([
@@ -114,7 +114,7 @@ class UsersController extends Controller
      */
     public function destroy($user_id)
     {
-        $user = Users::find($user_id);
+        $user = User::find($user_id);
         $user->delete();
  
         return response()->json(['User has been successfully deleted.', 204]);
