@@ -18,6 +18,22 @@ class User extends Authenticatable {
         'role_id'
     ];
  
+    public function isAdmin()
+    {
+        return $this->role_id === 1;
+    }
+
+    public function isLoggedIn()
+    {
+        return $this->role_id === 2;
+    }
+
+    public function isNotLoggedIn()
+    {
+        return $this->role_id === 3;
+    }
+
+
     /**
      * The attributes that should be hidden for serialization.
      *

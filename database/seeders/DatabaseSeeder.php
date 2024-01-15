@@ -14,14 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       
+
         $this->call([
-        //    UsersSeeder::class,
-        //    RestaurantSeeder::class,
-        //    CategorySeeder::class,
-        //    ItemSeeder::class,
-        //    RestaurantCategorySeeder::class,
-           RoleSeeder::class
+            UserSeeder::class,
+            RestaurantSeeder::class,
+            CategorySeeder::class,
+            ItemSeeder::class,
+            RestaurantCategorySeeder::class,
+            RoleSeeder::class
         ]);
     }
 }

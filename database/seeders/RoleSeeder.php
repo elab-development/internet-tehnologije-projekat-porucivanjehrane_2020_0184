@@ -14,9 +14,9 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         Role::insert([
-            ['role_name' => 'food supplier'],
-            ['role_name'=> 'customer'],
-            ['role_name'=> 'courier']
+            ['role_name' => 'admin'],
+            ['role_name'=> 'logged in user'],
+            ['role_name'=> 'guest']
         ]);
     }
 }
