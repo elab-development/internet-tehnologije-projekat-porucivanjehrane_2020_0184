@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
 use App\Models\Role;
 
 class AuthController extends Controller
@@ -50,13 +51,8 @@ class AuthController extends Controller
 
     }
 
-    // public function logout(){
-    //     $user = auth()->user();
-    
-    //     if ($user) {
-    //         $user->tokens()->delete();
-    //     }
-        
-    //     return ['message' => 'Odlogovan si.'];
-    // }
+    public function logout(Request $request)
+    {
+        $request->user()->token()->delete();
+    }
 }

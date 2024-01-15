@@ -43,17 +43,19 @@ Route::resource('/orders', OrderController::class);
 Route::resource('/categories', CategoryController::class);
 Route::resource('/items', ItemController::class);
 
- Route::post('/register', [AuthController::class, 'register']);
- Route::post('/login', [AuthController::class, 'login']);
-
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
  Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/profile', function(Request $request) {
-    return auth()->user();
+    Route::get('/profile', function (Request $request) {
+        return auth()->user();
     });
-    Route::resource('restaurants', Restaurant::class)->only(['update','store','destroy']);
-    // API route for logout user
+
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    //Route::resource('restaurants', Restaurant::class)->only(['update','store','destroy']);
+    // API route for logout user
+    
    });
 
 // Route::group(['middleware' => ['auth:sanctum']], function () { //ovo su zasticene rute
