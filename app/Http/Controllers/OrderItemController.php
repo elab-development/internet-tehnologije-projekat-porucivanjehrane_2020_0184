@@ -39,17 +39,23 @@ class OrderItemController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 422);
         }
 
+        // Provera da li korisnik ima dozvolu za dodavanje stavke porudžbine u svoju porudžbinu
+        $order = Order::find($request->order_id);
 
-        $order_item = OrderItem::create([
+        if (!$order || auth()->user()->id !== $order->user_id) {
+            return response()->json(['error' => 'You do not have the permission to add items to this order'], 403);
+        }
+
+        $orderItem = OrderItem::create([
             'order_id' => $request->order_id,
             'item_id' => $request->item_id,
             'quantity' => $request->quantity,
         ]);
 
-        return response()->json(['Order item has been saved.', new OrderItemResource($order_item)]);
+        return response()->json(['message' => 'Order item has been added.', 'order_item' => new OrderItemResource($orderItem)], 201);
     }
 
     /**
@@ -73,22 +79,27 @@ class OrderItemController extends Controller
      */
     public function update(Request $request, $orderItem_id)
     {
-         // Pronalaženje korisnika po ID-u
-         $order_item = OrderItem::findOrFail($orderItem_id);
+        // Pronalaženje stavke porudžbine po ID-u
+        $order_item = OrderItem::findOrFail($orderItem_id);
 
-         // Validacija prosleđenih podataka - prilagodite prema potrebama
-         $request->validate([
-             'column' => 'required', // Validacija kolone koju želite da ažurirate
-             'value' => 'required',  // Nova vrednost kolone
-         ]);
-        
-         $column = $request->input('column');
-         $value = $request->input('value');
- 
-         $order_item->$column = $value;
-         $order_item->save();
- 
-         return response()->json(['Order Item has been updated.', 204]);
+        // Provera da li stavka porudžbine pripada porudžbini koja pripada ulogovanom korisniku
+        if (auth()->user()->id !== $order_item->order->user_id) {
+            return response()->json(['error' => 'You do not have the permission to update this order item, because it is not a part of your order'], 403);
+        }
+
+        // Validacija prosleđenih podataka - prilagodite prema potrebama
+        $request->validate([
+            'column' => 'required', // Validacija kolone koju želite da ažurirate
+            'value' => 'required',  // Nova vrednost kolone
+        ]);
+
+        $column = $request->input('column');
+        $value = $request->input('value');
+
+        $order_item->$column = $value;
+        $order_item->save();
+
+        return response()->json(['message' => 'Order item has been updated.'], 200);
     }
 
     /**
@@ -101,15 +112,18 @@ class OrderItemController extends Controller
         return response()->json(['Order item has been successfully deleted.', 204]);
     }
 
-    public function getOrderOrderItems(Request $request, $order_id){
-        $order = Order::find($request->$order_id);
-   //     return response()->json($order);
-        if ($order) {
-            $order_items = $order->order_items; 
-            return response()->json($order_items);
-        }else {
-            return response()->json(['message' => 'Order not found.'], 404);
+
+
+    public function orderOrderItems(Order $order)
+    {
+        // Provera da li korisnik ima dozvolu za pregled stavki porudžbine
+        if (auth()->user()->id !== $order->user_id) {
+            return response()->json(['error' => 'You do not have the permission to view order items of this order.'], 403);
         }
 
+        // Dobijanje svih stavki porudžbine za određenu porudžbinu
+        $orderItems = $order->order_items;
+
+        return response()->json(['order_items for order:' . $order->id => $orderItems], 200);
     }
 }

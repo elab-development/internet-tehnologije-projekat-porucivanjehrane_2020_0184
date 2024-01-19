@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Restaurant;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,11 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'status' => 'pending',
+            'payment_method' => 'cash_on_delivery',
+            'user_id' => '6',
+            'restaurant_id' =>  Restaurant::factory(),
+            
         ];
     }
 }

@@ -97,36 +97,31 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($order_id)
+    public function destroy(User $user, Order $order)
     {
-        $order = Order::find($order_id);
+        // Provera da li porudžbina pripada korisniku
+        if ($order->user_id !== $user->id) {
+            return response()->json(['error' => 'You do not have the permission to delete this order.'], 403);
+        }
+
+        // Brisanje porudžbine
         $order->delete();
 
-        return response()->json(['Order has been successfully deleted.', 204]);
+        return response()->json(['message' => 'Order has been successfully deleted.'], 200);
     }
 
-    public function getUserOrders(Request $request, $user_id)
+
+   
+    public function userOrders(User $user)
     {
-        $user = User::find($request->$user_id);
-
-        if ($user) {
-            $orders = $user->orders;
-            return response()->json($orders);
-        } else {
-            return response()->json(['message' => 'User not found.'], 404);
+        // Provera da li korisnik ima dozvolu za pregled svojih porudžbina
+        if (auth()->user()->id !== $user->id) {
+            return response()->json(['error' => 'You do not have the permission to view this order.'], 403);
         }
-    }
 
-    public function deleteOnlyYourOrder(Request $request, $user_id, $id)
-    {
-        $order = Order::find($request->$id);
-    
-        if ($order && $request->$user_id == $order->user_id) {
-            $order->delete();
-            return response()->json(['message' => 'Order has been successfully deleted.'], 204);
-        } else {
-            return response()->json(['message' => 'You cannot delete the order that is not yours.'], 404);
-        }
+        // Dobijanje svih porudžbina za određenog korisnika 
+        $orders = $user->orders;
+
+        return response()->json(['orders' => $orders], 200);
     }
-    
 }

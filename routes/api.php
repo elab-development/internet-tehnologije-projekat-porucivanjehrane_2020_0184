@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () { //ovo su zasticen
     Route::get('/profile', function (Request $request) {
         return auth()->user();
     });
-    Route::resource('/items', ItemController::class)->only(['update','destroy'])->middleware('accessControl:1');
+    Route::resource('/items', ItemController::class)->only(['update', 'destroy'])->middleware('accessControl:1');
     Route::post('/items/store', [ItemController::class, 'store'])->middleware('accessControl:1');
     Route::resource('/categories', CategoryController::class)->only(['update', 'destroy'])->middleware('accessControl:1');
     Route::post('/categories/store', [CategoryController::class, 'store'])->middleware('accessControl:1');
@@ -54,17 +54,29 @@ Route::group(['middleware' => ['auth:sanctum']], function () { //ovo su zasticen
     Route::get('/users', [UserController::class, 'index'])->middleware('accessControl:1');
     Route::get('/users/{id}', [UserController::class, 'show'])->middleware('accessControl:1');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware('accessControl:1');
+
     Route::resource('/orders', OrderController::class)->only(['index', 'show'])->middleware('accessControl:1');
+
+    // Admin moze da azurira status porudzbine
     Route::resource('/orders', OrderController::class)->only(['update'])->middleware('accessControl:1');
 
+    // Logged in user moze da kreira porudzbine
     Route::post('/orders/store', [OrderController::class, 'store'])->middleware('accessControl:2');
-    Route::get('/orders/{user_id}', [OrderController::class, 'getUserOrders'])->middleware('accessControl:2');
-    Route::delete('/orders/{user_id}/{id}', [OrderController::class, 'deleteOnlyYourOrder'])->middleware('accessControl:2');
-    // Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->middleware('accessControl:2');
+
+    // Logged in user moze da dodaje proizvode samo u svoje porudzbine, ne moze u tudje
     Route::post('/order_items/store', [OrderItemController::class, 'store'])->middleware('accessControl:2');
+
+    // Logged in user moze da azurira samo one proizvode koji se nalaze u njegovoj porudzbini
     Route::resource('/order_items', OrderItemController::class)->only(['update'])->middleware('accessControl:2');
-    Route::get('/order_items/{order_id}', [OrderItemController::class, 'getOrderOrderItems'])->middleware('accessControl:2');
-    Route::put('/users/{id}/update', [UserController::class, 'update'])->middleware('accessControl:2');
+
+    // Logged in user moze da vidi samo svoje porudzbine, ne moze tudje
+    Route::get('/user/{user}/orders', [OrderController::class, 'userOrders'])->middleware('accessControl:2');
+
+    // Logged in user moze da vidi stavke samo svoje porudzbine, ne moze da gleda stavke tudjih porudzbina
+    Route::get('/order/{order}/order_items', [OrderItemController::class, 'orderOrderItems'])->middleware('accessControl:2');
+
+    // Logged in user moze da obrise samo svoje porudzbine, ne moze tudje
+    Route::delete('/user/{user}/orders/{order}', [OrderController::class, 'destroy'])->middleware('accessControl:2');
 
 
     // API route for logout user
