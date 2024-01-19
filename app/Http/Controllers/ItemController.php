@@ -73,28 +73,22 @@ class ItemController extends Controller
      */
     public function update(Request $request, $item_id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100',
-            'meal_description'=>'required',
-            'price'=> 'required|numeric',
-            'category_id'=> 'required',
-        ]);
+         // Pronalaženje korisnika po ID-u
+         $item = Item::findOrFail($item_id);
 
-        if($validator->fails()){
-            return response()->json($validator->errors());
-        }
-
-        $item = Item::find($item_id);
-     
-        $item->name = $request->name;
-        $item->meal_description = $request->meal_description;
-        $item->price = $request->price;
-        $item->category_id = $request->category_id;
+         // Validacija prosleđenih podataka - prilagodite prema potrebama
+         $request->validate([
+             'column' => 'required', // Validacija kolone koju želite da ažurirate
+             'value' => 'required',  // Nova vrednost kolone
+         ]);
         
-
-        $item->save();
-     
-        return response()->json(['Item has been updated.', new ItemResource($item)]);
+         $column = $request->input('column');
+         $value = $request->input('value');
+ 
+         $item->$column = $value;
+         $item->save();
+ 
+         return response()->json(['Item has been updated.', 204]);
     }
 
     /**

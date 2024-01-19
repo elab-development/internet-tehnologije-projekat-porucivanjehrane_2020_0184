@@ -73,31 +73,24 @@ class RestaurantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Restaurant $restaurant_id)
+    public function update(Request $request, $restaurant_id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100',
-            'description'=>'required|string|max:255',
-            'address'=> 'required|string|max:100',
-            'contact_phone_number'=> 'required|string|max:9',
-            'contact_email_address'=> 'required|string|email|max:100|unique:users',
+        // Pronalaženje korisnika po ID-u
+        $restaurant = Restaurant::findOrFail($restaurant_id);
+
+        // Validacija prosleđenih podataka - prilagodite prema potrebama
+        $request->validate([
+            'column' => 'required', // Validacija kolone koju želite da ažurirate
+            'value' => 'required',  // Nova vrednost kolone
         ]);
+       
+        $column = $request->input('column');
+        $value = $request->input('value');
 
-        if($validator->fails()){
-            return response()->json($validator->errors());
-        }
-
-        $restaurant = Restaurant::find($restaurant_id);
-     
-        $restaurant->name = $request->name;
-        $restaurant->description = $request->description;
-        $restaurant->address = $request->address;
-        $restaurant->contact_phone_number = $request->contant_phone_number;
-        $restaurant->contact_email_address = $request->contact_email_address;
-
+        $restaurant->$column = $value;
         $restaurant->save();
-     
-        return response()->json(['Restaurant has been updated.', new RestaurantResource($restaurant)]);
+
+        return response()->json(['Restaurant has been updated.', 204]);
     }
 
     /**

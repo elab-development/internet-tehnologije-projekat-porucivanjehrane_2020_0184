@@ -105,7 +105,7 @@ class UserController extends Controller
         $user->$column = $value;
         $user->save();
 
-        return redirect()->back()->with('success', 'Podaci korisnika su uspešno ažurirani.');
+        return response()->json(['User has been updated.', 204]);
 
     }
 

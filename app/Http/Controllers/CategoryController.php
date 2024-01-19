@@ -68,21 +68,22 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $category_id)
     {
-        $validator = Validator::make($request->all(), [
-            'name'=> 'required|string|max:100',
+        // Pronalaženje korisnika po ID-u
+        $category = Category::findOrFail($category_id);
+
+        // Validacija prosleđenih podataka - prilagodite prema potrebama
+        $request->validate([
+            'column' => 'required', // Validacija kolone koju želite da ažurirate
+            'value' => 'required',  // Nova vrednost kolone
         ]);
+       
+        $column = $request->input('column');
+        $value = $request->input('value');
 
-        if($validator->fails()){
-            return response()->json($validator->errors());
-        }
-
-        $category = Category::find($category_id);
-     
-        $category->name = $request->name;
-
+        $category->$column = $value;
         $category->save();
-     
-        return response()->json(['Category has been updated.', new CategoryResource($category)]); 
+
+        return response()->json(['Category has been updated.', 204]);
     }
 
     /**

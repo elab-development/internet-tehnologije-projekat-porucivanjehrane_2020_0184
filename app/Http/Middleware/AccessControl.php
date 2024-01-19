@@ -16,10 +16,10 @@ class AccessControl
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-     //   $role = Role::where('role_name', $request->role_name)->first();
-        if($request->user('sanctum') && in_array($request->user('sanctum')->role_id, $roles)){
-        return $next($request);
+        //   $role = Role::where('role_name', $request->role_name)->first();
+        if ($request->user('sanctum') && in_array($request->user('sanctum')->role_id, $roles)) {
+            return $next($request);
         }
-        return response()->json(['error'=>'Access denied'], 401);
+        return response()->json(['error' => 'Access denied'], 401);
     }
 }
