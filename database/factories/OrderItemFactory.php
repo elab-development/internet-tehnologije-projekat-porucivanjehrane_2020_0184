@@ -19,7 +19,7 @@ class OrderItemFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id' => '4',
+            'order_id' => '1',
             'item_id' => function () {
                 return Item::factory()->create()->id;
             },

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\CacheController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderController;
@@ -82,3 +83,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () { //ovo su zasticen
     // API route for logout user
     Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+// data caching
+Route::get('/cache', [CacheController::class, 'index']);

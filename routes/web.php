@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CacheController;
 use Illuminate\Support\Facades\Route;
 
 /*

@@ -21,7 +21,7 @@ class OrderFactory extends Factory
         return [
             'status' => 'pending',
             'payment_method' => 'cash_on_delivery',
-            'user_id' => '6',
+            'user_id' => User::factory(),
             'restaurant_id' =>  Restaurant::factory(),
             
         ];
