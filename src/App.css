@@ -1,14 +1,15 @@
+
 .navBar {
   display: flex;
   flex-direction: row;
   background-color: #A9BFF1;
   border-bottom-style: solid;
   border-bottom-width: 2px;
-  border-bottom-color: rgb(175, 175, 175);
+  border-bottom-color: rgb(125, 114, 114);
   align-items: center;
   min-height: 50px;
-  padding-left: 10px;
-  font-size: large;
+  padding-left: 40px;
+  font-size: 25px;
   font-weight: bold;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
  }
@@ -17,18 +18,131 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
-  margin-right: 20px;
+  margin-right: 50px;
 }
 
 .navBar a:hover{
   text-decoration: underline;
 }
 
+.all-items {
+  display: flex;
+  margin: 20px;
+}
+
+.itemCard {
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(211, 211, 211);
+  border-radius: 10px;
+  max-width: 250px;
+  max-height: 850px;
+  margin:25px;
+  box-shadow: 10px 10px 10px 10px rgb(217, 223, 223);
+
+}
+
+.itemCard-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.itemCard-img-left {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.itemCard-body {
+  margin: 10px;
+  
+}
+
+.itemCard-price{
+  font-size: large;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.itemCard:hover{
+  background-color: rgb(217, 223, 223);
+
+}
+
+.itemCard-cart {
+  display: flex;
+  flex-direction: row;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(211, 211, 211);
+  border-radius: 10px;
+  max-width: 500px;
+}
+
+.all-restaurants {
+  margin: 20px;
+}
+
+.restaurantCard {
+  display: flex;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(211, 211, 211);
+  border-radius: 10px;
+  max-width: 950px;
+  max-height: 850px;
+  margin:25px;
+  box-shadow: 10px 10px 10px 10px rgb(217, 223, 223);
+
+}
+
+.restaurantCard :hover{
+  background-color: rgb(217, 223, 223);
+}
+
+
+.restaurantCard-img-top {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.restaurantCard-img-left {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.restaurantCard-body {
+  margin: 10px;
+}
+
+.restaurantCard-cart {
+  display: flex;
+  flex-direction: row;
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(211, 211, 211);
+  border-radius: 10px;
+  max-width: 500px;
+}
+
+.btn {
+  background-color: #C49C91;
+  color: rgb(51, 45, 45);
+  padding:5px;
+  margin: 5px;
+  border-radius: 3px;
+  border-width: 0px;
+  width: 55px;
+  height: 55px;
+}
+
+
+.cart-container {
+  margin: 20px;
+}
+
+
 .cart-items {
   display: flex;
   flex-direction:row;
   align-items: end;
-  margin-left: 20px;
 }
 
 .cart-num {
@@ -43,56 +157,62 @@
   margin-left: 5px;
 }
 
-.all-products {
+.footer {
+  padding:4px;
+  color:#eff1f3;
+  background-color:#5D7B9E;
+  font-weight: bold;
+}
+
+.footer .copyright {
+  text-align:center;
+  padding-top:14px;
+  padding-bottom: 10px;
+  opacity:0.7;
+  font-size:20px;
+  margin-bottom:0;
+}
+
+ .contactTitle{
+  font-size: 25px;
+  text-align: center;
+ }
+ 
+ .formClass {
+  margin: 3rem 0;
   display: flex;
-  margin: 20px;
+  flex-direction: column;
+  row-gap: 2rem;
+  align-items: center;
 }
-
-.card {
-  border-style: solid;
-  border-width: 2px;
-  border-color: rgb(211, 211, 211);
-  border-radius: 10px;
-  max-width: 200px;
-}
-
-.card-img-top {
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
-.card-body {
-  margin: 10px;
-}
-
-.btn {
-  background-color: cornflowerblue;
-  color: white;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-  margin: 3px;
-  border-radius: 3px;
-  border-width: 0px;
-}
-
-
-.cart-container {
-  margin: 20px;
-}
-
-.card-cart {
+ 
+ .input__container {
   display: flex;
-  flex-direction: row;
-  border-style: solid;
-  border-width: 2px;
-  border-color: rgb(211, 211, 211);
-  border-radius: 10px;
-  max-width: 500px;
-}
+  flex-direction: column;
+  row-gap: 0.5rem;
+  width: 450px;
+  
+ }
+  
+ .input__container input,
+ textarea {
+  padding: 25px 25px;
+  border-radius: 5px;
+  font-size: 25px;
+  border: 1px solid #555;
+  resize: none;
+ }
+ 
+ button {
+  padding: 20px 100px;
+  font-size: 25px;
+  border-radius: 5px;
+  border: none;
+  background: #C49C91;
+  color: #fff;
+  cursor: pointer;
+ }
 
-.card-img-left {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+.cartPage{
+  text-align: center;
 }

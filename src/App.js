@@ -5,22 +5,11 @@ import Cart from "./components/Cart";
 import Restaurants from "./components/Restaurants";
 import Items from "./components/Items";
 import Category from "./components/Categories";
-
+import Contact from "./components/Contact";
+import Footer from "./components/footer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-  const items = [
-    {
-      id: 1,
-      name: "Mesano meso",
-      meal_description:
-        "cevapcici, leskovacki ustipak, pileci file, dimljena vesalica, kobasica, pomfrit, crni luk /450g",
-      price: "850.00 RSD",
-      category: "rostilj",
-      amount: 0,
-    },
-  ];
-
   return (
     <BrowserRouter>
       <NavBar />
@@ -31,11 +20,12 @@ function App() {
           }
         /> */}
         <Route path="/cart" element={<Cart />} />
-        <Route path="/restaurants" elements={<Restaurants />} />
-        <Route path="/items" elements={<Items />} />
-        <Route path="/categories" elements={<Category />} />
+        <Route path="/restaurants" element={<Restaurants />} />
+        <Route path="/items" element={<Items />} />
+        {/* <Route path="/categories" element={<Category />} /> */}
+        <Route path="/contact" element={<Contact />} />
       </Routes>
-      <Items items={items} />
+      <Footer />
     </BrowserRouter>
   );
 }
