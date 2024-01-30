@@ -55,11 +55,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () { //ovo su zasticen
     Route::get('/users', [UserController::class, 'index'])->middleware('accessControl:1');
     Route::get('/users/{id}', [UserController::class, 'show'])->middleware('accessControl:1');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware('accessControl:1');
+    Route::put('/users/{id}', [UserController::class, 'update'])->middleware('accessControl:1');
 
     Route::resource('/orders', OrderController::class)->only(['index', 'show'])->middleware('accessControl:1');
 
     // Admin moze da azurira status porudzbine
-    Route::resource('/orders', OrderController::class)->only(['update'])->middleware('accessControl:1');
+    Route::put('/orders/update/{order_id}', [OrderController::class, 'update'])->middleware('accessControl:1');
 
     // Logged in user moze da kreira porudzbine
     Route::post('/orders/store', [OrderController::class, 'store'])->middleware('accessControl:2');

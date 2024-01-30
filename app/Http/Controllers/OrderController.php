@@ -72,26 +72,21 @@ class OrderController extends Controller
      */
     public function update(Request $request, $order_id)
     {
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required|exists:users,id',
-            'restaurant_id' => 'required|exists:restaurants,id',
-            'payment_method' => 'required',
-        ]);
+         $order = Order::findOrFail($order_id);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors());
-        }
+         // Validacija prosleđenih podataka - prilagodite prema potrebama
+         $request->validate([
+             'column' => 'required', // Validacija kolone koju želite da ažurirate
+             'value' => 'required',  // Nova vrednost kolone
+         ]);
+        
+         $column = $request->input('column');
+         $value = $request->input('value');
+ 
+         $order->$column = $value;
+         $order->save();
+         return response()->json(['Order has been updated.', 204]);
 
-        $order = Order::find($order_id);
-
-        $order->user_id = $request->user_id;
-        $order->restaurant_id = $request->restaurant_id;
-        $order->payment_method = $request->payment_method;
-
-
-        $order->save();
-
-        return response()->json(['Order has been updated.', new OrderResource($order)]);
     }
 
     /**
