@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Button from "./Button";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -127,12 +128,7 @@ const Register = () => {
                       />
                     </div>
 
-                    <button
-                      className="btn btn-outline-light btn-lg px-5"
-                      type="submit"
-                    >
-                      Register
-                    </button>
+                    <Button type="submit" text="Register" />
                   </div>
 
                   <div>

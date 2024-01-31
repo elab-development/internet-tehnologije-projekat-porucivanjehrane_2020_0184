@@ -203,13 +203,23 @@
   resize: none;
  }
  
- button {
+ .buttonContact {
   padding: 20px 100px;
   font-size: 25px;
   border-radius: 5px;
   border: none;
   background: #C49C91;
   color: #fff;
+  cursor: pointer;
+ }
+
+ .buttonComponent{
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  background:rgb(56, 137, 137);
   cursor: pointer;
  }
 

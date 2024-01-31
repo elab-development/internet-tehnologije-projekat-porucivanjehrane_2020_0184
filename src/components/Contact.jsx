@@ -17,7 +17,7 @@ const Contact = () => {
           <label htmlFor="message">Vaša poruka:</label>
           <textarea id="message" name="message" rows="4" required></textarea>
         </div>
-        <button>Pošaljite poruku :)</button>
+        <button class="buttonContact">Pošaljite poruku :)</button>
       </form>
     </div>
   );

@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Button from "./Button";
 
 const Login = ({ addToken, addUser, currentUser }) => {
   const [userData, setUserData] = useState({
@@ -95,12 +96,7 @@ const Login = ({ addToken, addUser, currentUser }) => {
                       />
                     </div>
 
-                    <button
-                      className="btn btn-outline-light btn-lg px-5"
-                      type="submit"
-                    >
-                      Login
-                    </button>
+                    <Button type="submit" text="Login" />
                   </div>
 
                   <div>
