@@ -2,47 +2,60 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Select from 'react-select';
+import Swal from "sweetalert2";
 
 const Register = () => {
-  let navigate = useNavigate();
-
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
     address: "",
-    role_name: "",
+    role_name: "logged in user",
   });
-
-  const roleOptions = [
-    { value: "admin", label: "Admin" },
-    { value: "logged in user", label: "Logged In User" },
-  ];
+  const [errors, setErrors] = useState({});
 
   function handleInput(e) {
-    let newUser = user;
-    newUser[e.target.name] = e.target.value;
-    setUser(newUser);
-  }
-
-  const handleRoleChange = (selectedOption) => {
+    const { name, value } = e.target;
     setUser({
       ...user,
-      role_name: selectedOption.value,
+      [name]: value,
     });
-  };
+  }
+
+  let navigate = useNavigate();
 
   function handleRegister(e) {
     e.preventDefault();
+
     axios
       .post("http://127.0.0.1:8000/api/register", user)
-      .then((res) => {
-        console.log(res.data);
-        navigate("/restaurants");
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.access_token) {
+          window.sessionStorage.setItem(
+            "auth_token",
+            response.data.access_token
+          );
+          window.sessionStorage.setItem("role", "logged in user");
+          window.sessionStorage.setItem("user", response.data.data.name);
+          navigate("/items");
+          Swal.fire({
+            icon: "success",
+            title: "Successfull",
+            text: "Operation was successful!",
+          });
+        }
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        console.error("Registration failed:", error);
+
+        if (error.response && error.response.data) {
+          // If the response contains validation errors
+          setErrors(error.response.data);
+        } else {
+          // If there is a generic error
+          setErrors({ generic: "Registration failed. Please try again." });
+        }
       });
   }
 
@@ -111,41 +124,6 @@ const Register = () => {
                         className="form-control form-control-lg"
                         name="address"
                         onInput={handleInput}
-                      />
-                    </div>
-
-                    {/* <div>
-                      <label className="form-label" htmlFor="typeRoleNameX">
-                        Role name
-                      </label>
-                      <input type="text" list="roles" />
-                      <datalist id="typeRoleX">
-                        <option>admin</option>
-                        <option>logged in user</option>
-                      </datalist>
-                    </div> */}
-                    {/* <div>
-                      <label className="form-label" htmlFor="typeRoleNameX">
-                        Role name
-                      </label>
-                      <input
-                        type="text"
-                        list="roles"
-                        id="typeRoleNameX"
-                        value={role_name}
-                        onInput={handleInput}
-                      />
-                      <datalist id="roles">
-                        <option>admin</option>
-                        <option>logged in user</option>
-                      </datalist>
-                    </div> */}
-                    <div>
-                      <label>Role name:</label>
-                      <Select
-                        value={user.role_name}
-                        onChange={handleRoleChange}
-                        options={roleOptions}
                       />
                     </div>
 
