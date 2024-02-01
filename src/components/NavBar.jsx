@@ -1,18 +1,19 @@
 import React from "react";
 import { FaCartShopping } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
-function NavBar() {
+function NavBar({ cartNum }) {
   return (
     <div className="navBar">
-      <a href="/">Home</a>
-      <a href="/restaurants">Restaurants</a>
-      <a href="/items">Items</a>
-      {/* <a href="/categories">Categories</a> */}
-      <a href="/contact">Contact</a>
-      <a href="/cart" className="cart-items">
+      <Link to="/">Home</Link>
+      <Link to="/restaurants">Restaurants</Link>
+      <Link to="/items">Items</Link>
+      <Link to="/contact">Contact</Link>
+
+      <Link to="/cart" className="cart-items">
         <FaCartShopping style={{ marginLeft: 10 }} />
-        {/* <div className="cart-num">{cartNum}</div> */}
-      </a>
+        <div className="cart-num">{cartNum}</div>
+      </Link>
     </div>
   );
 }

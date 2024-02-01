@@ -69,7 +69,6 @@
 
 .itemCard-cart {
   display: flex;
-  flex-direction: row;
   border-style: solid;
   border-width: 2px;
   border-color: rgb(211, 211, 211);
@@ -226,3 +225,4 @@
 .cartPage{
   text-align: center;
 }
+

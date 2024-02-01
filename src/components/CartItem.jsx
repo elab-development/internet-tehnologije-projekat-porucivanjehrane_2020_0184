@@ -2,7 +2,8 @@ import React from "react";
 import { MdAddShoppingCart } from "react-icons/md";
 import { CgRemoveR } from "react-icons/cg";
 
-const OneItem = ({ item, onAdd, onRemove }) => {
+const CartItem = ({ item }) => {
+  var total_price = 0;
   return (
     <div className="itemCard">
       <img
@@ -15,15 +16,11 @@ const OneItem = ({ item, onAdd, onRemove }) => {
         <h3 className="itemCard-title">{item.name}</h3>
         <p className="itemCard-text">{item.meal_description} </p>
         <p className="itemCard-price"> Cena: {item.price}</p>
-        <button className="btn" onClick={() => onAdd(item.id)}>
-          <MdAddShoppingCart size="30" />
-        </button>
-        <button className="btn" onClick={() => onRemove(item.id)}>
-          <CgRemoveR size="30" />
-        </button>
+        <h3> Amount: {item.amount}</h3>
+        <h3> Total price: {(total_price += item.price * item.amount)}</h3>
       </div>
     </div>
   );
 };
 
-export default OneItem;
+export default CartItem;

@@ -1,13 +1,31 @@
 {
-    "items":[
-        {
-            "id": 1,
-            "name": "Mesano meso",
-            "description":
-              "cevapcici, leskovacki ustipak, pileci file, dimljena vesalica, kobasica, pomfrit, crni luk /450g",
-            "price": "850.00 RSD",
-            "category": "rostilj",
-            "amount": 0
-          }
-    ]
+  "items": [
+    {
+      "id": 1,
+      "name": "Mešano meso",
+      "meal_description": "Ćevapi, leskovački uštipak, pileći file, dimljena vešalica, kobasica, pomfrit, crni luk /450g",
+      "price": 950,
+      "image": "https://www.smartkurir.com/wp-content/uploads/2022/09/rostilj-za-4.6-osoba.jpg",
+      "category": "rostilj",
+      "amount": 0
+    },
+    {
+      "id": 2,
+      "name": "Karbonara",
+      "meal_description": "Slanina, pavlaka, jaje, ekstradevičansko maslinovo ulje, parmezan",
+      "price": 650,
+      "image": "https://rucakza200dinara.com/wp-content/uploads/2018/12/IMG_20181111_110351_045.jpg",
+      "category": "pasta",
+      "amount": 0
+    },
+    {
+      "id": 3,
+      "name": "Leskovački uštipci",
+      "meal_description": "kackavalj, slanina, crni luk, beli luk, sunka, tucana paprika, pomfrit",
+      "price": 700,
+      "image": "https://www.salas011.rs/wp-content/uploads/2018/02/web-leskova%C4%8Dki-u%C5%A1tipci-Sala%C5%A1011-dostava-hrane-1.jpg",
+      "category": "rostilj",
+      "amount": 0
+    }
+  ]
 }

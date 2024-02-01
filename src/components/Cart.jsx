@@ -1,11 +1,19 @@
 import React from "react";
-const Cart = () => {
+import CartItem from "./CartItem";
+
+const Cart = ({ cartItems }) => {
   return (
-    <div class="cartPage">
-      <h1>Vaša korpa je trenutno prazna.</h1>
-      <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-7359557-6024626.png"></img>
-      <br></br>
-      <br></br>
+    <div class="all-items">
+      {cartItems.length === 0 ? (
+        <div>
+          <h1>Your cart is currently empty.</h1>
+          <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-7359557-6024626.png"></img>
+          <br></br>
+          <br></br>{" "}
+        </div>
+      ) : (
+        cartItems.map((item) => <CartItem key={item.id} item={item} />)
+      )}
     </div>
   );
 };

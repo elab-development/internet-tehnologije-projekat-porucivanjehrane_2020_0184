@@ -1,8 +1,8 @@
 import React from "react";
 import OneRestaurant from "./OneRestaurant";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
-import '../style/Pagination.css';
+import "../style/Pagination.css";
 
 const Restaurants = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -50,7 +50,8 @@ const Restaurants = () => {
           "Frans je restoran sa specijalitetima francuske kuhinje. Uživajte u izvrsnoj hrani i autentičnoj atmosferi.",
         address: "Bulevar Oslobodjenja 18a",
         contact_phone_number: "+381 11 1111111",
-        image: "https://frans.rs/wp-content/uploads/2017/05/basta-i-restoran-frans.jpg",
+        image:
+          "https://frans.rs/wp-content/uploads/2017/05/basta-i-restoran-frans.jpg",
       },
       {
         id: 5,
@@ -59,7 +60,8 @@ const Restaurants = () => {
           "Dolly Bell nudi nezaboravna iskustva sa jelima mediteranske kuhinje. Posetite nas i uživajte u vrhunskoj hrani.",
         address: "Bulevar Mihajla Pupina 165b",
         contact_phone_number: "+381 11 2222222",
-        image: "https://www.restoranibeograd.com/storage/news/interior/770/dolly_bell_beograd.jpg",
+        image:
+          "https://www.restoranibeograd.com/storage/news/interior/770/dolly_bell_beograd.jpg",
       },
       {
         id: 6,
@@ -68,8 +70,9 @@ const Restaurants = () => {
           "Restoran Dva Jelena je poznat po tradicionalnim srpskim specijalitetima. Posetite nas i doživite pravu domaću kuhinju.",
         address: "Skadarska 32",
         contact_phone_number: "+381 11 3333333",
-        image: "https://www.restoranibeograd.com/storage/news/interior/770/restoran_dva_jelena.jpg",
-      }
+        image:
+          "https://www.restoranibeograd.com/storage/news/interior/770/restoran_dva_jelena.jpg",
+      },
     ];
 
     const filtered = allRestaurants.filter(
@@ -134,15 +137,15 @@ const Restaurants = () => {
       />
       {displayRestaurants()}
       <ReactPaginate
-  pageCount={pageCount}
-  pageRangeDisplayed={3}
-  marginPagesDisplayed={1}
-  onPageChange={handlePageClick}
-  containerClassName={'pagination'}
-  activeClassName={'active'}
-  previousLabel={<div className="pagination-btn">previous</div>}
-  nextLabel={<div className="pagination-btn">next</div>}
-/>
+        pageCount={pageCount}
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={1}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        activeClassName={"active"}
+        previousLabel={<div className="pagination-btn">previous</div>}
+        nextLabel={<div className="pagination-btn">next</div>}
+      />
     </div>
   );
 };

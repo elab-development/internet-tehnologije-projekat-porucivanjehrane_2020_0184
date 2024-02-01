@@ -4,95 +4,74 @@ import NavBar from "./components/NavBar";
 import Cart from "./components/Cart";
 import Restaurants from "./components/Restaurants";
 import Items from "./components/Items";
-import Category from "./components/Categories";
 import Contact from "./components/Contact";
 import Footer from "./components/footer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import User from "./components/User";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 function App() {
-  // const [token,setToken]=useState();
+  const [items, setItems] = useState(null);
 
-  // function addToken(auth_token){
-  //     setToken(auth_token);
-  // }
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("/itemsData.json");
+      console.log(response.data.items);
+      setItems(response.data.items);
+    };
+    fetchData();
+  }, []);
 
-  // function removeToken(){
-  //     setToken(null);
-  //     setCurrentUser(null);
+  const [cartNum, setcartNum] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
 
-  // }
+  const refreshCart = () => {
+    const newItems = items.filter((item) => item.amount > 0);
+    setCartItems(newItems);
+  };
 
-  // const [users, setUsers]=useState();
+  const onAdd = (id) => {
+    items.map((item) => {
+      if (item.id === id) {
+        item.amount++;
+        const a = cartNum + 1;
+        setcartNum(a);
+        refreshCart();
+        console.log("itemid: " + item.id + " amount: " + item.amount);
+      }
+    });
+  };
 
-  //  useEffect(()=>{
-  //      if(users==null){
-  //          axios.get("http://127.0.0.1:8000/api/users").then((res)=>{
-  //              console.log(res.data);
-  //              setUsers(res.data);
-  //          });
-  //      }
-  //  },[users]);
-
-  // const [currentUser, setCurrentUser] = useState();
-
-  // function addUser(u){
-  //   console.log('123123');
-  //   console.log("users: " + users);
-  //     if(users != null){
-  //         // users.find((user) =>{
-  //         //     if(user.email == u.email){
-  //         //         setCurrentUser(user);
-  //         //         console.log(user);
-
-  //         //         setCurrentUser(user);
-  //         //         console.log("User: " + currentUser);
-  //         //         loadFavourites();
-  //         //     };
-  //         // });
-  //         const foundUser = users.find(user => user.email == u.email);
-  //         console.log('asdasd');
-  //         if (foundUser) {
-  //           setCurrentUser(foundUser);
-  //           console.log("User:", foundUser);
-  //         }
-  //     };
-  // }
+  const onRemove = (id) => {
+    items.map((item) => {
+      if (item.id === id) {
+        if (item.amount > 0) {
+          item.amount--;
+          const a = cartNum - 1;
+          setcartNum(a);
+          refreshCart();
+          console.log("itemid: " + item.id + " amount: " + item.amount);
+        } else {
+          console.log("Amount is already 0");
+        }
+      }
+    });
+  };
 
   return (
     <BrowserRouter>
-      <NavBar />
+      <NavBar cartNum={cartNum} />
       <Routes>
-        {/* <Route
-          path="/"
-          element={
-          }
-        /> */}
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<Cart cartItems={cartItems} />} />
         <Route path="/restaurants" element={<Restaurants />} />
-        <Route path="/items" element={<Items />} />
-        {/* 
         <Route
-          path="/user"
-          element={
-            <div>
-              <NavBar
-                token={token}
-                removeToken={removeToken}
-                currentUser={currentUser}
-              />
-              <User currentUser={currentUser} />
-            </div>
-          }
-        /> */}
-
+          path="/items"
+          element={<Items items={items} onAdd={onAdd} onRemove={onRemove} />}
+        />
         <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/categories" element={<Category />} /> */}
         <Route path="/contact" element={<Contact />} />
       </Routes>
       <Footer />
