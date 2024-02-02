@@ -1,5 +1,6 @@
 import React from "react";
 import OneItem from "./OneItem";
+import ButtonToTop from "./ButtonToTop";
 
 const Items = ({ items, onAdd, onRemove }) => {
   return (
@@ -9,6 +10,7 @@ const Items = ({ items, onAdd, onRemove }) => {
         : items.map((it) => (
             <OneItem item={it} key={it.id} onAdd={onAdd} onRemove={onRemove} />
           ))}
+      <ButtonToTop />
     </div>
   );
 };

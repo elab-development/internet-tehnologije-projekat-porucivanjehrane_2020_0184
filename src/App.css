@@ -39,8 +39,9 @@
 }
 
 .all-items {
-  display: flex;
-  margin: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px; /* Ovo možete prilagoditi prema potrebi za razmakom između proizvoda */
 }
 
 .itemCard {
@@ -213,7 +214,7 @@ textarea {
   border-radius: 5px;
   border: none;
   background: #c49c91;
-  color: #fff;
+  color: black;
   cursor: pointer;
 }
 
@@ -259,4 +260,26 @@ textarea {
   width: 200px;
   margin-bottom: 10px;
   font-size: 20px;
+}
+
+.button-ToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  border-radius: 3px;
+  cursor: pointer;
+  color: black;
+  padding: 10px;
+  font-size: 35px;
+  display: flex;
+  background-color: #c49c91;
+  transition: background-color 1s ease;
+}
+
+.button-ToTop:hover {
+  background-color: rgb(56, 137, 137);
+}
+
+.emptyCart {
+  width: 1000px;
 }

@@ -11,6 +11,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import ButtonToTop from "./components/ButtonToTop";
 
 function App() {
   const [items, setItems] = useState(null);
@@ -74,7 +75,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
-      <Foot/>
+      <Foot />
     </BrowserRouter>
   );
 }

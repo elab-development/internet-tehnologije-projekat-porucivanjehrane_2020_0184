@@ -26,6 +26,24 @@
       "image": "https://www.salas011.rs/wp-content/uploads/2018/02/web-leskova%C4%8Dki-u%C5%A1tipci-Sala%C5%A1011-dostava-hrane-1.jpg",
       "category": "rostilj",
       "amount": 0
+    },
+    {
+      "id": 4,
+      "name": "Grilovani losos",
+      "meal_description": "losos, spanać, krompir",
+      "price": 2700,
+      "image": "https://www.kuvarancije.com/images/recepti/riba/2018/grilovani-losos-7.JPG",
+      "category": "rostilj",
+      "amount": 0
+    },
+    {
+      "id": 5,
+      "name": "Povrće na grilu",
+      "meal_description": "luk, krompir, tikvice, paprika",
+      "price": 700,
+      "image": "https://static.kraljzara.hr/cache/0X300/blog/98/prva.jpg",
+      "category": "rostilj",
+      "amount": 0
     }
   ]
 }

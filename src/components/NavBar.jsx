@@ -1,8 +1,6 @@
 import React from "react";
 import { FaCartShopping } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
-import Logout from "../images/logout.png";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { IoIosLogOut } from "react-icons/io";
 

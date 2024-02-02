@@ -1,5 +1,6 @@
 import React from "react";
 import CartItem from "./CartItem";
+import ButtonToTop from "./ButtonToTop";
 
 const Cart = ({ cartItems }) => {
   return (
@@ -14,6 +15,7 @@ const Cart = ({ cartItems }) => {
       ) : (
         cartItems.map((item) => <CartItem key={item.id} item={item} />)
       )}
+      <ButtonToTop />
     </div>
   );
 };
