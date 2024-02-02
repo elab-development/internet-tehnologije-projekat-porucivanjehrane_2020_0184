@@ -3,6 +3,7 @@ import OneRestaurant from "./OneRestaurant";
 import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import "../style/Pagination.css";
+import Button from "./Button";
 
 const Restaurants = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -143,8 +144,8 @@ const Restaurants = () => {
         onPageChange={handlePageClick}
         containerClassName={"pagination"}
         activeClassName={"active"}
-        previousLabel={<div className="pagination-btn">previous</div>}
-        nextLabel={<div className="pagination-btn">next</div>}
+        previousLabel={<Button text="Previous" />}
+        nextLabel={<Button text="Next" />}
       />
     </div>
   );

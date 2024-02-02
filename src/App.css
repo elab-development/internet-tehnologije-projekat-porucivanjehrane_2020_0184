@@ -1,27 +1,26 @@
-
 .navBar {
   display: flex;
   flex-direction: row;
-  background-color: #A9BFF1;
+  background-color: #a9bff1;
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: rgb(125, 114, 114);
   align-items: center;
   min-height: 50px;
-  padding-left: 40px;
+  padding-left: 150px;
   font-size: 25px;
   font-weight: bold;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
- }
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 
- .navBar a {
+.navBar a {
   color: black;
   text-decoration: none;
   cursor: pointer;
-  margin-right: 100px;
+  margin-right: 120px;
 }
 
-.navBar a:hover{
+.navBar a:hover {
   text-decoration: underline;
 }
 
@@ -51,9 +50,8 @@
   border-radius: 10px;
   max-width: 250px;
   max-height: 850px;
-  margin:25px;
+  margin: 25px;
   box-shadow: 10px 10px 10px 10px rgb(217, 223, 223);
-
 }
 
 .itemCard-img-top {
@@ -67,18 +65,16 @@
 }
 .itemCard-body {
   margin: 10px;
-  
 }
 
-.itemCard-price{
+.itemCard-price {
   font-size: large;
   font-weight: bold;
   text-decoration: underline;
 }
 
-.itemCard:hover{
+.itemCard:hover {
   background-color: rgb(217, 223, 223);
-
 }
 
 .itemCard-cart {
@@ -102,15 +98,13 @@
   border-radius: 10px;
   max-width: 950px;
   max-height: 850px;
-  margin:25px;
+  margin: 25px;
   box-shadow: 10px 10px 10px 10px rgb(217, 223, 223);
-
 }
 
-.restaurantCard :hover{
+.restaurantCard :hover {
   background-color: rgb(217, 223, 223);
 }
-
 
 .restaurantCard-img-top {
   border-top-left-radius: 10px;
@@ -136,9 +130,9 @@
 }
 
 .btn {
-  background-color: #C49C91;
+  background-color: #c49c91;
   color: rgb(51, 45, 45);
-  padding:5px;
+  padding: 5px;
   margin: 5px;
   border-radius: 3px;
   border-width: 0px;
@@ -146,15 +140,13 @@
   height: 55px;
 }
 
-
 .cart-container {
   margin: 20px;
 }
 
-
 .cart-items {
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
   align-items: end;
 }
 
@@ -171,72 +163,100 @@
 }
 
 .Foot {
-  padding:4px;
-  color:#eff1f3;
-  background-color:#5D7B9E;
+  padding: 4px;
+  color: #eff1f3;
+  background-color: #5d7b9e;
   font-weight: bold;
 }
 
 .Foot .copyright {
-  text-align:center;
-  padding-top:14px;
+  text-align: center;
+  padding-top: 14px;
   padding-bottom: 10px;
-  opacity:0.7;
-  font-size:20px;
-  margin-bottom:0;
+  opacity: 0.7;
+  font-size: 20px;
+  margin-bottom: 0;
 }
 
- .contactTitle{
+.contactTitle {
   font-size: 25px;
   text-align: center;
- }
- 
- .formClass {
+}
+
+.formClass {
   margin: 3rem 0;
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
   align-items: center;
 }
- 
- .input__container {
+
+.input__container {
   display: flex;
   flex-direction: column;
   row-gap: 0.5rem;
   width: 450px;
-  
- }
-  
- .input__container input,
- textarea {
+}
+
+.input__container input,
+textarea {
   padding: 25px 25px;
   border-radius: 5px;
   font-size: 25px;
   border: 1px solid #555;
   resize: none;
- }
- 
- .buttonContact {
+}
+
+.buttonContact {
   padding: 20px 100px;
   font-size: 25px;
   border-radius: 5px;
   border: none;
-  background: #C49C91;
+  background: #c49c91;
   color: #fff;
   cursor: pointer;
- }
+}
 
- .buttonComponent{
-  padding: 10px 20px;
-  font-size: 15px;
-  border-radius: 5px;
-  border: none;
-  font-weight: bold;
-  background:rgb(56, 137, 137);
-  cursor: pointer;
- }
-
-.cartPage{
+.cartPage {
   text-align: center;
 }
 
+.buttonComponent {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 25px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  background: rgb(56, 137, 137);
+  cursor: pointer;
+}
+
+.cartPage {
+  text-align: center;
+}
+
+.login-wrapper {
+  width: 400px;
+  height: 450px;
+  margin: 100px auto 0;
+  background: #c49c91;
+  border-radius: 10px;
+  box-shadow: 1px 1px 8px -3px #000;
+  text-align: center;
+  padding: 10px 10px 0 0;
+  font-size: 23px;
+}
+.login-wrapper form {
+  padding: 10px;
+}
+
+.input-form {
+  border: none;
+  border-radius: 5px;
+  height: 30px;
+  padding: 5px;
+  width: 200px;
+  margin-bottom: 10px;
+  font-size: 20px;
+}

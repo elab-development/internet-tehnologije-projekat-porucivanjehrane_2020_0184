@@ -33,7 +33,10 @@ const Register = () => {
       .then((response) => {
         console.log(response.data);
         if (response.data.access_token) {
-          window.sessionStorage.setItem("auth_token",response.data.access_token);
+          window.sessionStorage.setItem(
+            "auth_token",
+            response.data.access_token
+          );
           window.sessionStorage.setItem("role_id", "2");
           window.sessionStorage.setItem("user", response.data.data.name);
           navigate("/items");
@@ -66,60 +69,52 @@ const Register = () => {
               className="card bg-dark text-white"
               style={{ borderRadius: 1 + "rem" }}
             >
-              <div className="card-body p-4 text-center">
+              <div className="login-wrapper">
                 <form onSubmit={handleRegister}>
-                  <div className="mb-md-5 mt-md-4 pb-5">
-                    <p className="text-white-50 mb-5">
-                      Please enter your information
+                  <div>
+                    <p>
+                      <b>Please enter your information</b>
                     </p>
 
-                    <div className="form-outline form-white mb-4">
-                      <label className="form-label" htmlFor="typeNameX">
-                        Name
-                      </label>
+                    <div>
+                      <label>Name </label>
                       <input
+                        className="input-form"
                         type="text"
                         id="typeNameX"
-                        className="form-control form-control-lg"
                         name="name"
                         onInput={handleInput}
                       />
                     </div>
 
-                    <div className="form-outline form-white mb-4">
-                      <label className="form-label" htmlFor="typeEmailX">
-                        Email
-                      </label>
+                    <div>
+                      <label>Email </label>
                       <input
+                        className="input-form"
                         type="text"
                         id="typeEmailX"
-                        className="form-control form-control-lg"
                         name="email"
                         onInput={handleInput}
                       />
                     </div>
 
-                    <div className="form-outline form-white mb-4">
-                      <label className="form-label" htmlFor="typePasswordX">
-                        Password
-                      </label>
+                    <div>
+                      <label>Password </label>
                       <input
+                        className="input-form"
                         type="password"
                         id="typePasswordX"
-                        className="form-control form-control-lg"
                         name="password"
                         onInput={handleInput}
                       />
                     </div>
 
-                    <div className="form-outline form-white mb-4">
-                      <label className="form-label" htmlFor="typeAddressX">
-                        Address
-                      </label>
+                    <div>
+                      <label>Address </label>
                       <input
+                        className="input-form"
                         type="text"
                         id="typeAddressX"
-                        className="form-control form-control-lg"
                         name="address"
                         onInput={handleInput}
                       />
@@ -142,6 +137,7 @@ const Register = () => {
           </div>
         </div>
       </div>
+      <br></br>
     </section>
   );
 };

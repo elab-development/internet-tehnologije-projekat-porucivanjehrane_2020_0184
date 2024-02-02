@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Logout from "../images/logout.png";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { IoIosLogOut } from "react-icons/io";
 
 export default function NavBar({ cartNum }) {
   const navigate = useNavigate();
@@ -24,27 +25,16 @@ export default function NavBar({ cartNum }) {
 
   return (
     <div className="navBar">
-      <div className="menu">
-        <span>
-          {!isUserLoggedIn &&
-          <Link to="/">Register</Link>
-          }
-          <Link to="/restaurants">Restaurants</Link>
-          <Link to="/items">Items</Link>
-          <Link to="/contact">Contact</Link>
-
-          <Link to="/cart" className="cart-items">
-            <FaCartShopping style={{ marginLeft: 10 }} />
-            <div className="cart-num">{cartNum}</div>
-          </Link>
-        </span>
-      </div>
+      {!isUserLoggedIn && <Link to="/">Register/Login</Link>}
+      <Link to="/restaurants">Restaurants</Link>
+      <Link to="/items">Items</Link>
+      <Link to="/contact">Contact</Link>
+      <Link to="/cart" className="cart-items">
+        <FaCartShopping />
+        <div className="cart-num">{cartNum}</div>
+      </Link>
       {isUserLoggedIn && (
-        <div className="logout">
-          <span className="cursor-pointer" onClick={logout}>
-            <img width={30} src={Logout} alt="Logout" />
-          </span>
-        </div>
+        <IoIosLogOut style={{ cursor: "pointer" }} onClick={logout} />
       )}
     </div>
   );

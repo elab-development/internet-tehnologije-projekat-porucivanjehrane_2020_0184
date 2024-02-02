@@ -30,15 +30,15 @@ const Login = ({ addToken, addUser, currentUser }) => {
       .post("http://127.0.0.1:8000/api/login", userData)
       .then((response) => {
         console.log(response.data);
-          window.sessionStorage.setItem("auth_token",response.data.access_token);
-          window.sessionStorage.setItem("role_id", response.data.role_id);
-          window.sessionStorage.setItem("user", response.data.name);
-          navigate("/items");
-          Swal.fire({
-            icon: "success",
-            title: "Successfull",
-            text: "Operation was successful!",
-          });
+        window.sessionStorage.setItem("auth_token", response.data.access_token);
+        window.sessionStorage.setItem("role_id", response.data.role_id);
+        window.sessionStorage.setItem("user", response.data.name);
+        navigate("/items");
+        Swal.fire({
+          icon: "success",
+          title: "Successfull",
+          text: "Operation was successful!",
+        });
       })
       .catch((error) => {
         console.error("Login failed:", error);
@@ -61,34 +61,28 @@ const Login = ({ addToken, addUser, currentUser }) => {
               className="card bg-dark text-white"
               style={{ borderRadius: 1 + "rem" }}
             >
-              <div className="card-body p-5 text-center">
+              <div className="login-wrapper">
                 <form onSubmit={handleLogin}>
-                  <div className="mb-md-5 mt-md-4 pb-5">
-                    <p className="text-white-50 mb-5">
-                      Please enter your email and password
-                    </p>
+                  <div>
+                    <p>Please enter your email and password</p>
 
-                    <div className="form-outline form-white mb-4">
-                      <label className="form-label" htmlFor="typeEmailX">
-                        Email
-                      </label>
+                    <div>
+                      <label>Email </label>
                       <input
+                        className="input-form"
                         type="text"
                         id="typeEmailX"
-                        className="form-control form-control-lg"
                         name="email"
                         onInput={handleInput}
                       />
                     </div>
 
-                    <div className="form-outline form-white mb-4">
-                      <label className="form-label" htmlFor="typePasswordX">
-                        Password
-                      </label>
+                    <div>
+                      <label htmlFor="typePasswordX">Password </label>
                       <input
+                        className="input-form"
                         type="password"
                         id="typePasswordX"
-                        className="form-control form-control-lg"
                         name="password"
                         onInput={handleInput}
                       />
@@ -99,10 +93,7 @@ const Login = ({ addToken, addUser, currentUser }) => {
 
                   <div>
                     <p className="mb-0">
-                      Don't have an account?{" "}
-                      <a href="/" className="text-white-50 fw-bold">
-                        Sign Up
-                      </a>
+                      Don't have an account? <a href="/">Sign Up</a>
                     </p>
                   </div>
                 </form>
@@ -111,6 +102,7 @@ const Login = ({ addToken, addUser, currentUser }) => {
           </div>
         </div>
       </div>
+      <br></br>
     </section>
   );
 };

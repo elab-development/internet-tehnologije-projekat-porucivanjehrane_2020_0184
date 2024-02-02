@@ -3,7 +3,7 @@ import CartItem from "./CartItem";
 
 const Cart = ({ cartItems }) => {
   return (
-    <div class="all-items">
+    <div className="all-items">
       {cartItems.length === 0 ? (
         <div>
           <h1>Your cart is currently empty.</h1>
