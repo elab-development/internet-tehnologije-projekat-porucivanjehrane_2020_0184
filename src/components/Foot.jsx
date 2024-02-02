@@ -1,13 +1,13 @@
 import React from "react";
 
-const Footer = () => {
+const Foot = () => {
   return (
     <div>
-      <div className="Footer">
+      <div className="Foot">
         <p className="copyright">Ana Pavlović & Adrijana Pantić © 2024</p>
       </div>
     </div>
   );
 };
 
-export default Footer;
+export default Foot;

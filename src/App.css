@@ -162,14 +162,14 @@
   margin-left: 5px;
 }
 
-.Footer {
+.Foot {
   padding:4px;
   color:#eff1f3;
   background-color:#5D7B9E;
   font-weight: bold;
 }
 
-.Footer .copyright {
+.Foot .copyright {
   text-align:center;
   padding-top:14px;
   padding-bottom: 10px;
