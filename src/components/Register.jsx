@@ -50,6 +50,12 @@ const Register = () => {
       .catch((error) => {
         console.error("Registration failed:", error);
 
+        navigate("/");
+        Swal.fire({
+          icon: "error",
+          title: "Ooops...",
+          text: "Please check the data you entered!",
+        });
         if (error.response && error.response.data) {
           // If the response contains validation errors
           setErrors(error.response.data);
