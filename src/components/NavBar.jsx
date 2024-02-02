@@ -20,6 +20,7 @@ export default function NavBar({ cartNum }) {
     });
   };
 
+  const isUserLoggedIn = !!window.sessionStorage.getItem("auth_token");
 
   return (
     <div className="navBar">
@@ -36,11 +37,13 @@ export default function NavBar({ cartNum }) {
           </Link>
         </span>
       </div>
-      <div className="logout">
-        <span className="cursor-pointer" onClick={logout}>
-          <img width={30} src={Logout} alt="Logout" />
-        </span>
-      </div>
+      {isUserLoggedIn && (
+        <div className="logout">
+          <span className="cursor-pointer" onClick={logout}>
+            <img width={30} src={Logout} alt="Logout" />
+          </span>
+        </div>
+      )}
     </div>
   );
 }
