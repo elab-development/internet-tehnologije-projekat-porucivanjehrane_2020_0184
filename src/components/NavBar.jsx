@@ -26,7 +26,9 @@ export default function NavBar({ cartNum }) {
     <div className="navBar">
       <div className="menu">
         <span>
+          {!isUserLoggedIn &&
           <Link to="/">Register</Link>
+          }
           <Link to="/restaurants">Restaurants</Link>
           <Link to="/items">Items</Link>
           <Link to="/contact">Contact</Link>
