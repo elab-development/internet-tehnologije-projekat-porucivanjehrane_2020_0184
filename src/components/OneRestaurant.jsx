@@ -12,6 +12,10 @@ const OneRestaurant = ({ restaurant }) => {
         <h3>{restaurant.name}</h3>
         <p>{restaurant.description} </p>
         <p>
+          <b>Adresa: </b>
+          {restaurant.address}
+        </p>
+        <p>
           <b>Kontakt telefon:</b> {restaurant.contact_phone_number}
         </p>
       </div>

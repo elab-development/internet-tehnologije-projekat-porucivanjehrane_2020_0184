@@ -61,82 +61,90 @@ const Register = () => {
   }
 
   return (
-    <section className="vh-100 gradient-custom">
-      <div className="container py-3 h-50">
-        <div className="row d-flex justify-content-center align-items-center h-90">
-          <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div
-              className="card bg-dark text-white"
-              style={{ borderRadius: 1 + "rem" }}
-            >
-              <div className="login-wrapper">
-                <form onSubmit={handleRegister}>
-                  <div>
-                    <p>
-                      <b>Please enter your information</b>
-                    </p>
+    <section>
+      <div style={{ borderRadius: 1 + "rem" }}>
+        <div className="login-wrapper">
+          <form onSubmit={handleRegister}>
+            <div>
+              <p>
+                <b>Please enter your information</b>
+              </p>
 
-                    <div>
-                      <label>Name </label>
-                      <input
-                        className="input-form"
-                        type="text"
-                        id="typeNameX"
-                        name="name"
-                        onInput={handleInput}
-                      />
-                    </div>
-
-                    <div>
-                      <label>Email </label>
-                      <input
-                        className="input-form"
-                        type="text"
-                        id="typeEmailX"
-                        name="email"
-                        onInput={handleInput}
-                      />
-                    </div>
-
-                    <div>
-                      <label>Password </label>
-                      <input
-                        className="input-form"
-                        type="password"
-                        id="typePasswordX"
-                        name="password"
-                        onInput={handleInput}
-                      />
-                    </div>
-
-                    <div>
-                      <label>Address </label>
-                      <input
-                        className="input-form"
-                        type="text"
-                        id="typeAddressX"
-                        name="address"
-                        onInput={handleInput}
-                      />
-                    </div>
-
-                    <Button type="submit" text="Register" />
-                  </div>
-
-                  <div>
-                    <p className="mb-0">
-                      Already have an account?{" "}
-                      <a href="/login" className="text-white-50 fw-bold">
-                        Login
-                      </a>
-                    </p>
-                  </div>
-                </form>
+              <div>
+                <div>
+                  <label style={{ textAlign: "start" }}>
+                    Name: <br></br>
+                  </label>
+                </div>
+                <input
+                  className="input-form"
+                  type="text"
+                  id="typeNameX"
+                  name="name"
+                  onInput={handleInput}
+                />
               </div>
+
+              <div>
+                <div>
+                  <label style={{ textAlign: "start" }}>
+                    Email: <br></br>
+                  </label>
+                </div>
+                <input
+                  className="input-form"
+                  type="text"
+                  id="typeEmailX"
+                  name="email"
+                  onInput={handleInput}
+                />
+              </div>
+
+              <div>
+                <div>
+                  <label style={{ textAlign: "start" }}>
+                    Password: <br></br>
+                  </label>
+                </div>
+                <input
+                  className="input-form"
+                  type="password"
+                  id="typePasswordX"
+                  name="password"
+                  onInput={handleInput}
+                />
+              </div>
+
+              <div>
+                <div>
+                  <label style={{ textAlign: "start" }}>
+                    Address: <br></br>
+                  </label>
+                </div>
+                <input
+                  className="input-form"
+                  type="text"
+                  id="typeAddressX"
+                  name="address"
+                  onInput={handleInput}
+                />
+              </div>
+
+              <Button type="submit" text="Register" />
             </div>
-          </div>
+
+            <div>
+              <p className="mb-0">
+                Already have an account?{" "}
+                <a href="/login" className="text-white-50 fw-bold">
+                  Login
+                </a>
+              </p>
+            </div>
+          </form>
         </div>
       </div>
+
       <br></br>
     </section>
   );

@@ -53,55 +53,58 @@ const Login = ({ addToken, addUser, currentUser }) => {
   };
 
   return (
-    <section className="vh-100 gradient-custom">
-      <div className="container py-5 h-100">
-        <div className="row d-flex justify-content-center align-items-center h-100">
-          <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-            <div
-              className="card bg-dark text-white"
-              style={{ borderRadius: 1 + "rem" }}
-            >
-              <div className="login-wrapper">
-                <form onSubmit={handleLogin}>
-                  <div>
-                    <p>Please enter your email and password</p>
+    <section>
+      <div style={{ borderRadius: 1 + "rem" }}>
+        <div className="login-wrapper">
+          <form onSubmit={handleLogin}>
+            <div>
+              <p>
+                <b>Please enter your email and password</b>
+              </p>
 
-                    <div>
-                      <label>Email </label>
-                      <input
-                        className="input-form"
-                        type="text"
-                        id="typeEmailX"
-                        name="email"
-                        onInput={handleInput}
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="typePasswordX">Password </label>
-                      <input
-                        className="input-form"
-                        type="password"
-                        id="typePasswordX"
-                        name="password"
-                        onInput={handleInput}
-                      />
-                    </div>
-
-                    <Button type="submit" text="Login" />
-                  </div>
-
-                  <div>
-                    <p className="mb-0">
-                      Don't have an account? <a href="/">Sign Up</a>
-                    </p>
-                  </div>
-                </form>
+              <div>
+                <div>
+                  <label style={{ textAlign: "start" }}>
+                    Email: <br></br>
+                  </label>
+                </div>
+                <input
+                  className="input-form"
+                  type="text"
+                  id="typeEmailX"
+                  name="email"
+                  onInput={handleInput}
+                />
               </div>
+
+              <div>
+                <div>
+                  <label>
+                    Password: <br></br>
+                  </label>
+                </div>
+                <input
+                  className="input-form"
+                  type="password"
+                  id="typePasswordX"
+                  name="password"
+                  onInput={handleInput}
+                />
+              </div>
+              <center>
+                <Button type="submit" text="Login" />
+              </center>
             </div>
-          </div>
+
+            <div>
+              <p className="mb-0">
+                Don't have an account? <a href="/">Sign Up</a>
+              </p>
+            </div>
+          </form>
         </div>
       </div>
+
       <br></br>
     </section>
   );

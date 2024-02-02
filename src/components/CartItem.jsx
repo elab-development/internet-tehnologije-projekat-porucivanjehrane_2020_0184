@@ -14,7 +14,10 @@ const CartItem = ({ item }) => {
       />
       <div className="itemCard-body">
         <h3 className="itemCard-title">{item.name}</h3>
-        <p className="itemCard-text">{item.meal_description} </p>
+        <p className="itemCard-text">
+          {item.meal_description} <br></br>
+          <b>Restoran: {item.restaurant}</b>
+        </p>
         <p className="itemCard-price"> Cena: {item.price}</p>
         <h3> Amount: {item.amount}</h3>
         <h3> Total price: {(total_price += item.price * item.amount)}</h3>

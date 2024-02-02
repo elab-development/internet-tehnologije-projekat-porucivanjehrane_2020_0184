@@ -239,17 +239,18 @@ textarea {
 
 .login-wrapper {
   width: 400px;
-  height: 450px;
-  margin: 100px auto 0;
+  height: 550px;
+  margin: 30px auto 0;
   background: #c49c91;
   border-radius: 10px;
   box-shadow: 1px 1px 8px -3px #000;
-  text-align: center;
+  text-align: start;
   padding: 10px 10px 0 0;
   font-size: 23px;
 }
 .login-wrapper form {
   padding: 10px;
+  text-align: center;
 }
 
 .input-form {
@@ -260,6 +261,7 @@ textarea {
   width: 200px;
   margin-bottom: 10px;
   font-size: 20px;
+  text-align: center;
 }
 
 .button-ToTop {
