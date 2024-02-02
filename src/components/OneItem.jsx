@@ -13,7 +13,10 @@ const OneItem = ({ item, onAdd, onRemove }) => {
       />
       <div className="itemCard-body">
         <h3 className="itemCard-title">{item.name}</h3>
-        <p className="itemCard-text">{item.meal_description} </p>
+        <p className="itemCard-text">
+          {item.meal_description} <br></br>
+          <b>Restoran: {item.restaurant}</b>
+        </p>
         <p className="itemCard-price"> Cena: {item.price}</p>
         <button className="btn" onClick={() => onAdd(item.id)}>
           <MdAddShoppingCart size="30" />

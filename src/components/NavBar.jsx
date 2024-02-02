@@ -27,10 +27,12 @@ export default function NavBar({ cartNum }) {
       <Link to="/restaurants">Restaurants</Link>
       <Link to="/items">Items</Link>
       <Link to="/contact">Contact</Link>
-      <Link to="/cart" className="cart-items">
-        <FaCartShopping />
-        <div className="cart-num">{cartNum}</div>
-      </Link>
+      {isUserLoggedIn && (
+        <Link to="/cart" className="cart-items">
+          <FaCartShopping />
+          <div className="cart-num">{cartNum}</div>
+        </Link>
+      )}
       {isUserLoggedIn && (
         <IoIosLogOut style={{ cursor: "pointer" }} onClick={logout} />
       )}
