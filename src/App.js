@@ -5,7 +5,7 @@ import Cart from "./components/Cart";
 import Restaurants from "./components/Restaurants";
 import Items from "./components/Items";
 import Contact from "./components/Contact";
-import Footer from "./components/footer";
+import Foot from "./components/Foot";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./components/Register";
 import Login from "./components/Login";
@@ -74,7 +74,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
-      <Footer />
+      <Foot/>
     </BrowserRouter>
   );
 }

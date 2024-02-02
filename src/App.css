@@ -18,11 +18,17 @@
   color: black;
   text-decoration: none;
   cursor: pointer;
-  margin-right: 50px;
+  margin-right: 100px;
 }
 
 .navBar a:hover{
   text-decoration: underline;
+}
+
+.logout {
+  float: right;
+  position: relative;
+  bottom: 32px;
 }
 
 .all-items {
@@ -156,14 +162,14 @@
   margin-left: 5px;
 }
 
-.footer {
+.Footer {
   padding:4px;
   color:#eff1f3;
   background-color:#5D7B9E;
   font-weight: bold;
 }
 
-.footer .copyright {
+.Footer .copyright {
   text-align:center;
   padding-top:14px;
   padding-bottom: 10px;

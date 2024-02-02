@@ -33,11 +33,8 @@ const Register = () => {
       .then((response) => {
         console.log(response.data);
         if (response.data.access_token) {
-          window.sessionStorage.setItem(
-            "auth_token",
-            response.data.access_token
-          );
-          window.sessionStorage.setItem("role", "logged in user");
+          window.sessionStorage.setItem("auth_token",response.data.access_token);
+          window.sessionStorage.setItem("role_id", "2");
           window.sessionStorage.setItem("user", response.data.data.name);
           navigate("/items");
           Swal.fire({

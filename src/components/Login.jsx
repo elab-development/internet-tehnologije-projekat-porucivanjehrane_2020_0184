@@ -22,6 +22,7 @@ const Login = ({ addToken, addUser, currentUser }) => {
   };
 
   let navigate = useNavigate();
+
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -29,17 +30,15 @@ const Login = ({ addToken, addUser, currentUser }) => {
       .post("http://127.0.0.1:8000/api/login", userData)
       .then((response) => {
         console.log(response.data);
-        navigate("/items");
-
-        window.sessionStorage.setItem("auth_token", response.data.access_token);
-        window.sessionStorage.setItem("role", response.data.role_name);
-        window.sessionStorage.setItem("name", response.data.name);
-
-        Swal.fire({
-          icon: "success",
-          title: "Successfull",
-          text: "Operation was successful!",
-        });
+          window.sessionStorage.setItem("auth_token",response.data.access_token);
+          window.sessionStorage.setItem("role_id", response.data.role_id);
+          window.sessionStorage.setItem("user", response.data.name);
+          navigate("/items");
+          Swal.fire({
+            icon: "success",
+            title: "Successfull",
+            text: "Operation was successful!",
+          });
       })
       .catch((error) => {
         console.error("Login failed:", error);
@@ -49,7 +48,6 @@ const Login = ({ addToken, addUser, currentUser }) => {
           text: "Wrong credentials",
         });
 
-        // Update the error state with the error message
         setError("Invalid username or password. Please try again.");
       });
   };
