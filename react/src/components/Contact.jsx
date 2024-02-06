@@ -32,7 +32,7 @@ const Contact = () => {
           <textarea id="message" name="message" rows="4" required></textarea>
         </div>
         <button className="buttonContact" onClick={handleSendMessage}>
-          Send the message :)
+          Send the message
         </button>
       </form>
     </div>
