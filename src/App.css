@@ -285,3 +285,17 @@ textarea {
 .emptyCart {
   width: 1000px;
 }
+
+#map-container {
+  width: 400px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+#map {
+  height: 400px;
+  width: 400px;
+}
