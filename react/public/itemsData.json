@@ -1,0 +1,54 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "name": "Mešano meso",
+      "meal_description": "Ćevapi, leskovački uštipak, pileći file, dimljena vešalica, kobasica, pomfrit, crni luk /450g",
+      "price": 950,
+      "image": "https://www.smartkurir.com/wp-content/uploads/2022/09/rostilj-za-4.6-osoba.jpg",
+      "restaurant": "Lider",
+      "category": "rostilj",
+      "amount": 0
+    },
+    {
+      "id": 2,
+      "name": "Karbonara",
+      "meal_description": "Slanina, pavlaka, jaje, ekstradevičansko maslinovo ulje, parmezan",
+      "price": 650,
+      "image": "https://rucakza200dinara.com/wp-content/uploads/2018/12/IMG_20181111_110351_045.jpg",
+      "restaurant": "Agi Pasta Away",
+      "category": "pasta",
+      "amount": 0
+    },
+    {
+      "id": 3,
+      "name": "Leskovački uštipci",
+      "meal_description": "kackavalj, slanina, crni luk, beli luk, sunka, tucana paprika, pomfrit",
+      "price": 700,
+      "image": "https://www.salas011.rs/wp-content/uploads/2018/02/web-leskova%C4%8Dki-u%C5%A1tipci-Sala%C5%A1011-dostava-hrane-1.jpg",
+      "restaurant": "Dva Jelena",
+      "category": "rostilj",
+      "amount": 0
+    },
+    {
+      "id": 4,
+      "name": "Grilovani losos",
+      "meal_description": "losos, spanać, krompir",
+      "price": 2700,
+      "image": "https://www.kuvarancije.com/images/recepti/riba/2018/grilovani-losos-7.JPG",
+      "restaurant": "Frans",
+      "category": "rostilj",
+      "amount": 0
+    },
+    {
+      "id": 5,
+      "name": "Povrće na grilu",
+      "meal_description": "luk, krompir, tikvice, paprika",
+      "price": 700,
+      "image": "https://static.kraljzara.hr/cache/0X300/blog/98/prva.jpg",
+      "restaurant": "Dolly Bell",
+      "category": "rostilj",
+      "amount": 0
+    }
+  ]
+}
