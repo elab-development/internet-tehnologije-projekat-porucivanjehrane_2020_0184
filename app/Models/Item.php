@@ -10,22 +10,22 @@ class Item extends Model
     use HasFactory;
 
 
-    protected $fillable = [    
+    protected $fillable = [
         'name',
         'meal_description',
         'price',
-        'category_id',      
+        'category_id',
     ];
 
-    // public function orders(){
-    //     return $this->belongsToMany(Order::class,'order_items');
-    // }
 
-    public function category(){
+
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
 
-    public function order_items(){
+    public function order_items()
+    {
         return $this->hasMany(OrderItem::class);
     }
 }
