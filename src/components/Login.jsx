@@ -7,7 +7,7 @@ import Button from "./Button";
 
 const Login = ({ addToken, addUser, currentUser }) => {
   const [userData, setUserData] = useState({
-    username: "",
+    email: "",
     password: "",
   });
 

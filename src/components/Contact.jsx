@@ -31,7 +31,7 @@ const Contact = () => {
           <label htmlFor="message">Your message:</label>
           <textarea id="message" name="message" rows="4" required></textarea>
         </div>
-        <button class="buttonContact" onClick={handleSendMessage}>
+        <button className="buttonContact" onClick={handleSendMessage}>
           Send the message :)
         </button>
       </form>
