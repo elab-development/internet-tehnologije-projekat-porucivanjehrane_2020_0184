@@ -1,5 +1,5 @@
 import React from "react";
-
+import Map from "./Map";
 const Contact = () => {
   const handleSendMessage = (event) => {
     event.preventDefault();
@@ -35,6 +35,7 @@ const Contact = () => {
           Send the message
         </button>
       </form>
+      <Map />
     </div>
   );
 };
