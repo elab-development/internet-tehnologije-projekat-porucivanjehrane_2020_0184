@@ -1,4 +1,5 @@
 import React from "react";
+
 const OneRestaurant = ({ restaurant }) => {
   return (
     <div className="restaurantCard">

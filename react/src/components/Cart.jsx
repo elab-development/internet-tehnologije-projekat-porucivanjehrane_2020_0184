@@ -1,11 +1,11 @@
 import React from "react";
-import CartItem from "./CartItem";
 import ButtonToTop from "./ButtonToTop";
+import OneItem from "./OneItem";
 
-const Cart = ({ cartItems }) => {
+function Cart({ items, cart }) {
   return (
     <div className="all-items">
-      {cartItems.length === 0 ? (
+      {cart.length === 0 ? (
         <div>
           <h1>Your cart is currently empty.</h1>
           <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-7359557-6024626.png"></img>
@@ -13,10 +13,12 @@ const Cart = ({ cartItems }) => {
           <br></br>{" "}
         </div>
       ) : (
-        cartItems.map((item) => <CartItem key={item.id} item={item} />)
+        cart?.map((i) => (
+          <OneItem item={i} key={i.id} onAdd={() => {}} inCart={0} />
+        ))
       )}
       <ButtonToTop />
     </div>
   );
-};
+}
 export default Cart;

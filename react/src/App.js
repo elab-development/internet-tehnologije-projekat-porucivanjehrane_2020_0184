@@ -15,50 +15,21 @@ import ButtonToTop from "./components/ButtonToTop";
 
 function App() {
   const [items, setItems] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get("/itemsData.json");
-      console.log(response.data.items);
-      setItems(response.data.items);
-    };
-    fetchData();
-  }, []);
-
-  const [cartNum, setcartNum] = useState(0);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartNum, setCartNum] = useState(0);
 
   const refreshCart = () => {
     const newItems = items.filter((item) => item.amount > 0);
     setCartItems(newItems);
   };
 
-  const onAdd = (id) => {
-    items.map((item) => {
-      if (item.id === id) {
-        item.amount++;
-        const a = cartNum + 1;
-        setcartNum(a);
-        refreshCart();
-        console.log("itemid: " + item.id + " amount: " + item.amount);
-      }
-    });
+  const onAdd = () => {
+    setCartNum((previousNumber) => previousNumber + 1);
   };
 
-  const onRemove = (id) => {
-    items.map((item) => {
-      if (item.id === id) {
-        if (item.amount > 0) {
-          item.amount--;
-          const a = cartNum - 1;
-          setcartNum(a);
-          refreshCart();
-          console.log("itemid: " + item.id + " amount: " + item.amount);
-        } else {
-          console.log("Amount is already 0");
-        }
-      }
-    });
+  const onRemove = () => {
+    if (cartNum > 0) {
+      setCartNum((previousNumber) => previousNumber - 1);
+    }
   };
 
   return (
