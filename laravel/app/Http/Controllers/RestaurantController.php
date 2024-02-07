@@ -116,6 +116,6 @@ class RestaurantController extends Controller
     {
         $category = Category::findOrFail($categoryId);
         $restaurants = $category->restaurants()->get();
-        return response()->json($restaurants);
+        return RestaurantResource::collection($restaurants);
     }
 }

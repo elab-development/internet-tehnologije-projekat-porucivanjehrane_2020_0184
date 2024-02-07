@@ -111,4 +111,12 @@ class ItemController extends Controller
 
         return response()->json(['Item has been successfully deleted.', 204]);
     }
+
+    public function getItemsByRestaurant($restaurantId)
+    {
+        $restaurant = Restaurant::findOrFail($restaurantId);
+        $items = $restaurant->items()->get();
+        return ItemResource::collection($items); // Koristimo ItemResource za oblikovanje podataka
+
+    }
 }

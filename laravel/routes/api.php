@@ -36,6 +36,8 @@ Route::resource('/restaurants', RestaurantController::class)->only(['index', 'sh
 // Prikaz svih restorana koji pripadaju odredjenoj kategoriji
 Route::get('category/{categoryId}/restaurants', [RestaurantController::class, 'getRestaurantsByCategory']);
 
+// Prikaz svih proizvoda koje ima jedan restoran
+Route::get('restaurant/{restaurantId}/items', [ItemController::class, 'getItemsByRestaurant']);
 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
