@@ -16,7 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->float('price');
-            $table->foreignId('category_id');
+            $table->text('image')->default(null);
+            $table->integer('amount')->default(0);
+            $table->foreignId('restaurant_id')->references('id')->on('restaurants')->onDelete('cascade');
             $table->timestamps();
         });
     }

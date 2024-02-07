@@ -33,6 +33,10 @@ Route::resource('/items', ItemController::class)->only(['index', 'show']);
 Route::resource('/categories', CategoryController::class)->only(['index', 'show']);
 Route::resource('/restaurants', RestaurantController::class)->only(['index', 'show']);
 
+// Prikaz svih restorana koji pripadaju odredjenoj kategoriji
+Route::get('category/{categoryId}/restaurants', [RestaurantController::class, 'getRestaurantsByCategory']);
+
+
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 

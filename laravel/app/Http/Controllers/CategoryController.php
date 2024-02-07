@@ -32,19 +32,18 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'=> 'required|string|max:100',
+            'category_name' => 'required|string|max:100',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors());
         }
 
         $category = Category::create([
-            'name' => $request->name,
+            'category_name' => $request->name,
         ]);
 
-        return response()->json(['Category has been saved.', new CategoryResource($category)]); 
-    
+        return response()->json(['Category has been saved.', new CategoryResource($category)]);
     }
 
     /**
@@ -76,7 +75,7 @@ class CategoryController extends Controller
             'column' => 'required', // Validacija kolone koju želite da ažurirate
             'value' => 'required',  // Nova vrednost kolone
         ]);
-       
+
         $column = $request->input('column');
         $value = $request->input('value');
 
@@ -93,7 +92,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($category_id);
         $category->delete();
- 
+
         return response()->json(['Category has been successfully deleted.', 204]);
     }
 }

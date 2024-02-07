@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Restaurant;
 use App\Http\Resources\RestaurantResource;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -33,14 +34,20 @@ class RestaurantController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:100',
-            'description'=>'required|string|max:255',
-            'address'=> 'required|string|max:100',
-            'contact_phone_number'=>'required|string|max:11',
-            'contact_email_address'=>'required|string|email|max:100',
+            'description' => 'required|string|max:255',
+            'address' => 'required|string|max:100',
+            'contact_phone_number' => 'required|string|max:11',
+            'contact_email_address' => 'required|string|email|max:100',
+            'category_name' => 'required|string'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors());
+        }
+
+        $category = Category::where('category_name', $request->category_name)->first();
+        if (!$category) {
+            return response()->json(['error' => 'Category not found']);
         }
 
         $restaurant = Restaurant::create([
@@ -49,6 +56,7 @@ class RestaurantController extends Controller
             'address' => $request->address,
             'contact_phone_number' => $request->contact_phone_number,
             'contact_email_address' => $request->contact_email_address,
+            'category_id' => $category->id
         ]);
 
         return response()->json(['Restaurant has been saved.', new RestaurantResource($restaurant)]);
@@ -83,7 +91,7 @@ class RestaurantController extends Controller
             'column' => 'required', // Validacija kolone koju želite da ažurirate
             'value' => 'required',  // Nova vrednost kolone
         ]);
-       
+
         $column = $request->input('column');
         $value = $request->input('value');
 
@@ -100,7 +108,14 @@ class RestaurantController extends Controller
     {
         $restaurant = Restaurant::find($restaurant_id);
         $restaurant->delete();
- 
+
         return response()->json(['Restaurant has been successfully deleted.', 204]);
+    }
+
+    public function getRestaurantsByCategory($categoryId)
+    {
+        $category = Category::findOrFail($categoryId);
+        $restaurants = $category->restaurants()->get();
+        return response()->json($restaurants);
     }
 }

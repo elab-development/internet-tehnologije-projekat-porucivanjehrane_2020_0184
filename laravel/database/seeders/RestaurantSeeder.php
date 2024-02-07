@@ -14,11 +14,12 @@ class RestaurantSeeder extends Seeder
     public function run(): void
     {
         Restaurant::create([
-            'name'=>'Restoran Sindjelic', 
-            'description'=>'Restoran sa dugogodisnjom tradicijom. Mozete dobiti da jedete sve sto zamislite.Hrana je veoma ukusna. Prijatno mesto sa dobrom muzikom uzivo u vecernjim satima. Osoblje je savrseno, pazljivo i ljubazno.',
-            'address'=>'Vojislava Ilica 86, Beograd 11050',
-            'contact_phone_number'=>'+381 11 3087067',
-            'contact_email_address'=>'info@restoransindjelic.com'
+            'name' => 'Restoran Sindjelic',
+            'description' => 'Restoran sa dugogodisnjom tradicijom. Mozete dobiti da jedete sve sto zamislite. Hrana je veoma ukusna. Prijatno mesto sa dobrom muzikom uzivo u vecernjim satima. Osoblje je savrseno, pazljivo i ljubazno.',
+            'address' => 'Vojislava Ilica 86, Beograd 11050',
+            'contact_phone_number' => '+381 11 3087067',
+            'contact_email_address' => 'info@restoransindjelic.com',
+            'category_id' => '3'
         ]);
     }
 }

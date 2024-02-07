@@ -15,12 +15,16 @@ class ItemResource extends JsonResource
     public static $wrap = 'item';
     public function toArray(Request $request): array
     {
+        $restaurantName = $this->restaurant ? $this->restaurant->name : null;
+
         return [
             'id' => $this->resource->id,
             'name' => $this->resource->name,
-            'meal_description' => $this->resource->meal_description, 
+            'meal_description' => $this->resource->meal_description,
             'price' => $this->resource->price,
-            'category' => $this->resource->category->name,
-           ];
+            'image' => $this->resource->image,
+            'amount' => $this->resource->amount,
+            'restaurant' => $restaurantName,
+        ];
     }
 }

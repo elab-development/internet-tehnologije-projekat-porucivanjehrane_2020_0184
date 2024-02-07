@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ItemResource;
 use App\Models\Item;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,21 +33,30 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name'=>'required|string|max:100',
-            'meal_description'=>'required',
-            'price'=>'required|numeric',
-            'category_id'=>'required',
+            'name' => 'required|string|max:100',
+            'meal_description' => 'required',
+            'price' => 'required|numeric',
+            'image' => 'string',
+            'amount' => 'numeric',
+            'restaurant_id' => 'required',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors());
+        }
+
+        $restaurant = Restaurant::where('id', $request->restaurant_id)->first();
+        if (!$restaurant) {
+            return response()->json(['error' => 'Restaurant not found']);
         }
 
         $item = Item::create([
             'name' => $request->name,
             'meal_description' => $request->meal_description,
             'price' => $request->price,
-            'category_id' => $request->category_id,
+            'image' => $request->image,
+            'amount' => $request->amount,
+            'restaurant_id' => $restaurant->id,
         ]);
 
         return response()->json(['Item has been saved.', new ItemResource($item)]);
@@ -73,22 +83,22 @@ class ItemController extends Controller
      */
     public function update(Request $request, $item_id)
     {
-         // Pronalaženje korisnika po ID-u
-         $item = Item::findOrFail($item_id);
+        // Pronalaženje korisnika po ID-u
+        $item = Item::findOrFail($item_id);
 
-         // Validacija prosleđenih podataka - prilagodite prema potrebama
-         $request->validate([
-             'column' => 'required', // Validacija kolone koju želite da ažurirate
-             'value' => 'required',  // Nova vrednost kolone
-         ]);
-        
-         $column = $request->input('column');
-         $value = $request->input('value');
- 
-         $item->$column = $value;
-         $item->save();
- 
-         return response()->json(['Item has been updated.', 204]);
+        // Validacija prosleđenih podataka - prilagodite prema potrebama
+        $request->validate([
+            'column' => 'required', // Validacija kolone koju želite da ažurirate
+            'value' => 'required',  // Nova vrednost kolone
+        ]);
+
+        $column = $request->input('column');
+        $value = $request->input('value');
+
+        $item->$column = $value;
+        $item->save();
+
+        return response()->json(['Item has been updated.', 204]);
     }
 
     /**
@@ -98,7 +108,7 @@ class ItemController extends Controller
     {
         $item = Item::find($item_id);
         $item->delete();
- 
+
         return response()->json(['Item has been successfully deleted.', 204]);
     }
 }

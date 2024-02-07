@@ -20,19 +20,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-      //  Category::factory(5)->create();
-     //   User::factory(3)->create();
-     //   Item::factory(4)->create();
-     //   Restaurant::factory(4)->create();
-        Order::factory(3)->create();
-        OrderItem::factory(3)->create();
-        //  $this->call([
-        //      UserSeeder::class,
-        //      RestaurantSeeder::class,
-        //      CategorySeeder::class,
-        //      ItemSeeder::class,
-        //      RestaurantCategorySeeder::class,
-        //      RoleSeeder::class
-        //  ]);
+        //  Category::factory(5)->create();
+        //   User::factory(3)->create();
+        //   Item::factory(4)->create();
+        //   Restaurant::factory(4)->create();
+        // Order::factory(3)->create();
+        // OrderItem::factory(3)->create();
+        $this->call([
+            // UserSeeder::class,
+            CategorySeeder::class,
+            RestaurantSeeder::class,
+            ItemSeeder::class,
+            RoleSeeder::class
+        ]);
     }
 }

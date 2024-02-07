@@ -14,14 +14,16 @@ class Item extends Model
         'name',
         'meal_description',
         'price',
-        'category_id',
+        'image',
+        'amount',
+        'restaurant_id',
     ];
 
 
 
-    public function category()
+    public function restaurant()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Restaurant::class);
     }
 
     public function order_items()
