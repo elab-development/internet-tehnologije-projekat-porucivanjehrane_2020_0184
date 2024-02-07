@@ -5,8 +5,8 @@ import ReactPaginate from "react-paginate";
 import "../style/Pagination.css";
 import Button from "./Button";
 import { useParams } from "react-router-dom";
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 // const categories = {
 //   azijska: 1,
@@ -15,7 +15,7 @@ import axios from 'axios';
 //   americka: 4
 // }
 
-function Restaurants () {
+function Restaurants() {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 2;
   const { id: categoryId } = useParams();
@@ -24,28 +24,28 @@ function Restaurants () {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/category/${categoryId}/restaurants`);
+        const response = await axios.get(
+          `http://127.0.0.1:8000/api/category/${categoryId}/restaurants`
+        );
         console.log(response.data.data);
-        
-        
+
         const filtered = response.data?.data.filter(
           (restaurant) =>
             restaurant.name &&
             restaurant.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
-      
+
         setFilteredRestaurants(filtered);
       } catch (error) {
-        console.error('Error while loading restaurants for a category:', error);
+        console.error("Error while loading restaurants for a category:", error);
       }
     };
 
     fetchData();
   }, [categoryId, searchTerm]);
- 
+
   const pageCount = filteredRestaurants
     ? Math.ceil(filteredRestaurants.length / itemsPerPage)
     : 0;
@@ -64,9 +64,13 @@ function Restaurants () {
     return (
       <div>
         {filteredRestaurants.slice(startIndex, endIndex).map((restaurant) => (
-          <Link to = {`/items/${restaurant.id}`} key = {restaurant.id} >
-          <OneRestaurant restaurant={restaurant} />
-        </Link>
+          <Link
+            to={`/restaurant/${restaurant.id}/items`}
+            key={restaurant.id}
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <OneRestaurant restaurant={restaurant} />
+          </Link>
         ))}
       </div>
     );
@@ -112,6 +116,6 @@ function Restaurants () {
       />
     </div>
   );
-};
+}
 
 export default Restaurants;

@@ -25,7 +25,8 @@ class RestaurantResource extends JsonResource
             'address' => $this->resource->address,
             'contact_phone_number' => $this->resource->contact_phone_number,
             'contact_email_address' => $this->resource->contact_email_address,
-            'category' => $categoryName
+            'category' => $categoryName,
+            'image' => $this->resource->image
         ];
     }
 }

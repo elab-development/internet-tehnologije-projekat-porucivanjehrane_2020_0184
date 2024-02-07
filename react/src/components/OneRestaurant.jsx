@@ -19,7 +19,9 @@ const OneRestaurant = ({ restaurant }) => {
         <p>
           <b>Kontakt telefon:</b> {restaurant.contact_phone_number}
         </p>
-        <p>Kategorija: {restaurant.category} </p>
+        <i>
+          <p>Kategorija hrane: {restaurant.category} </p>{" "}
+        </i>
       </div>
     </div>
   );

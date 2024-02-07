@@ -129,6 +129,26 @@
   border-radius: 10px;
   max-width: 500px;
 }
+.categoriesCard {
+  display: flex;
+  flex-direction: column; /* Postavite orijentaciju na kolonu da biste stavili elemente jedan ispod drugog */
+  justify-content: center; /* Poravnavanje po vertikali - na sredinu stranice */
+  align-items: center; /* Poravnavanje po horizontali - na sredinu stranice */
+  border-style: solid;
+  border-width: 2px;
+  border-color: rgb(211, 211, 211);
+  border-radius: 10px;
+  max-width: 600px;
+  max-height: 850px;
+  margin: auto; /* Automatsko postavljanje margina na auto će centrirati karticu na stranici */
+  margin-bottom: 25px;
+  box-shadow: 10px 10px 10px 10px rgb(217, 223, 223);
+  transition: transform 0.3s ease; /* Postavite tranziciju za transformaciju */
+}
+
+.categoriesCard :hover {
+  transform: scale(1.05); /* Uvećajte element kada se približi miš */
+}
 
 .btn {
   background-color: #c49c91;

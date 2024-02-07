@@ -38,7 +38,8 @@ class RestaurantController extends Controller
             'address' => 'required|string|max:100',
             'contact_phone_number' => 'required|string|max:11',
             'contact_email_address' => 'required|string|email|max:100',
-            'category_name' => 'required|string'
+            'category_name' => 'required|string',
+            'image' => 'string'
         ]);
 
         if ($validator->fails()) {
@@ -56,7 +57,8 @@ class RestaurantController extends Controller
             'address' => $request->address,
             'contact_phone_number' => $request->contact_phone_number,
             'contact_email_address' => $request->contact_email_address,
-            'category_id' => $category->id
+            'category_id' => $category->id,
+            'image' => $request->image
         ]);
 
         return response()->json(['Restaurant has been saved.', new RestaurantResource($restaurant)]);

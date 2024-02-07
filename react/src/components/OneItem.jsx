@@ -15,20 +15,21 @@ function OneItem({ item, onAdd, onRemove, inCart }) {
         <h3 className="itemCard-title">{item.name}</h3>
         <p className="itemCard-text">
           {item.meal_description} <br></br>
-          {/* <b>Restoran: {item.restaurant}</b> */}
+          <b>Restoran: {item.restaurant}</b>
         </p>
         <p className="itemCard-price"> Cena: {item.price}</p>
-        {inCart == 1 ?
-        <div>
-          <button className="btn" onClick={() => onAdd(item)}>
-            <MdAddShoppingCart size="30" />
-          </button>
-          <button className="btn" onClick={() => onRemove(item)}>
-            <CgRemoveR size="30" />
-          </button>
-        </div>
-        :
-        <p style={{ fontWeight: 'bold' }}>This item is already in cart.</p>}
+        {inCart == 1 ? (
+          <div>
+            <button className="btn" onClick={() => onAdd(item)}>
+              <MdAddShoppingCart size="30" />
+            </button>
+            <button className="btn" onClick={() => onRemove(item)}>
+              <CgRemoveR size="30" />
+            </button>
+          </div>
+        ) : (
+          <p style={{ fontWeight: "bold" }}>This item is already in cart.</p>
+        )}
       </div>
     </div>
   );

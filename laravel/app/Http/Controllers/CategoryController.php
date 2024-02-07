@@ -33,6 +33,7 @@ class CategoryController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'category_name' => 'required|string|max:100',
+            'image' => 'string'
         ]);
 
         if ($validator->fails()) {
@@ -41,6 +42,7 @@ class CategoryController extends Controller
 
         $category = Category::create([
             'category_name' => $request->name,
+            'image' => $request->image
         ]);
 
         return response()->json(['Category has been saved.', new CategoryResource($category)]);

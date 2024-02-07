@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import OneCategory from "./OneCategory";
 
 function Categories() {
   const [categories, setCategories] = useState([]);
@@ -23,13 +24,13 @@ function Categories() {
 
   return (
     <div>
-      <h2>All Categories</h2>
+      {/* <h2>All Categories</h2> */}
       <ul>
         {categories.map((category) => (
-        //   <li key={category.id}>{category.category_name}</li>
-        <Link to={`/category/${category.id}/restaurants`} key={category.id}>
-        {category.category_name}
-      </Link>
+          //   <li key={category.id}>{category.category_name}</li>
+          <Link to={`/category/${category.id}/restaurants`} key={category.id}>
+            <OneCategory category={category} />
+          </Link>
         ))}
       </ul>
     </div>
