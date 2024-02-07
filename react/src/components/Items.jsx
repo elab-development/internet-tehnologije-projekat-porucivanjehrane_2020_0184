@@ -9,8 +9,10 @@ import Cart from "./Cart";
 function Items({ cartNum, setCartNum }){
   const [items, setItems] = useState([]);
   const [cart, setCart] = useState([]);
-  const {restaurantId} = useParams();
+  const {id: restaurantId} = useParams();
+  
   useScrollToTop()
+  
   const onAdd = (item) => {
     setCartNum(previousNumber => previousNumber + 1);
     setCart([...cart, item]);
@@ -31,7 +33,7 @@ function Items({ cartNum, setCartNum }){
     const fetchData = async () => {
       try{
         const response = await axios.get(
-          `http://127.0.0.1:8000/restaurant/${restaurantId}/items`);
+          `http://127.0.0.1:8000/api/restaurant/${restaurantId}/items`);
           console.log(response.data.data);
           setItems(response.data.data);
       } catch(error){

@@ -8,10 +8,17 @@ import { useParams } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+// const categories = {
+//   azijska: 1,
+//   meksicka: 2,
+//   srpska: 3,
+//   americka: 4
+// }
 
 function Restaurants () {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 2;
+  const { id: categoryId } = useParams();
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,8 +27,9 @@ function Restaurants () {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/restaurants`);
+        const response = await axios.get(`http://127.0.0.1:8000/api/category/${categoryId}/restaurants`);
         console.log(response.data.data);
+        
         
         const filtered = response.data?.data.filter(
           (restaurant) =>
@@ -31,12 +39,12 @@ function Restaurants () {
       
         setFilteredRestaurants(filtered);
       } catch (error) {
-        console.error('Error while loading restaurants:', error);
+        console.error('Error while loading restaurants for a category:', error);
       }
     };
 
     fetchData();
-  }, [searchTerm]);
+  }, [categoryId, searchTerm]);
  
   const pageCount = filteredRestaurants
     ? Math.ceil(filteredRestaurants.length / itemsPerPage)
@@ -56,7 +64,7 @@ function Restaurants () {
     return (
       <div>
         {filteredRestaurants.slice(startIndex, endIndex).map((restaurant) => (
-          <Link to = {`/restaurant/${restaurant.id}/items`} key = {restaurant.id} >
+          <Link to = {`/items/${restaurant.id}`} key = {restaurant.id} >
           <OneRestaurant restaurant={restaurant} />
         </Link>
         ))}
