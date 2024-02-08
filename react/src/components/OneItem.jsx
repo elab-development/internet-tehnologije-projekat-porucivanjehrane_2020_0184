@@ -2,7 +2,7 @@ import React from "react";
 import { MdAddShoppingCart } from "react-icons/md";
 import { CgRemoveR } from "react-icons/cg";
 
-function OneItem({ item, onAdd, onRemove, inCart }) {
+function OneItem({ item, onAdd, onRemove, inCart, valuta }) {
   return (
     <div className="itemCard">
       <img
@@ -18,7 +18,10 @@ function OneItem({ item, onAdd, onRemove, inCart }) {
           {item.meal_description} <br></br>
           <b>Restoran: {item.restaurant}</b>
         </p>
-        <p className="itemCard-price"> Cena: {item.price}</p>
+        <p className="itemCard-price">
+          {" "}
+          Cena: {item.price} {valuta}
+        </p>
         {inCart == 1 ? (
           <div>
             <button className="btn" onClick={onAdd}>
