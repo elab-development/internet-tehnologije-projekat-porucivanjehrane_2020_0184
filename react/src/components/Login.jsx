@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Button from "./Button";
 
@@ -33,7 +33,7 @@ const Login = ({ addToken, addUser, currentUser }) => {
         window.sessionStorage.setItem("auth_token", response.data.access_token);
         window.sessionStorage.setItem("role_id", response.data.role_id);
         window.sessionStorage.setItem("user", response.data.name);
-        navigate("/items");
+        navigate("/categories");
         Swal.fire({
           icon: "success",
           title: "Successfull",
@@ -100,6 +100,9 @@ const Login = ({ addToken, addUser, currentUser }) => {
               <p className="mb-0">
                 Don't have an account? <a href="/">Sign Up</a>
               </p>
+            </div>
+            <div>
+            <Link to="/reset-password">Forgot your password?</Link>
             </div>
           </form>
         </div>

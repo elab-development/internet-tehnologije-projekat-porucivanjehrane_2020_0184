@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
 use App\Models\OrderItem;
@@ -28,10 +29,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Ruta za resetovanje lozinke 
+Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
+
 
 Route::resource('/items', ItemController::class)->only(['index', 'show']);
 Route::resource('/categories', CategoryController::class)->only(['index', 'show']);
 Route::resource('/restaurants', RestaurantController::class)->only(['index', 'show']);
+
 
 // Prikaz svih restorana koji pripadaju odredjenoj kategoriji
 Route::get('category/{categoryId}/restaurants', [RestaurantController::class, 'getRestaurantsByCategory']);

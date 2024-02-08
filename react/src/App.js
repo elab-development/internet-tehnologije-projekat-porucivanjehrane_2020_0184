@@ -15,6 +15,7 @@ import axios from "axios";
 import ButtonToTop from "./components/ButtonToTop";
 import Categories from "./components/Categories";
 import MealDBApiExample from "./components/MealDBApiExample";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   const [items, setItems] = useState(null);
@@ -63,6 +64,7 @@ function App() {
         />
         <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/meal-db-example" element={<MealDBApiExample />} />
       </Routes>
