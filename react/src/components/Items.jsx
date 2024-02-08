@@ -10,10 +10,13 @@ function Items({ cartNum, setCartNum }) {
   const [items, setItems] = useState([]);
   const { id: restaurantId } = useParams();
   const [cart, setCart] = useState([]); // Stanje za korpu
-  const [exchangeRate, setExchangeRate] = useState(0); // Dodamo state za kurs
   const [valuta, setValuta] = useState("RSD");
   const [originalItems, setOriginalItems] = useState([]); // Dodamo state za originalne cene
   const [clicked, setClicked] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState("EUR"); // Dodamo state za izabranu valutu
+  const [exchangeRateEUR, setExchangeRateEUR] = useState(0); // Dodamo state za kurs evra
+  const [exchangeRateUSD, setExchangeRateUSD] = useState(0); // Dodamo state za kurs dolara
+  const [isConverted, setIsConverted] = useState(false); // Stanje za praćenje da li je konverzija izvršena
 
   useScrollToTop();
 
@@ -50,36 +53,48 @@ function Items({ cartNum, setCartNum }) {
   }, [restaurantId]);
 
   useEffect(() => {
-    const fetchExchangeRate = async () => {
+    const fetchExchangeRates = async () => {
       try {
-        const response = await axios.get(
+        const responseEUR = await axios.get(
           "https://api.exchangerate-api.com/v4/latest/EUR"
         );
-        const rate = response.data.rates.RSD;
-        console.log(rate); // ispisuje u konzoli trenutni kurs za evro
-        setExchangeRate(rate);
+        const rateEUR = responseEUR.data.rates.RSD;
+        setExchangeRateEUR(rateEUR);
+
+        const responseUSD = await axios.get(
+          "https://api.exchangerate-api.com/v4/latest/USD"
+        );
+        const rateUSD = responseUSD.data.rates.RSD;
+        setExchangeRateUSD(rateUSD);
       } catch (error) {
-        console.error("Error fetching exchange rate:", error);
+        console.error("Error fetching exchange rates:", error);
       }
     };
 
-    fetchExchangeRate();
+    fetchExchangeRates();
   }, []);
 
-  const handleConvertToEurClick = () => {
-    // Implementacija konverzije cena proizvoda u evre
-    if (clicked == false) {
-      const convertedItems = items.map((item) => {
-        const priceInEur = (item.price / exchangeRate).toFixed(2); // Zaokružujemo na dvije decimale
-        setValuta("EUR");
-        return { ...item, price: priceInEur };
-      });
+  const handleConvertToCurrencyClick = () => {
+    // Implementacija konverzije cena proizvoda u odabranu valutu
+    if (!clicked) {
+      let convertedItems;
+      if (selectedCurrency === "EUR") {
+        convertedItems = items.map((item) => {
+          const priceInEur = (item.price / exchangeRateEUR).toFixed(2); // Zaokružujemo na dve decimale
+          return { ...item, price: priceInEur };
+        });
+      } else if (selectedCurrency === "USD") {
+        convertedItems = items.map((item) => {
+          const priceInUsd = (item.price / exchangeRateUSD).toFixed(2); // Zaokružujemo na dve decimale
+          return { ...item, price: priceInUsd };
+        });
+      }
       setItems(convertedItems);
-      setClicked(true); // ako je korisnik vec jednom kliknuo na dugme za konvertovanje u EUR, onda ne moze to ponovo da uradi
-      // ako ne bi ovo postojalo, onda bi korisnik mogao vise puta da klikne na dugme, i cena bi se stalno menjala
+      setValuta(selectedCurrency);
+      // setClicked(true);
+      setIsConverted(true);
     }
   };
-
   const handleConvertToDinClick = () => {
     // Vraćanje cena proizvoda u dinare
     setItems(originalItems);
@@ -87,12 +102,27 @@ function Items({ cartNum, setCartNum }) {
     setClicked(false);
     // ako korisnik klikne na dugme da se vrate cene u RSD, to znaci da moze ponovo da klikne na dugme za konvertovanje
     // cena u EUR, ako to zeli
+    setIsConverted(false);
+  };
+  const handleCurrencyChange = (event) => {
+    setSelectedCurrency(event.target.value);
   };
 
   return (
     <div>
       <div className="button-container">
-        <button onClick={handleConvertToEurClick}>Konvertuj cene u EUR</button>
+        {!isConverted && (
+          <>
+            <button onClick={handleConvertToCurrencyClick}>
+              Konvertuj cene
+            </button>
+            <select value={valuta} onChange={handleCurrencyChange}>
+              <option value="EUR">EUR</option>
+              <option value="USD">USD</option>
+            </select>
+          </>
+        )}
+
         <button onClick={handleConvertToDinClick}>Vrati cene u RSD</button>
       </div>
       <div className="all-items">
