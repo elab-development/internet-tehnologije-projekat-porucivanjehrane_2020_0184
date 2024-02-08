@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ButtonToTop from "./components/ButtonToTop";
 import Categories from "./components/Categories";
+import MealDBApiExample from "./components/MealDBApiExample";
 
 function App() {
   const [items, setItems] = useState(null);
@@ -55,7 +56,7 @@ function App() {
           path="/category/:id/restaurants"
           element={<RestaurantByCategory />}
         />
-        <Route path="/categories" element={<Categories />} />
+        <Route path="/categories" element={<Categories /> } />
         <Route
           path="/items"
           element={<Items items={items} onAdd={onAdd} onRemove={onRemove} />}
@@ -63,6 +64,7 @@ function App() {
         <Route path="/" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/meal-db-example" element={<MealDBApiExample />} />
       </Routes>
       <Foot />
     </BrowserRouter>
