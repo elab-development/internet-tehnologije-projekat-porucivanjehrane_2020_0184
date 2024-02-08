@@ -40,8 +40,21 @@ function App() {
       <Routes>
         <Route path="/cart" element={<Cart cartNum={cartNum} />} />
         <Route path="/restaurants" element={<Restaurants />} />
-        <Route path="/restaurant/:id/items" element={<Items />} />
-        <Route path="/category/:id/restaurants" element={<RestaurantByCategory />} />
+        <Route
+          path="/restaurant/:id/items"
+          element={
+            <Items
+              cartNum
+              onAdd={onAdd}
+              onRemove={onRemove}
+              setCartNum={setCartNum}
+            />
+          }
+        />
+        <Route
+          path="/category/:id/restaurants"
+          element={<RestaurantByCategory />}
+        />
         <Route path="/categories" element={<Categories />} />
         <Route
           path="/items"

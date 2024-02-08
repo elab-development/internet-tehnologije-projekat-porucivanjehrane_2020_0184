@@ -20,10 +20,10 @@ function OneItem({ item, onAdd, onRemove, inCart }) {
         <p className="itemCard-price"> Cena: {item.price}</p>
         {inCart == 1 ? (
           <div>
-            <button className="btn" onClick={() => onAdd(item)}>
+            <button className="btn" onClick={onAdd}>
               <MdAddShoppingCart size="30" />
             </button>
-            <button className="btn" onClick={() => onRemove(item)}>
+            <button className="btn" onClick={onRemove}>
               <CgRemoveR size="30" />
             </button>
           </div>

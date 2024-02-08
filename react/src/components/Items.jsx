@@ -8,8 +8,8 @@ import Cart from "./Cart";
 
 function Items({ cartNum, setCartNum }) {
   const [items, setItems] = useState([]);
-  const [cart, setCart] = useState([]);
   const { id: restaurantId } = useParams();
+  const [cart, setCart] = useState([]); // Stanje za korpu
 
   useScrollToTop();
 
@@ -23,9 +23,9 @@ function Items({ cartNum, setCartNum }) {
       setCartNum((previousNumber) => previousNumber - 1);
     }
 
-    let array = cart.filter((it) => it.id != item.id);
-    console.log(array);
-    setCart(array);
+    const updatedCart = cart.filter((cartItem) => cartItem.id !== item.id); // Filtriramo proizvode iz korpe
+    console.log(updatedCart);
+    setCart(updatedCart);
   };
 
   useEffect(() => {
@@ -50,8 +50,8 @@ function Items({ cartNum, setCartNum }) {
         <OneItem
           item={i}
           key={i.id}
-          onAdd={onAdd}
-          onRemove={onRemove}
+          onAdd={() => onAdd(i)}
+          onRemove={() => onRemove(i)}
           inCart={1}
         />
       ))}
