@@ -6,7 +6,8 @@ function OneItem({ item, onAdd, onRemove, inCart }) {
   return (
     <div className="itemCard">
       <img
-        width={250}
+        width={400}
+        height={300}
         className="itemCard-img-top"
         src={item.image}
         alt="Slika jela"

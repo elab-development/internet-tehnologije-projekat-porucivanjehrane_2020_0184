@@ -49,7 +49,7 @@
   border-width: 2px;
   border-color: rgb(211, 211, 211);
   border-radius: 10px;
-  max-width: 250px;
+  max-width: 400px;
   max-height: 850px;
   margin: 25px;
   box-shadow: 10px 10px 10px 10px rgb(217, 223, 223);
@@ -261,7 +261,7 @@ textarea {
   width: 400px;
   height: 550px;
   margin: 30px auto 0;
-  background: #c49c91;
+  background: rgb(217, 223, 223);
   border-radius: 10px;
   box-shadow: 1px 1px 8px -3px #000;
   text-align: start;
