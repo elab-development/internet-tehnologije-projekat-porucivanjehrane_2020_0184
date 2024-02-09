@@ -252,7 +252,7 @@ function Items({ cartNum, setCartNum }) {
                     }}
                   >
                     {" "}
-                    Ukupna cena: {totalPrice} {valuta}
+                    Total price: {totalPrice} {valuta}
                   </p>
                   <Button text="Place your order" onClick={onAddToOrder} />
                 </>
