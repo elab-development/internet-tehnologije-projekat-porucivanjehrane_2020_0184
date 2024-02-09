@@ -49,7 +49,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
-        return response()->json(['message' => "Hi " . $user->name . ", welcome back!", 'access_token' => $token, 'token_type' => "Bearer", "name" => $user->name, "role_id" => $user->role_id]);
+        return response()->json(['message' => "Hi " . $user->name . ", welcome back!", 'access_token' => $token, 'token_type' => "Bearer", "name" => $user->name, "role_id" => $user->role_id, "user_id" => $user->id]);
     }
 
     public function logout(Request $request)

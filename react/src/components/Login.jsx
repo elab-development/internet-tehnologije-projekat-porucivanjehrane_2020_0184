@@ -33,6 +33,7 @@ const Login = () => {
         window.sessionStorage.setItem("auth_token", response.data.access_token);
         window.sessionStorage.setItem("role_id", response.data.role_id);
         window.sessionStorage.setItem("user", response.data.name);
+        window.sessionStorage.setItem("user_id", response.data.user_id);
         navigate("/categories");
         Swal.fire({
           icon: "success",
@@ -102,7 +103,7 @@ const Login = () => {
               </p>
             </div>
             <div>
-            <Link to="/reset-password">Forgot your password?</Link>
+              <Link to="/reset-password">Forgot your password?</Link>
             </div>
           </form>
         </div>

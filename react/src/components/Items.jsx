@@ -19,14 +19,20 @@ function Items({ cartNum, setCartNum }) {
   const [exchangeRateUSD, setExchangeRateUSD] = useState(0); // Dodamo state za kurs dolara
   const [isConverted, setIsConverted] = useState(false); // Stanje za praćenje da li je konverzija izvršena
   const role = window.sessionStorage.getItem("role_id");
-
+  const accessToken = window.sessionStorage.getItem("auth_token");
+  const userId = window.sessionStorage.getItem("user_id");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
   useScrollToTop();
   const refreshCart = () => {
     const newItems = items.filter((item) => item.amount > 0);
     setCart(newItems);
   };
 
-  const onAdd = (id) => {
+  const addToCart = (id) => {
     items.map((item) => {
       if (item.id === id) {
         item.amount++;
@@ -35,6 +41,75 @@ function Items({ cartNum, setCartNum }) {
         console.log("itemid: " + item.id + " amount: " + item.amount);
       }
     });
+  };
+
+  const onAdd = (id) => {
+    addToCart(id);
+  };
+
+  // const onAddToOrder = async () => {
+  //   // Slanje proizvoda u korpi na backend tek kada se klikne na dugme "Poruči"
+  //   try {
+  //     await Promise.all(
+  //       cart.map(async (item) => {
+  //         const response = await axios.post(
+  //           "http://127.0.0.1:8000/api/order_items/store",
+  //           {
+  //             order_id: 1, // Zamijenite YOUR_ORDER_ID_HERE sa odgovarajućim ID-em porudžbine
+  //             item_id: item.id,
+  //             quantity: item.amount,
+  //           },
+  //           config
+  //         );
+  //         console.log(response.data.message);
+  //       })
+  //     );
+  //     // Osvežavanje korpe nakon uspješnog slanja proizvoda u korpi
+  //     refreshCart();
+  //   } catch (error) {
+  //     console.error("Error while adding item to cart:", error);
+  //     // Obradite grešku ako je potrebno
+  //   }
+  // };
+
+  const onAddToOrder = async () => {
+    try {
+      // Pozovite rutu za kreiranje nove porudžbine na backend-u
+      const orderResponse = await axios.post(
+        "http://127.0.0.1:8000/api/orders/store",
+        {
+          payment_method: "cash_on_delivery",
+          user_id: userId,
+          restaurant_id: restaurantId,
+        }, // Možete proslediti bilo kakve dodatne podatke za kreiranje porudžbine
+        config
+      );
+
+      // Dobijanje ID nove porudžbine iz odgovora
+      const newOrderId = orderResponse.data[1].id; // Prilagodite ovoj liniji prema strukturi odgovora koji vraća vaš backend
+      console.log(newOrderId);
+      // Slanje proizvoda u korpu na backend koristeći dobijeni ID porudžbine
+      await Promise.all(
+        cart.map(async (item) => {
+          const response = await axios.post(
+            "http://127.0.0.1:8000/api/order_items/store",
+            {
+              order_id: newOrderId,
+              item_id: item.id,
+              quantity: item.amount,
+            },
+            config
+          );
+          console.log(response.data.message);
+        })
+      );
+
+      // Osvežavanje korpe nakon uspješnog slanja proizvoda u korpi
+      refreshCart();
+    } catch (error) {
+      console.error("Error while adding item to cart:", error);
+      // Obradite grešku ako je potrebno
+    }
   };
 
   const onRemove = (id) => {
@@ -146,7 +221,7 @@ function Items({ cartNum, setCartNum }) {
         )}
         {isConverted && (
           <>
-            <button onClick={handleConvertToDinClick}>Show prices in RSD</button>
+            <button onClick={handleConvertToDinClick}>Show in RSD</button>
           </>
         )}{" "}
       </div>
@@ -167,7 +242,10 @@ function Items({ cartNum, setCartNum }) {
         <div className="cart-container">
           {/* Samo logged in user-u se prikazuje korpa */}
           {role == "2" && (
-            <Cart cartNum={cartNum} cart={cart} valuta={valuta} />
+            <>
+              <Cart cartNum={cartNum} cart={cart} valuta={valuta} />
+              <button onClick={onAddToOrder}>Order</button>
+            </>
           )}
         </div>
       </div>

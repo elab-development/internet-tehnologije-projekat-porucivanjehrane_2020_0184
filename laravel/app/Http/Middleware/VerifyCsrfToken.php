@@ -17,7 +17,8 @@ class VerifyCsrfToken extends Middleware
         'api/users',
         'api/logout',
         'api/restaurants/*',
-        'api/reset-password'
-
+        'api/reset-password',
+        'api/order_items/store',
+        'api/orders/*'
     ];
 }
