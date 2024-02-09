@@ -29,7 +29,7 @@ export default function NavBar({ cartNum }) {
       <Link to="/restaurants">Restaurants</Link>
       <Link to="/meal-db-example">Chicken Dishes</Link>
       {/* Samo za logged in user-a se prikazuju Contact strana i ikonica za korpu */}
-      {role === "2" && ( 
+      {(role === "2" || !role) && ( 
         <Link to="/contact">Contact</Link>
       )}
       {role == "2" && (
