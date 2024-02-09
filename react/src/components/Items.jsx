@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import OneItem from "./OneItem";
 import axios from "axios";
 import ButtonToTop from "./ButtonToTop";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useScrollToTop from "./useScrollToTop";
 import Cart from "./Cart";
 import "../App.css";
+import Button from "./Button";
+import Swal from "sweetalert2";
 
 function Items({ cartNum, setCartNum }) {
   const [items, setItems] = useState([]);
@@ -18,6 +20,9 @@ function Items({ cartNum, setCartNum }) {
   const [exchangeRateEUR, setExchangeRateEUR] = useState(0); // Dodamo state za kurs evra
   const [exchangeRateUSD, setExchangeRateUSD] = useState(0); // Dodamo state za kurs dolara
   const [isConverted, setIsConverted] = useState(false); // Stanje za praćenje da li je konverzija izvršena
+  const [totalPrice, setTotalPrice] = useState(0);
+  let navigate = useNavigate();
+
   const role = window.sessionStorage.getItem("role_id");
   const accessToken = window.sessionStorage.getItem("auth_token");
   const userId = window.sessionStorage.getItem("user_id");
@@ -32,7 +37,7 @@ function Items({ cartNum, setCartNum }) {
     setCart(newItems);
   };
 
-  const addToCart = (id) => {
+  const onAdd = (id) => {
     items.map((item) => {
       if (item.id === id) {
         item.amount++;
@@ -42,35 +47,6 @@ function Items({ cartNum, setCartNum }) {
       }
     });
   };
-
-  const onAdd = (id) => {
-    addToCart(id);
-  };
-
-  // const onAddToOrder = async () => {
-  //   // Slanje proizvoda u korpi na backend tek kada se klikne na dugme "Poruči"
-  //   try {
-  //     await Promise.all(
-  //       cart.map(async (item) => {
-  //         const response = await axios.post(
-  //           "http://127.0.0.1:8000/api/order_items/store",
-  //           {
-  //             order_id: 1, // Zamijenite YOUR_ORDER_ID_HERE sa odgovarajućim ID-em porudžbine
-  //             item_id: item.id,
-  //             quantity: item.amount,
-  //           },
-  //           config
-  //         );
-  //         console.log(response.data.message);
-  //       })
-  //     );
-  //     // Osvežavanje korpe nakon uspješnog slanja proizvoda u korpi
-  //     refreshCart();
-  //   } catch (error) {
-  //     console.error("Error while adding item to cart:", error);
-  //     // Obradite grešku ako je potrebno
-  //   }
-  // };
 
   const onAddToOrder = async () => {
     try {
@@ -106,6 +82,12 @@ function Items({ cartNum, setCartNum }) {
 
       // Osvežavanje korpe nakon uspješnog slanja proizvoda u korpi
       refreshCart();
+      Swal.fire({
+        icon: "success",
+        title: "Order has been placed!",
+      });
+      navigate("/categories");
+      setCartNum(0);
     } catch (error) {
       console.error("Error while adding item to cart:", error);
       // Obradite grešku ako je potrebno
@@ -167,6 +149,17 @@ function Items({ cartNum, setCartNum }) {
     fetchExchangeRates();
   }, []);
 
+  const calculateTotalPrice = () => {
+    let total = 0;
+    cart.forEach((item) => {
+      total += item.price * item.amount;
+    });
+    return total.toFixed(2); // Zaokružite na dve decimale
+  };
+  useEffect(() => {
+    setTotalPrice(calculateTotalPrice());
+  }, [cart]);
+
   const handleConvertToCurrencyClick = () => {
     // Implementacija konverzije cena proizvoda u odabranu valutu
     if (!clicked) {
@@ -201,30 +194,33 @@ function Items({ cartNum, setCartNum }) {
     setSelectedCurrency(event.target.value);
   };
 
+  // Dugmici za konvertovanje cena i vracanje cena se prikazuju samo onda kada je korpa prazna.
   return (
     <div>
-      <div className="button-container">
-        {!isConverted && (
-          <>
-            <button onClick={handleConvertToCurrencyClick}>
-              Show prices in:
-            </button>
-            <select
-              className="select-currency "
-              value={valuta}
-              onChange={handleCurrencyChange}
-            >
-              <option value="EUR">EUR</option>
-              <option value="USD">USD</option>
-            </select>
-          </>
-        )}
-        {isConverted && (
-          <>
-            <button onClick={handleConvertToDinClick}>Show in RSD</button>
-          </>
-        )}{" "}
-      </div>
+      {cartNum == 0 && (
+        <div className="button-container">
+          {!isConverted && (
+            <>
+              <button onClick={handleConvertToCurrencyClick}>
+                Show prices in:
+              </button>
+              <select
+                className="select-currency"
+                value={valuta}
+                onChange={handleCurrencyChange}
+              >
+                <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+              </select>
+            </>
+          )}
+          {isConverted && (
+            <>
+              <button onClick={handleConvertToDinClick}>Show in RSD</button>
+            </>
+          )}
+        </div>
+      )}
       <div>
         <div className="all-items">
           {items?.map((i) => (
@@ -244,7 +240,23 @@ function Items({ cartNum, setCartNum }) {
           {role == "2" && (
             <>
               <Cart cartNum={cartNum} cart={cart} valuta={valuta} />
-              <button onClick={onAddToOrder}>Order</button>
+              {cartNum > 0 && (
+                <>
+                  <p
+                    style={{
+                      marginLeft: "20px",
+                      fontSize: "30px",
+                      fontWeight: "bold",
+                      border: "2px dotted",
+                      paddingLeft: "5px",
+                    }}
+                  >
+                    {" "}
+                    Ukupna cena: {totalPrice} {valuta}
+                  </p>
+                  <Button text="Place your order" onClick={onAddToOrder} />
+                </>
+              )}
             </>
           )}
         </div>
