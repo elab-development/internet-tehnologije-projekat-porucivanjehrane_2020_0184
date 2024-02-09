@@ -146,7 +146,7 @@ function Items({ cartNum, setCartNum }) {
         )}
         {isConverted && (
           <>
-            <button onClick={handleConvertToDinClick}>Show in RSD</button>
+            <button onClick={handleConvertToDinClick}>Show prices in RSD</button>
           </>
         )}{" "}
       </div>
