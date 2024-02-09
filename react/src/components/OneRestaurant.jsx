@@ -13,14 +13,14 @@ const OneRestaurant = ({ restaurant }) => {
         <h3>{restaurant.name}</h3>
         <p>{restaurant.description} </p>
         <p>
-          <b>Adresa: </b>
+          <b>Address: </b>
           {restaurant.address}
         </p>
         <p>
-          <b>Kontakt telefon:</b> {restaurant.contact_phone_number}
+          <b>Contact phone:</b> {restaurant.contact_phone_number}
         </p>
         <i>
-          <p>Kategorija hrane: {restaurant.category} </p>{" "}
+          <p>Food category: {restaurant.category} </p>{" "}
         </i>
       </div>
     </div>
