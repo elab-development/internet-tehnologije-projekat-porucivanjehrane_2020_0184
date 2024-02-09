@@ -13,6 +13,7 @@ const Register = () => {
     address: "",
     role_name: "logged in user",
   });
+
   const [errors, setErrors] = useState({});
 
   function handleInput(e) {
@@ -57,10 +58,8 @@ const Register = () => {
           text: "Please check the data you entered!",
         });
         if (error.response && error.response.data) {
-          // If the response contains validation errors
           setErrors(error.response.data);
         } else {
-          // If there is a generic error
           setErrors({ generic: "Registration failed. Please try again." });
         }
       });

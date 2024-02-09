@@ -1,7 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
 import NavBar from "./components/NavBar";
-import Cart from "./components/Cart";
 import Restaurants from "./components/Restaurants";
 import RestaurantByCategory from "./components/RestaurantsByCategory";
 import Items from "./components/Items";
@@ -10,9 +8,7 @@ import Foot from "./components/Foot";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import ButtonToTop from "./components/ButtonToTop";
+import { useState } from "react";
 import Categories from "./components/Categories";
 import MealDBApiExample from "./components/MealDBApiExample";
 import ResetPassword from "./components/ResetPassword";
@@ -20,11 +16,6 @@ import ResetPassword from "./components/ResetPassword";
 function App() {
   const [items, setItems] = useState(null);
   const [cartNum, setCartNum] = useState(0);
-
-  // const refreshCart = () => {
-  //   const newItems = items.filter((item) => item.amount > 0);
-  //   setCartItems(newItems);
-  // };
 
   const onAdd = () => {
     setCartNum(cartNum + 1);
@@ -40,7 +31,6 @@ function App() {
     <BrowserRouter>
       <NavBar cartNum={cartNum} />
       <Routes>
-        {/* <Route path="/cart" element={<Cart cartNum={cartNum} />} /> */}
         <Route path="/restaurants" element={<Restaurants />} />
         <Route
           path="/restaurant/:id/items"

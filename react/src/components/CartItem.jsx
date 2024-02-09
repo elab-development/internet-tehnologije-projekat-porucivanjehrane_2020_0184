@@ -1,6 +1,4 @@
 import React from "react";
-import { MdAddShoppingCart } from "react-icons/md";
-import { CgRemoveR } from "react-icons/cg";
 
 const CartItem = ({ item, valuta }) => {
   var total_price = 0;

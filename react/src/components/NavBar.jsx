@@ -28,7 +28,6 @@ export default function NavBar({ cartNum }) {
       <Link to="/categories">Categories</Link>
       <Link to="/restaurants">Restaurants</Link>
       <Link to="/meal-db-example">Chicken Dishes</Link>
-      {/* <Link to="/items">Items</Link> */}
       <Link to="/contact">Contact</Link>
       {role == "2" && (
         <>

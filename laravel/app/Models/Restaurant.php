@@ -15,7 +15,8 @@ class Restaurant extends Model
         'address',
         'contact_phone_number',
         'contact_email_address',
-        'category_id'
+        'category_id',
+        'image'
     ];
 
     public function category()

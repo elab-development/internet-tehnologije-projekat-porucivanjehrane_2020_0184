@@ -8,13 +8,6 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-// const categories = {
-//   azijska: 1,
-//   meksicka: 2,
-//   srpska: 3,
-//   americka: 4
-// }
-
 function Restaurants() {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 2;
@@ -78,14 +71,6 @@ function Restaurants() {
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
-  };
-
-  const handleNextClick = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const handlePrevClick = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
   };
 
   return (

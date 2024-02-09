@@ -41,7 +41,7 @@ class CategoryController extends Controller
         }
 
         $category = Category::create([
-            'category_name' => $request->name,
+            'category_name' => $request->category_name,
             'image' => $request->image
         ]);
 

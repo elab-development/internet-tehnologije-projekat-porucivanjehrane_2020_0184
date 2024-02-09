@@ -12,7 +12,7 @@ const MealDBApiExample = () => {
         const response = await axios.get(
           "https://www.themealdb.com/api/json/v1/1/search.php?s=chicken"
         );
-        setMealData(response.data.meals); // Postavljanje podataka u stanje komponente
+        setMealData(response.data.meals); 
       } catch (error) {
         console.error("Error fetching data from TheMealDB API:", error);
       }

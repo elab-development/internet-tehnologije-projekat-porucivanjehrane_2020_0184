@@ -9,8 +9,6 @@ use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\UserController;
-use App\Models\OrderItem;
-use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

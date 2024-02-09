@@ -11,7 +11,7 @@ function Restaurants() {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 2;
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-  const [roleId, setRoleId] = useState(null); // Čuvamo stanje role_id korisnika
+  const [roleId, setRoleId] = useState(null); 
   const [searchTerm, setSearchTerm] = useState("");
   let navigate = useNavigate();
 
@@ -56,11 +56,11 @@ function Restaurants() {
       setFilteredRestaurants(
         filteredRestaurants.filter((r) => r.id !== restaurantId)
       );
-      navigate("/categories");
       Swal.fire({
         icon: "success",
         title: "Restaurant has been deleted!",
       });
+      navigate("/categories");
     } catch (error) {
       console.error("Error deleting restaurant:", error);
       Swal.fire({
@@ -95,6 +95,7 @@ function Restaurants() {
             >
               <OneRestaurant restaurant={restaurant} />
             </Link>
+            {/* Samo admin moze da obrise restoran */}
             {roleId === "1" && (
               <Button
                 text="Delete"

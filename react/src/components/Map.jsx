@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
+import 'leaflet/dist/leaflet.css';
 import "../App.css";
 
 const Map = () => {
@@ -11,11 +11,6 @@ const Map = () => {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
-
-    L.marker([44.8186, 20.4526])
-      .addTo(map)
-      .bindPopup("Fakultet organizacionih nauka, Beograd")
-      .openPopup();
 
     return () => {
       map.remove();

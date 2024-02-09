@@ -1,9 +1,8 @@
 import React from "react";
 import ButtonToTop from "./ButtonToTop";
-import OneItem from "./OneItem";
 import CartItem from "./CartItem";
 
-function Cart({ items, cart, valuta }) {
+function Cart({ cart, valuta }) {
   return (
     <div className="all-items">
       <h1 style={{ marginLeft: "25px" }}> Your cart:</h1>

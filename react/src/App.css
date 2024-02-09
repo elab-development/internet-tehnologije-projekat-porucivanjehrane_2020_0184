@@ -308,6 +308,7 @@ textarea {
 }
 
 #map-container {
+  height: 400px; 
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
@@ -317,8 +318,8 @@ textarea {
   overflow: hidden;
 }
 
-#map {
-  height: 400px;
+.map {
+  height: 100%; 
   width: 100%;
 }
 

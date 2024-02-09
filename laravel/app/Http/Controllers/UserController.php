@@ -43,7 +43,7 @@ class UserController extends Controller
             return response()->json($validator->errors());
         }
     
-        // Find the role by name
+        // Find the role by name -> SQL Injection
         $role = Role::where('role_name', $request->role_name)->first();
     
         if (!$role) {

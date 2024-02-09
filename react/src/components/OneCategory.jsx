@@ -7,7 +7,7 @@ const OneCategory = ({ category }) => {
         width={600}
         height={250}
         src={category.image}
-        alt="Slika kategorije"
+        alt="Category image"
       />
     </div>
   );

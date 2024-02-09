@@ -12,7 +12,7 @@ function OneItem({ item, onAdd, onRemove, inCart, valuta }) {
         height={300}
         className="itemCard-img-top"
         src={item.image}
-        alt="Slika jela"
+        alt="Meal image"
       />
       <div className="itemCard-body">
         <h3 className="itemCard-title">{item.name}</h3>

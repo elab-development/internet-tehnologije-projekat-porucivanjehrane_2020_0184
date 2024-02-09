@@ -7,7 +7,7 @@ const OneRestaurant = ({ restaurant }) => {
         width={600}
         height={250}
         src={restaurant.image}
-        alt="Slika restorana"
+        alt="Restaurant image"
       />
       <div className="restaurantCard-body">
         <h3>{restaurant.name}</h3>

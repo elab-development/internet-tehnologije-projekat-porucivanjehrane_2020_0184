@@ -109,7 +109,6 @@ function Items({ cartNum, setCartNum }) {
       }
       setItems(convertedItems);
       setValuta(selectedCurrency);
-      // setClicked(true);
       setIsConverted(true);
     }
   };
@@ -166,6 +165,7 @@ function Items({ cartNum, setCartNum }) {
           <ButtonToTop />
         </div>
         <div className="cart-container">
+          {/* Samo logged in user-u se prikazuje korpa */}
           {role == "2" && (
             <Cart cartNum={cartNum} cart={cart} valuta={valuta} />
           )}

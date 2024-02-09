@@ -24,10 +24,8 @@ function Categories() {
 
   return (
     <div>
-      {/* <h2>All Categories</h2> */}
       <ul>
         {categories.map((category) => (
-          //   <li key={category.id}>{category.category_name}</li>
           <Link to={`/category/${category.id}/restaurants`} key={category.id}>
             <OneCategory category={category} />
           </Link>

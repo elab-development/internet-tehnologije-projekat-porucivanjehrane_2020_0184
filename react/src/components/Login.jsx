@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Button from "./Button";
 
-const Login = ({ addToken, addUser, currentUser }) => {
+const Login = () => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",

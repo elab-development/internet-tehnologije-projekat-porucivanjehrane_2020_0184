@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('contact_phone_number');
             $table->foreignId('category_id');
+            $table->text('image');
             $table->timestamps();
         });
     }

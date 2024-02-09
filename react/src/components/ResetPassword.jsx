@@ -11,6 +11,7 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  
   let navigate = useNavigate();
 
   const handleResetPassword = async () => {
@@ -23,14 +24,12 @@ const ResetPassword = () => {
           password_confirmation: confirmPassword,
         }
       );
-      // setMessage(response.data.message);
       Swal.fire({
         icon: "success",
         title: "Password has been changed!",
       });
       navigate("/login");
     } catch (error) {
-      // setError(error.response.data.error);
       if (error.response.data.error == "User not found") {
         Swal.fire({
           icon: "error",
