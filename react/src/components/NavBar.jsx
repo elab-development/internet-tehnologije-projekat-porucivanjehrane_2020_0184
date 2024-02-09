@@ -28,13 +28,17 @@ export default function NavBar({ cartNum }) {
       <Link to="/categories">Categories</Link>
       <Link to="/restaurants">Restaurants</Link>
       <Link to="/meal-db-example">Chicken Dishes</Link>
-      <Link to="/contact">Contact</Link>
+      {/* Samo za logged in user-a se prikazuju Contact strana i ikonica za korpu */}
+      {role === "2" && ( 
+        <Link to="/contact">Contact</Link>
+      )}
       {role == "2" && (
         <>
           <FaCartShopping />
           <div className="cart-num">{cartNum}</div>
         </>
       )}
+      {/* Samo korisnik koji je ulogovan moze da se izloguje */}
       {isUserLoggedIn && (
         <IoIosLogOut style={{ cursor: "pointer" }} onClick={logout} />
       )}
