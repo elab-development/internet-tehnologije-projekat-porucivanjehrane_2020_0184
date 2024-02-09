@@ -5,6 +5,7 @@ import OneItem from "./OneItem";
 function Cart({ items, cart }) {
   return (
     <div className="all-items">
+      <h1 style={{ marginLeft: "25px" }}> Your cart:</h1>
       {cart.length === 0 ? (
         <div>
           <h1>Your cart is currently empty.</h1>

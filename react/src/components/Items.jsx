@@ -5,6 +5,7 @@ import ButtonToTop from "./ButtonToTop";
 import { useParams } from "react-router-dom";
 import useScrollToTop from "./useScrollToTop";
 import Cart from "./Cart";
+import "../App.css";
 
 function Items({ cartNum, setCartNum }) {
   const [items, setItems] = useState([]);
@@ -103,6 +104,7 @@ function Items({ cartNum, setCartNum }) {
     // ako korisnik klikne na dugme da se vrate cene u RSD, to znaci da moze ponovo da klikne na dugme za konvertovanje
     // cena u EUR, ako to zeli
     setIsConverted(false);
+    setSelectedCurrency("EUR");
   };
   const handleCurrencyChange = (event) => {
     setSelectedCurrency(event.target.value);
@@ -114,30 +116,41 @@ function Items({ cartNum, setCartNum }) {
         {!isConverted && (
           <>
             <button onClick={handleConvertToCurrencyClick}>
-              Konvertuj cene
+              Show prices in:
             </button>
-            <select value={valuta} onChange={handleCurrencyChange}>
+            <select
+              className="select-currency "
+              value={valuta}
+              onChange={handleCurrencyChange}
+            >
               <option value="EUR">EUR</option>
               <option value="USD">USD</option>
             </select>
           </>
         )}
-
-        <button onClick={handleConvertToDinClick}>Vrati cene u RSD</button>
+        {isConverted && (
+          <>
+            <button onClick={handleConvertToDinClick}>Show in RSD</button>
+          </>
+        )}{" "}
       </div>
-      <div className="all-items">
-        {items?.map((i) => (
-          <OneItem
-            item={i}
-            key={i.id}
-            onAdd={() => onAdd(i)}
-            onRemove={() => onRemove(i)}
-            inCart={1}
-            valuta={valuta}
-          />
-        ))}
-        <ButtonToTop />
-        <Cart cartNum={cartNum} cart={cart} />
+      <div>
+        <div className="all-items">
+          {items?.map((i) => (
+            <OneItem
+              item={i}
+              key={i.id}
+              onAdd={() => onAdd(i)}
+              onRemove={() => onRemove(i)}
+              inCart={1}
+              valuta={valuta}
+            />
+          ))}
+          <ButtonToTop />
+        </div>
+        <div className="cart-container">
+          <Cart cartNum={cartNum} cart={cart} />
+        </div>{" "}
       </div>
     </div>
   );

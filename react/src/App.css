@@ -334,7 +334,7 @@ textarea {
   cursor: pointer;
   background-color: #c49c91;
   color: black;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .button-container button:hover {
@@ -343,4 +343,16 @@ textarea {
 
 .currency-select {
   font-size: 20px;
+}
+
+.cart-container {
+  border: 1px solid;
+  width: 85%;
+  margin-left: 25px;
+  margin-bottom: 25px;
+}
+
+.select-currency {
+  font-size: 20px;
+  margin-left: 15px;
 }
