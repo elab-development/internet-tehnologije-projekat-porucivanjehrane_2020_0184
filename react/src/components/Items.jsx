@@ -18,22 +18,39 @@ function Items({ cartNum, setCartNum }) {
   const [exchangeRateEUR, setExchangeRateEUR] = useState(0); // Dodamo state za kurs evra
   const [exchangeRateUSD, setExchangeRateUSD] = useState(0); // Dodamo state za kurs dolara
   const [isConverted, setIsConverted] = useState(false); // Stanje za praćenje da li je konverzija izvršena
+  const role = window.sessionStorage.getItem("role_id");
 
   useScrollToTop();
-
-  const onAdd = (item) => {
-    setCartNum((previousNumber) => previousNumber + 1);
-    setCart([...cart, item]);
+  const refreshCart = () => {
+    const newItems = items.filter((item) => item.amount > 0);
+    setCart(newItems);
   };
 
-  const onRemove = (item) => {
-    if (cartNum > 0) {
-      setCartNum((previousNumber) => previousNumber - 1);
-    }
+  const onAdd = (id) => {
+    items.map((item) => {
+      if (item.id === id) {
+        item.amount++;
+        setCartNum(cartNum + 1);
+        refreshCart();
+        console.log("itemid: " + item.id + " amount: " + item.amount);
+      }
+    });
+  };
 
-    const updatedCart = cart.filter((cartItem) => cartItem.id !== item.id); // Filtriramo proizvode iz korpe
-    console.log(updatedCart);
-    setCart(updatedCart);
+  const onRemove = (id) => {
+    items.map((item) => {
+      if (item.id === id) {
+        if (item.amount > 0) {
+          item.amount--;
+          setCartNum(cartNum - 1);
+
+          refreshCart();
+          console.log("itemid: " + item.id + " amount: " + item.amount);
+        } else {
+          console.log("Amount is already 0");
+        }
+      }
+    });
   };
 
   useEffect(() => {
@@ -140,8 +157,8 @@ function Items({ cartNum, setCartNum }) {
             <OneItem
               item={i}
               key={i.id}
-              onAdd={() => onAdd(i)}
-              onRemove={() => onRemove(i)}
+              onAdd={() => onAdd(i.id)}
+              onRemove={() => onRemove(i.id)}
               inCart={1}
               valuta={valuta}
             />
@@ -149,8 +166,10 @@ function Items({ cartNum, setCartNum }) {
           <ButtonToTop />
         </div>
         <div className="cart-container">
-          <Cart cartNum={cartNum} cart={cart} />
-        </div>{" "}
+          {role == "2" && (
+            <Cart cartNum={cartNum} cart={cart} valuta={valuta} />
+          )}
+        </div>
       </div>
     </div>
   );

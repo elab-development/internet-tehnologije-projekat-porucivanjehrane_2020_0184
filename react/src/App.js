@@ -27,7 +27,7 @@ function App() {
   // };
 
   const onAdd = () => {
-    setCartNum((previousNumber) => previousNumber + 1);
+    setCartNum(cartNum + 1);
   };
 
   const onRemove = () => {
@@ -40,13 +40,13 @@ function App() {
     <BrowserRouter>
       <NavBar cartNum={cartNum} />
       <Routes>
-        <Route path="/cart" element={<Cart cartNum={cartNum} />} />
+        {/* <Route path="/cart" element={<Cart cartNum={cartNum} />} /> */}
         <Route path="/restaurants" element={<Restaurants />} />
         <Route
           path="/restaurant/:id/items"
           element={
             <Items
-              cartNum
+              cartNum={cartNum}
               onAdd={onAdd}
               onRemove={onRemove}
               setCartNum={setCartNum}
@@ -57,7 +57,7 @@ function App() {
           path="/category/:id/restaurants"
           element={<RestaurantByCategory />}
         />
-        <Route path="/categories" element={<Categories /> } />
+        <Route path="/categories" element={<Categories />} />
         <Route
           path="/items"
           element={<Items items={items} onAdd={onAdd} onRemove={onRemove} />}

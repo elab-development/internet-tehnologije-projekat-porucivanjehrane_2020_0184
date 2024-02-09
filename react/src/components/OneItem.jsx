@@ -3,6 +3,8 @@ import { MdAddShoppingCart } from "react-icons/md";
 import { CgRemoveR } from "react-icons/cg";
 
 function OneItem({ item, onAdd, onRemove, inCart, valuta }) {
+  const role = window.sessionStorage.getItem("role_id");
+
   return (
     <div className="itemCard">
       <img
@@ -22,7 +24,7 @@ function OneItem({ item, onAdd, onRemove, inCart, valuta }) {
           {" "}
           Cena: {item.price} {valuta}
         </p>
-        {inCart == 1 ? (
+        {role == "2" && (
           <div>
             <button className="btn" onClick={onAdd}>
               <MdAddShoppingCart size="30" />
@@ -31,8 +33,6 @@ function OneItem({ item, onAdd, onRemove, inCart, valuta }) {
               <CgRemoveR size="30" />
             </button>
           </div>
-        ) : (
-          <p style={{ fontWeight: "bold" }}>This item is already in cart.</p>
         )}
       </div>
     </div>

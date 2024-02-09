@@ -1,8 +1,9 @@
 import React from "react";
 import ButtonToTop from "./ButtonToTop";
 import OneItem from "./OneItem";
+import CartItem from "./CartItem";
 
-function Cart({ items, cart }) {
+function Cart({ items, cart, valuta }) {
   return (
     <div className="all-items">
       <h1 style={{ marginLeft: "25px" }}> Your cart:</h1>
@@ -15,7 +16,13 @@ function Cart({ items, cart }) {
         </div>
       ) : (
         cart?.map((i) => (
-          <OneItem item={i} key={i.id} onAdd={() => {}} inCart={0} />
+          <CartItem
+            item={i}
+            key={i.id}
+            valuta={valuta}
+            onAdd={() => {}}
+            inCart={0}
+          />
         ))
       )}
       <ButtonToTop />

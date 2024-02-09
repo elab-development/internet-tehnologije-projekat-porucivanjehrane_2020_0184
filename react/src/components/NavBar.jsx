@@ -20,6 +20,7 @@ export default function NavBar({ cartNum }) {
   };
 
   const isUserLoggedIn = !!window.sessionStorage.getItem("auth_token");
+  const role = window.sessionStorage.getItem("role_id");
 
   return (
     <div className="navBar">
@@ -29,11 +30,11 @@ export default function NavBar({ cartNum }) {
       <Link to="/meal-db-example">Chicken Dishes</Link>
       {/* <Link to="/items">Items</Link> */}
       <Link to="/contact">Contact</Link>
-      {isUserLoggedIn && (
-        <Link to="/cart" className="cart-items">
+      {role == "2" && (
+        <>
           <FaCartShopping />
           <div className="cart-num">{cartNum}</div>
-        </Link>
+        </>
       )}
       {isUserLoggedIn && (
         <IoIosLogOut style={{ cursor: "pointer" }} onClick={logout} />
