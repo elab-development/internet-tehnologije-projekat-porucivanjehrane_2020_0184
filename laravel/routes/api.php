@@ -69,8 +69,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () { //ovo su zasticen
 
     Route::resource('/orders', OrderController::class)->only(['index', 'show'])->middleware('accessControl:1');
 
-    // Admin moze da azurira status porudzbine
-    Route::put('/orders/update/{order_id}', [OrderController::class, 'update'])->middleware('accessControl:1');
+    // Delivery guy moze da azurira status porudzbine
+    Route::put('/orders/update/{order_id}', [OrderController::class, 'update'])->middleware('accessControl:3');
 
     // Logged in user moze da kreira porudzbine
     Route::post('/orders/store', [OrderController::class, 'store'])->middleware('accessControl:2');
