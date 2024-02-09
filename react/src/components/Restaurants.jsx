@@ -12,10 +12,14 @@ function Restaurants() {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 2;
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [roleId, setRoleId] = useState(null);
 
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+    const roleIdFromStorage = sessionStorage.getItem("role_id");
+    setRoleId(roleIdFromStorage);
+
     const fetchData = async () => {
       try {
         const response = await axios.get(
@@ -38,9 +42,21 @@ function Restaurants() {
     fetchData();
   }, [searchTerm]);
 
+
+  const handleDelete = async (restaurantId) => {
+    try {
+      await axios.delete(`http://127.0.0.1:8000/api/restaurants/${restaurantId}`);
+      // Uklonite izbrisani restoran iz stanja
+      setFilteredRestaurants(filteredRestaurants.filter(restaurant => restaurant.id !== restaurantId));
+    } catch (error) {
+      console.error("Error while deleting restaurant:", error);
+    }
+  };
+
   const pageCount = filteredRestaurants
     ? Math.ceil(filteredRestaurants.length / itemsPerPage)
     : 0;
+
 
   const displayRestaurants = () => {
     if (
@@ -55,16 +71,20 @@ function Restaurants() {
 
     return (
       <div>
-        {filteredRestaurants.slice(startIndex, endIndex).map((restaurant) => (
-          <Link
-            to={`/restaurant/${restaurant.id}/items`}
-            key={restaurant.id}
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            <OneRestaurant restaurant={restaurant} />
-          </Link>
-        ))}
+    {filteredRestaurants.slice(startIndex, endIndex).map((restaurant) => (
+      <div key={restaurant.id}>
+        <Link
+          to={`/restaurant/${restaurant.id}/items`}
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <OneRestaurant restaurant={restaurant} />
+        </Link>
+        {roleId === "1" && (
+          <Button text="Delete" onClick={() => handleDelete(restaurant.id)} />
+        )}
       </div>
+    ))}
+  </div>
     );
   };
 

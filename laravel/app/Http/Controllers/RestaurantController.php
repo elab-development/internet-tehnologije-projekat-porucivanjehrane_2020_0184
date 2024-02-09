@@ -83,10 +83,10 @@ class RestaurantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $restaurant_id)
+    public function update(Request $request, $restaurantId)
     {
         // Pronalaženje korisnika po ID-u
-        $restaurant = Restaurant::findOrFail($restaurant_id);
+        $restaurant = Restaurant::findOrFail($restaurantId);
 
         // Validacija prosleđenih podataka - prilagodite prema potrebama
         $request->validate([
@@ -106,9 +106,9 @@ class RestaurantController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($restaurant_id)
+    public function destroy($restaurantId)
     {
-        $restaurant = Restaurant::find($restaurant_id);
+        $restaurant = Restaurant::find($restaurantId);
         $restaurant->delete();
 
         return response()->json(['Restaurant has been successfully deleted.', 204]);

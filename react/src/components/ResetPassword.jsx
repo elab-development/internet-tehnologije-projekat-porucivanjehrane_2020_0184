@@ -39,7 +39,7 @@ const ResetPassword = () => {
       } else {
         Swal.fire({
           icon: "error",
-          title: "Wrong credentials",
+          title: "Failed to reset password",
         });
       }
     }

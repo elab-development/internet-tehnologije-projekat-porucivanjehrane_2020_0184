@@ -17,7 +17,7 @@ class ResetPasswordController extends Controller
                 'password_confirmation' => 'required|string|same:password',
             ]);
     
-            // Pronalazi korisnika po email adresi
+            // Pronalazi korisnika po email adresi -> zastita od SQL Injection-a
             $user = User::where('email', $request->email)->first();
     
             // Ako korisnik ne postoji, vraća grešku
