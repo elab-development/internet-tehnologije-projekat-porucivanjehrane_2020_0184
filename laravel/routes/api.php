@@ -61,7 +61,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () { //ovo su zasticen
     Route::post('/items/store', [ItemController::class, 'store'])->middleware('accessControl:1');
     Route::resource('/categories', CategoryController::class)->only(['update', 'destroy'])->middleware('accessControl:1');
     Route::post('/categories/store', [CategoryController::class, 'store'])->middleware('accessControl:1');
- //   Route::resource('/restaurants', RestaurantController::class)->only(['update', 'destroy'])->middleware('accessControl:1');
     Route::delete('/restaurants/{restaurantId}', [RestaurantController::class, 'destroy'])->middleware('accessControl:1');
     Route::put('/restaurants/{restaurantId}', [RestaurantController::class, 'update'])->middleware('accessControl:1');
     Route::post('/restaurants/store', [RestaurantController::class, 'store'])->middleware('accessControl:1');

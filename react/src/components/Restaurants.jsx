@@ -1,32 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import OneRestaurant from "./OneRestaurant";
-import { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import "../style/Pagination.css";
 import Button from "./Button";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function Restaurants() {
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 2;
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-  const [roleId, setRoleId] = useState(null);
-
+  const [roleId, setRoleId] = useState(null); // Čuvamo stanje role_id korisnika
   const [searchTerm, setSearchTerm] = useState("");
+  let navigate = useNavigate();
 
   useEffect(() => {
-    const roleIdFromStorage = sessionStorage.getItem("role_id");
-    setRoleId(roleIdFromStorage);
-
     const fetchData = async () => {
       try {
         const response = await axios.get(
           `http://127.0.0.1:8000/api/restaurants`
         );
-        console.log(response.data.data);
-
         const filtered = response.data?.data.filter(
           (restaurant) =>
             restaurant.name &&
@@ -40,23 +34,45 @@ function Restaurants() {
     };
 
     fetchData();
+
+    // Dobijamo role_id korisnika iz session storage-a
+    const storedRoleId = sessionStorage.getItem("role_id");
+    setRoleId(storedRoleId);
   }, [searchTerm]);
 
-
-  const handleDelete = async (restaurantId) => {
+  const deleteRestaurant = async (restaurantId) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/restaurants/${restaurantId}`);
-      // Uklonite izbrisani restoran iz stanja
-      setFilteredRestaurants(filteredRestaurants.filter(restaurant => restaurant.id !== restaurantId));
+      const token = sessionStorage.getItem("auth_token"); // Dobijamo access token
+      await axios.delete(
+        `http://127.0.0.1:8000/api/restaurants/${restaurantId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Dodajemo access token u zaglavlje
+          },
+        }
+      );
+
+      // Uklanjamo izbrisani restoran iz stanja
+      setFilteredRestaurants(
+        filteredRestaurants.filter((r) => r.id !== restaurantId)
+      );
+      navigate("/categories");
+      Swal.fire({
+        icon: "success",
+        title: "Restaurant has been deleted!",
+      });
     } catch (error) {
-      console.error("Error while deleting restaurant:", error);
+      console.error("Error deleting restaurant:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error while deleting the restaurant",
+      });
     }
   };
 
   const pageCount = filteredRestaurants
     ? Math.ceil(filteredRestaurants.length / itemsPerPage)
     : 0;
-
 
   const displayRestaurants = () => {
     if (
@@ -71,33 +87,28 @@ function Restaurants() {
 
     return (
       <div>
-    {filteredRestaurants.slice(startIndex, endIndex).map((restaurant) => (
-      <div key={restaurant.id}>
-        <Link
-          to={`/restaurant/${restaurant.id}/items`}
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <OneRestaurant restaurant={restaurant} />
-        </Link>
-        {roleId === "1" && (
-          <Button text="Delete" onClick={() => handleDelete(restaurant.id)} />
-        )}
+        {filteredRestaurants.slice(startIndex, endIndex).map((restaurant) => (
+          <div key={restaurant.id}>
+            <Link
+              to={`/restaurant/${restaurant.id}/items`}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <OneRestaurant restaurant={restaurant} />
+            </Link>
+            {roleId === "1" && (
+              <Button
+                text="Delete"
+                onClick={() => deleteRestaurant(restaurant.id)}
+              />
+            )}
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
     );
   };
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
-  };
-
-  const handleNextClick = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
-  const handlePrevClick = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
   };
 
   return (
