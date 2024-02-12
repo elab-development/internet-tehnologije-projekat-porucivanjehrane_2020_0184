@@ -15,11 +15,11 @@ const CartItem = ({ item, valuta }) => {
         <h3 className="itemCard-title">{item.name}</h3>
         <p className="itemCard-text">
           {item.meal_description} <br></br>
-          <b>Restoran: {item.restaurant}</b>
+          <b>Restaurant: {item.restaurant}</b>
         </p>
         <p className="itemCard-price">
           {" "}
-          Cena: {item.price} {valuta}
+          Price: {item.price} {valuta}
         </p>
         <h3> Amount: {item.amount}</h3>
         <h3>

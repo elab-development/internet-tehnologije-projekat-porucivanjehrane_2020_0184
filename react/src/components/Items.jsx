@@ -50,19 +50,19 @@ function Items({ cartNum, setCartNum }) {
 
   const onAddToOrder = async () => {
     try {
-      // Pozovite rutu za kreiranje nove porudžbine na backend-u
+      // Ruta za kreiranje nove porudžbine na backend-u
       const orderResponse = await axios.post(
         "http://127.0.0.1:8000/api/orders/store",
         {
           payment_method: "cash_on_delivery",
           user_id: userId,
           restaurant_id: restaurantId,
-        }, // Možete proslediti bilo kakve dodatne podatke za kreiranje porudžbine
+        }, 
         config
       );
 
       // Dobijanje ID nove porudžbine iz odgovora
-      const newOrderId = orderResponse.data[1].id; // Prilagodite ovoj liniji prema strukturi odgovora koji vraća vaš backend
+      const newOrderId = orderResponse.data[1].id; 
       console.log(newOrderId);
       // Slanje proizvoda u korpu na backend koristeći dobijeni ID porudžbine
       await Promise.all(
@@ -80,7 +80,7 @@ function Items({ cartNum, setCartNum }) {
         })
       );
 
-      // Osvežavanje korpe nakon uspješnog slanja proizvoda u korpi
+      // Osvežavanje korpe nakon uspešnog slanja proizvoda u korpi
       refreshCart();
       Swal.fire({
         icon: "success",
@@ -90,7 +90,6 @@ function Items({ cartNum, setCartNum }) {
       setCartNum(0);
     } catch (error) {
       console.error("Error while adding item to cart:", error);
-      // Obradite grešku ako je potrebno
     }
   };
 
@@ -154,7 +153,7 @@ function Items({ cartNum, setCartNum }) {
     cart.forEach((item) => {
       total += item.price * item.amount;
     });
-    return total.toFixed(2); // Zaokružite na dve decimale
+    return total.toFixed(2); 
   };
   useEffect(() => {
     setTotalPrice(calculateTotalPrice());
@@ -185,7 +184,7 @@ function Items({ cartNum, setCartNum }) {
     setItems(originalItems);
     setValuta("RSD");
     setClicked(false);
-    // ako korisnik klikne na dugme da se vrate cene u RSD, to znaci da moze ponovo da klikne na dugme za konvertovanje
+    // Ako korisnik klikne na dugme da se vrate cene u RSD, to znaci da moze ponovo da klikne na dugme za konvertovanje
     // cena u EUR, ako to zeli
     setIsConverted(false);
     setSelectedCurrency("EUR");
@@ -216,7 +215,7 @@ function Items({ cartNum, setCartNum }) {
           )}
           {isConverted && (
             <>
-              <button onClick={handleConvertToDinClick}>Show in RSD</button>
+              <button onClick={handleConvertToDinClick}>Show prices in RSD</button>
             </>
           )}
         </div>

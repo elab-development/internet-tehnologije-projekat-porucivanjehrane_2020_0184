@@ -40,6 +40,7 @@ const Register = () => {
           );
           window.sessionStorage.setItem("role_id", "2");
           window.sessionStorage.setItem("user", response.data.data.name);
+          window.sessionStorage.setItem("user_id", response.data.data.id);
           navigate("/categories");
           Swal.fire({
             icon: "success",

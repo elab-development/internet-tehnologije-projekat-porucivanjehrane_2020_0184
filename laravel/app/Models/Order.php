@@ -28,11 +28,6 @@ class Order extends Model
         return $this->belongsTo(Restaurant::class);
     }
 
-    // public function items()
-    // {
-    //     return $this->belongsToMany(Item::class, 'order_items');
-    // }
-
     public function order_items()
     {
         return $this->hasMany(OrderItem::class);

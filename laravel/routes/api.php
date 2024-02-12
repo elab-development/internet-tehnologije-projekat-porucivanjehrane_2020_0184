@@ -30,26 +30,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Ruta za resetovanje lozinke 
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 
+// Rute za register i login
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
 
+// Rute za prikaz proizvoda, restorana i kategorija
 Route::resource('/items', ItemController::class)->only(['index', 'show']);
 Route::resource('/categories', CategoryController::class)->only(['index', 'show']);
 Route::resource('/restaurants', RestaurantController::class)->only(['index', 'show']);
-
 
 // Prikaz svih restorana koji pripadaju odredjenoj kategoriji
 Route::get('category/{categoryId}/restaurants', [RestaurantController::class, 'getRestaurantsByCategory']);
 
 // Prikaz svih proizvoda koje ima jedan restoran
 Route::get('restaurant/{restaurantId}/items', [ItemController::class, 'getItemsByRestaurant']);
-
-Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/profile', function (Request $request) {
-        return auth()->user();
-    });
-});
 
 Route::group(['middleware' => ['auth:sanctum']], function () { //ovo su zasticene rute
     Route::get('/profile', function (Request $request) {
@@ -90,10 +84,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () { //ovo su zasticen
     // Logged in user moze da obrise samo svoje porudzbine, ne moze tudje
     Route::delete('/user/{user}/orders/{order}', [OrderController::class, 'destroy'])->middleware('accessControl:2');
 
-
-    // API route for logout user
+    // API ruta za logout 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-// data caching
+// Ruta za kesiranje
 Route::get('/cache', [CacheController::class, 'index']);
