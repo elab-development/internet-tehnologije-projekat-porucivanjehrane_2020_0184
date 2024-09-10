@@ -23,7 +23,6 @@ function Items({ cartNum, setCartNum }) {
   const [clicked, setClicked] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState("EUR"); // Dodamo state za izabranu valutu
   const [exchangeRateEUR, setExchangeRateEUR] = useState(0); // Dodamo state za kurs evra
-  const [exchangeRateUSD, setExchangeRateUSD] = useState(0); // Dodamo state za kurs dolara
   const [isConverted, setIsConverted] = useState(false); // Stanje za praćenje da li je konverzija izvršena
   const [totalPrice, setTotalPrice] = useState(0);
   const [showOrderDetails, setShowOrderDetails] = useState(false);
@@ -38,12 +37,15 @@ function Items({ cartNum, setCartNum }) {
       Authorization: `Bearer ${accessToken}`,
     },
   };
+
+  // Povratak na vrh stranice
   useScrollToTop();
   const refreshCart = () => {
     const newItems = items.filter((item) => item.amount > 0);
     setCart(newItems);
   };
 
+  // Dodavanje proizvoda u korpu
   const onAdd = (id) => {
     items.map((item) => {
       if (item.id === id) {
@@ -55,68 +57,75 @@ function Items({ cartNum, setCartNum }) {
     });
   };
 
-  const onAddToOrder = async () => {
-    //try {
+  // Funkcija za placanje pri dostavi
+  const payUponDelivery = async () => {
+    try {
       // Ruta za kreiranje nove porudžbine na backend-u
-      // const orderResponse = await axios.post(
-      //   "http://127.0.0.1:8000/api/orders/store",
-      //   {
-      //     payment_method: "cash_on_delivery",
-      //     user_id: userId,
-      //     restaurant_id: restaurantId,
-      //   }, 
-      //   config
-      // );
+      const orderResponse = await axios.post(
+        "http://127.0.0.1:8000/api/orders/store",
+        {
+          payment_method: "cash_on_delivery",
+          user_id: userId,
+          restaurant_id: restaurantId,
+        },
+        config
+      );
 
       // Dobijanje ID nove porudžbine iz odgovora
-      // const newOrderId = orderResponse.data[1].id; 
-      // console.log(newOrderId);
-      // // Slanje proizvoda u korpu na backend koristeći dobijeni ID porudžbine
-      // await Promise.all(
-      //   cart.map(async (item) => {
-      //     const response = await axios.post(
-      //       "http://127.0.0.1:8000/api/order_items/store",
-      //       {
-      //         order_id: newOrderId,
-      //         item_id: item.id,
-      //         quantity: item.amount,
-      //       },
-      //       config
-      //     );
-      //     console.log(response.data.message);
-      //   })
-      // );
+      const newOrderId = orderResponse.data[1].id;
+      console.log(newOrderId);
+      // Slanje proizvoda u korpu na backend koristeći dobijeni ID porudžbine
+      await Promise.all(
+        cart.map(async (item) => {
+          const response = await axios.post(
+            "http://127.0.0.1:8000/api/order_items/store",
+            {
+              order_id: newOrderId,
+              item_id: item.id,
+              quantity: item.amount,
+            },
+            config
+          );
+          console.log(response.data.message);
+        })
+      );
 
       // Osvežavanje korpe nakon uspešnog slanja proizvoda u korpi
-    //   refreshCart();
-    //   Swal.fire({
-    //     icon: "success",
-    //     title: "Order has been placed!",
-    //   });
-    //   navigate("/categories");
-    //   setCartNum(0);
-    // } catch (error) {
-    //   console.error("Error while adding item to cart:", error);
-    // }
-    
-  //}
-  MySwal.fire({
-    title: 'Order summary',
-    html: (
-      <OrderDetails
-      items = {items}
-      converted={isConverted}
-        totalPrice = {calculateTotalPrice()}
-        exchangeRateEUR={exchangeRateEUR}
-       // currency={currency}
-       // onCashPayment={handleCashPayment}
-       // onMetaMaskPayment={handleMetaMaskPayment}
-      />
-    ),
-    showConfirmButton: false, // Onemogućavamo dugmad za SweetAlert, jer koristimo dugmad unutar komponente
-  });
+      refreshCart();
+      Swal.fire({
+        icon: "success",
+        title: "Order has been placed!",
+      });
+      navigate("/categories");
+      setCartNum(0);
+    } catch (error) {
+      console.error("Error while adding item to cart:", error);
+    }
+
+  }
+
+
+  // Funkcija za placanje putem digitalnog novcanika
+  const onAddToOrder = async () => {
+
+    MySwal.fire({
+      title: 'Order summary',
+      html: (
+        <OrderDetails
+          items={items}
+          converted={isConverted}
+          totalPrice={calculateTotalPrice()}
+          exchangeRateEUR={exchangeRateEUR}
+        // currency={currency}
+        // onCashPayment={handleCashPayment}
+        // onMetaMaskPayment={handleMetaMaskPayment}
+        />
+      ),
+      showConfirmButton: false, // Onemogućavamo dugmad za SweetAlert, jer koristimo dugmad unutar komponente
+    });
   };
 
+  // Brisanje proizvoda iz korpe
   const onRemove = (id) => {
     items.map((item) => {
       if (item.id === id) {
@@ -134,6 +143,7 @@ function Items({ cartNum, setCartNum }) {
   };
 
 
+  // Ucitavanje proizvoda konkretnog restorana
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -151,6 +161,7 @@ function Items({ cartNum, setCartNum }) {
     fetchData();
   }, [restaurantId]);
 
+  // Ucitavanje trenutnog kursa RSD-EUR
   useEffect(() => {
     const fetchExchangeRates = async () => {
       try {
@@ -160,11 +171,7 @@ function Items({ cartNum, setCartNum }) {
         const rateEUR = responseEUR.data.rates.RSD;
         setExchangeRateEUR(rateEUR);
 
-        const responseUSD = await axios.get(
-          "https://api.exchangerate-api.com/v4/latest/USD"
-        );
-        const rateUSD = responseUSD.data.rates.RSD;
-        setExchangeRateUSD(rateUSD);
+
       } catch (error) {
         console.error("Error fetching exchange rates:", error);
       }
@@ -173,17 +180,19 @@ function Items({ cartNum, setCartNum }) {
     fetchExchangeRates();
   }, []);
 
+  // Racunanje ukupne cene
   const calculateTotalPrice = () => {
     let total = 0;
     cart.forEach((item) => {
       total += item.price * item.amount;
     });
-    return total.toFixed(2); 
+    return total.toFixed(2);
   };
   useEffect(() => {
     setTotalPrice(calculateTotalPrice());
   }, [cart]);
 
+  // Konverzija cena u odgovarajucu valutu
   const handleConvertToCurrencyClick = () => {
     // Implementacija konverzije cena proizvoda u odabranu valutu
     if (!clicked) {
@@ -192,11 +201,6 @@ function Items({ cartNum, setCartNum }) {
         convertedItems = items.map((item) => {
           const priceInEur = (item.price / exchangeRateEUR).toFixed(2); // Zaokružujemo na dve decimale
           return { ...item, price: priceInEur };
-        });
-      } else if (selectedCurrency === "USD") {
-        convertedItems = items.map((item) => {
-          const priceInUsd = (item.price / exchangeRateUSD).toFixed(2); // Zaokružujemo na dve decimale
-          return { ...item, price: priceInUsd };
         });
       }
       setItems(convertedItems);
@@ -218,9 +222,9 @@ function Items({ cartNum, setCartNum }) {
     setSelectedCurrency(event.target.value);
   };
 
-  const handleOrderPlaced = async(paymentMethod) =>{
+  const handleOrderPlaced = async (paymentMethod) => {
     console.log("radi");
-    
+
   }
 
   // Dugmici za konvertovanje cena i vracanje cena se prikazuju samo onda kada je korpa prazna.
@@ -284,17 +288,18 @@ function Items({ cartNum, setCartNum }) {
                     Total price: {totalPrice} {valuta}
                   </p>
                   <div>
-      {showOrderDetails ? (
-        <OrderDetails totalPriceRSD={totalPrice} onOrderPlaced={handleOrderPlaced} />
-      ) : (
-        <>
-          <div>
-            {/* Ostali sadržaj */}
-            <Button onClick={onAddToOrder} text={"Place your order"}></Button>
-          </div>
-        </>
-      )}
-    </div>
+                    {showOrderDetails ? (
+                      <OrderDetails totalPriceRSD={totalPrice} onOrderPlaced={handleOrderPlaced} />
+                    ) : (
+                      <>
+                        <div>
+                          {/* Ostali sadržaj */}
+                          <Button onClick={payUponDelivery} text={"Pay upon delivery"}></Button>
+                          <Button onClick={onAddToOrder} text={"Pay now with MetaMask"}></Button>
+                        </div>
+                      </>
+                    )}
+                  </div>
 
                 </>
               )}

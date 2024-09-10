@@ -3,12 +3,14 @@ import axios from "axios";
 //import { ethers } from ethers;
 import Swal from "sweetalert2";
 import Button from "./Button";
+import { connectMetaMaskWallet, interactWithContract, sendTransaction } from "../utils/ethereum";
 
 function OrderDetails({ items, converted, totalPrice, exchangeRateEUR }) {
 
     const [ethSepoliaRate, setEthSepoliaRate] = useState(null);
     const [ethPrice, setEthPrice] = useState(0);
 
+    const [signer, setSigner] = useState(null);
 
     // Dobijanje kursa 
     useEffect(() => {
@@ -54,7 +56,22 @@ function OrderDetails({ items, converted, totalPrice, exchangeRateEUR }) {
     }, [ethSepoliaRate, totalPrice]);
 
 
-
+    const handlePayWithMetaMask = async() =>{
+        console.log("Ovde smo");
+        if(!signer){
+            const connectedSigner = await connectMetaMaskWallet();
+            setSigner(connectedSigner);
+        }
+        if(signer){
+            try{
+                await interactWithContract(signer,"payForOrder",[]);
+                await sendTransaction(signer, ethPrice);
+                Swal.fire("Payment successful","Your transaction was successfull");
+            }catch(error){
+                Swal.fire("Payment failed","An error occurred while processing your transaction");
+            }
+        }
+    }
 
     return (
         <div>
@@ -96,7 +113,7 @@ function OrderDetails({ items, converted, totalPrice, exchangeRateEUR }) {
 
             <h3> Total price: {ethPrice} ETH</h3>
             <div>
-                <Button text="Pay now with MetaMask" />
+                <Button text="Pay now with MetaMask" onClick={handlePayWithMetaMask} />
             </div>
         </div>
     );
