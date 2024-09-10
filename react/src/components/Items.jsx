@@ -8,6 +8,11 @@ import Cart from "./Cart";
 import "../App.css";
 import Button from "./Button";
 import Swal from "sweetalert2";
+import OrderDetails from "./OrderDetails";
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
+
 
 function Items({ cartNum, setCartNum }) {
   const [items, setItems] = useState([]);
@@ -21,6 +26,8 @@ function Items({ cartNum, setCartNum }) {
   const [exchangeRateUSD, setExchangeRateUSD] = useState(0); // Dodamo state za kurs dolara
   const [isConverted, setIsConverted] = useState(false); // Stanje za praćenje da li je konverzija izvršena
   const [totalPrice, setTotalPrice] = useState(0);
+  const [showOrderDetails, setShowOrderDetails] = useState(false);
+
   let navigate = useNavigate();
 
   const role = window.sessionStorage.getItem("role_id");
@@ -49,48 +56,65 @@ function Items({ cartNum, setCartNum }) {
   };
 
   const onAddToOrder = async () => {
-    try {
+    //try {
       // Ruta za kreiranje nove porudžbine na backend-u
-      const orderResponse = await axios.post(
-        "http://127.0.0.1:8000/api/orders/store",
-        {
-          payment_method: "cash_on_delivery",
-          user_id: userId,
-          restaurant_id: restaurantId,
-        }, 
-        config
-      );
+      // const orderResponse = await axios.post(
+      //   "http://127.0.0.1:8000/api/orders/store",
+      //   {
+      //     payment_method: "cash_on_delivery",
+      //     user_id: userId,
+      //     restaurant_id: restaurantId,
+      //   }, 
+      //   config
+      // );
 
       // Dobijanje ID nove porudžbine iz odgovora
-      const newOrderId = orderResponse.data[1].id; 
-      console.log(newOrderId);
-      // Slanje proizvoda u korpu na backend koristeći dobijeni ID porudžbine
-      await Promise.all(
-        cart.map(async (item) => {
-          const response = await axios.post(
-            "http://127.0.0.1:8000/api/order_items/store",
-            {
-              order_id: newOrderId,
-              item_id: item.id,
-              quantity: item.amount,
-            },
-            config
-          );
-          console.log(response.data.message);
-        })
-      );
+      // const newOrderId = orderResponse.data[1].id; 
+      // console.log(newOrderId);
+      // // Slanje proizvoda u korpu na backend koristeći dobijeni ID porudžbine
+      // await Promise.all(
+      //   cart.map(async (item) => {
+      //     const response = await axios.post(
+      //       "http://127.0.0.1:8000/api/order_items/store",
+      //       {
+      //         order_id: newOrderId,
+      //         item_id: item.id,
+      //         quantity: item.amount,
+      //       },
+      //       config
+      //     );
+      //     console.log(response.data.message);
+      //   })
+      // );
 
       // Osvežavanje korpe nakon uspešnog slanja proizvoda u korpi
-      refreshCart();
-      Swal.fire({
-        icon: "success",
-        title: "Order has been placed!",
-      });
-      navigate("/categories");
-      setCartNum(0);
-    } catch (error) {
-      console.error("Error while adding item to cart:", error);
-    }
+    //   refreshCart();
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: "Order has been placed!",
+    //   });
+    //   navigate("/categories");
+    //   setCartNum(0);
+    // } catch (error) {
+    //   console.error("Error while adding item to cart:", error);
+    // }
+    
+  //}
+  MySwal.fire({
+    title: 'Order summary',
+    html: (
+      <OrderDetails
+      items = {items}
+      converted={isConverted}
+        totalPrice = {calculateTotalPrice()}
+        exchangeRateEUR={exchangeRateEUR}
+       // currency={currency}
+       // onCashPayment={handleCashPayment}
+       // onMetaMaskPayment={handleMetaMaskPayment}
+      />
+    ),
+    showConfirmButton: false, // Onemogućavamo dugmad za SweetAlert, jer koristimo dugmad unutar komponente
+  });
   };
 
   const onRemove = (id) => {
@@ -108,6 +132,7 @@ function Items({ cartNum, setCartNum }) {
       }
     });
   };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -193,6 +218,11 @@ function Items({ cartNum, setCartNum }) {
     setSelectedCurrency(event.target.value);
   };
 
+  const handleOrderPlaced = async(paymentMethod) =>{
+    console.log("radi");
+    
+  }
+
   // Dugmici za konvertovanje cena i vracanje cena se prikazuju samo onda kada je korpa prazna.
   return (
     <div>
@@ -253,7 +283,19 @@ function Items({ cartNum, setCartNum }) {
                     {" "}
                     Total price: {totalPrice} {valuta}
                   </p>
-                  <Button text="Place your order" onClick={onAddToOrder} />
+                  <div>
+      {showOrderDetails ? (
+        <OrderDetails totalPriceRSD={totalPrice} onOrderPlaced={handleOrderPlaced} />
+      ) : (
+        <>
+          <div>
+            {/* Ostali sadržaj */}
+            <Button onClick={onAddToOrder} text={"Place your order"}></Button>
+          </div>
+        </>
+      )}
+    </div>
+
                 </>
               )}
             </>
