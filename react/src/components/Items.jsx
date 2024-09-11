@@ -112,6 +112,10 @@ function Items({ cartNum, setCartNum }) {
       title: 'Order summary',
       html: (
         <OrderDetails
+          cartNum = {cartNum}
+          setCartNum = {setCartNum}
+          restaurantId = {restaurantId}
+          cart={cart}
           items={items}
           converted={isConverted}
           totalPrice={calculateTotalPrice()}
