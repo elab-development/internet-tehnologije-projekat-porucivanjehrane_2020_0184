@@ -1,7 +1,7 @@
 import {ethers} from "ethers";
 import {contractABI} from "./contractABI";
 
-const CONTRACT_ADDRESS = "0x5FD6eB55D12E759a21C09eF703fe0CBa1DC9d88D";
+const CONTRACT_ADDRESS = "0x540d7E428D5207B30EE03F2551Cbb5751D3c7569";
 
 export const connectMetaMaskWallet = async() =>{
     if(window.ethereum){
@@ -20,28 +20,20 @@ export const connectMetaMaskWallet = async() =>{
     }
 }
 
-export const interactWithContract = async(signer, methodName, params = []) =>{
-    const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI, signer);
-    try{
-        const result = await contract[methodName](...params);
-        return result;
-    }catch(error){
-        console.error("Contract interaction failed: ", error);
-        throw error;
-    }
-}
-
-export const sendTransaction = async(signer, amountInEther) =>{
+export const sendTransaction = async(signer, amountInEther) => {
+    console.log("Iznos ",amountInEther);
     const tx = {
         to: CONTRACT_ADDRESS,
         value: ethers.parseEther(amountInEther)
     };
 
-    try{
+    try {
         const transaction = await signer.sendTransaction(tx);
-        await transaction.wait();
-        console.log("Transaction successful", transaction);
-    }catch(error){
+        const receipt = await transaction.wait(); // Čekanje potvrde transakcije
+        console.log("Transaction successful", receipt);
+        return receipt; // Vraća receipt kao povratnu vrednost
+    } catch (error) {
         console.error("Transaction failed: ", error);
+        throw error; // Bacanje greške da bi pozivalac mogao da je uhvati
     }
 }

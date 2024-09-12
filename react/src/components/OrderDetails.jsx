@@ -68,65 +68,65 @@ function OrderDetails({ cartNum, setCartNum, restaurantId, cart, items, converte
 
 
     const handlePayWithMetaMask = async () => {
-        console.log("Ovde smo");
         if (!signer) {
             const connectedSigner = await connectMetaMaskWallet();
             setSigner(connectedSigner);
         }
+    
         if (signer) {
             try {
-                // Prvo izvrši transakciju
-                await interactWithContract(signer, "payForOrder", []);
-                await sendTransaction(signer, ethPrice);
-
-                // Tek nakon uspešne transakcije kreiraj porudžbinu
-                const orderResponse = await axios.post(
-                    "http://127.0.0.1:8000/api/orders/store",
-                    {
-                        payment_method: "paid_with_metamask",
-                        user_id: userId,
-                        restaurant_id: restaurantId,
-                    },
-                    config
-                );
-
-
-                // Dobijanje ID nove porudžbine iz odgovora
-                const newOrderId = orderResponse.data[1].id;
-                console.log("Porudžbina kreirana sa ID:", newOrderId);
-
-                // Slanje proizvoda u korpu na backend koristeći dobijeni ID porudžbine
-                await Promise.all(
-                    cart.map(async (item) => {
-                        const response = await axios.post(
-                            "http://127.0.0.1:8000/api/order_items/store",
-                            {
-                                order_id: newOrderId,
-                                item_id: item.id,
-                                quantity: item.amount,
-                            },
-                            config
-                        );
-                        console.log(response.data.message);
-                    })
-                );
-                window.location.reload();
-                Swal.fire("Payment successful", "Your transaction was successful");
-
-                
-                setCartNum(0);
+                // Prvo izvrši transakciju i dobije receipt
+                const receipt = await sendTransaction(signer, ethPrice);
+    
+                // Provera statusa transakcije
+                if (receipt.status === 1) {
+                    // Transakcija je uspešna, kreiraj porudžbinu
+                    const orderResponse = await axios.post(
+                        "http://127.0.0.1:8000/api/orders/store",
+                        {
+                            payment_method: "paid_with_metamask",
+                            user_id: userId,
+                            restaurant_id: restaurantId,
+                        },
+                        config
+                    );
+        
+                    // Dobijanje ID nove porudžbine iz odgovora
+                    const newOrderId = orderResponse.data[1].id;
+                    console.log("Porudžbina kreirana sa ID:", newOrderId);
+        
+                    // Slanje proizvoda u korpu na backend koristeći dobijeni ID porudžbine
+                    await Promise.all(
+                        cart.map(async (item) => {
+                            const response = await axios.post(
+                                "http://127.0.0.1:8000/api/order_items/store",
+                                {
+                                    order_id: newOrderId,
+                                    item_id: item.id,
+                                    quantity: item.amount,
+                                },
+                                config
+                            );
+                            console.log(response.data.message);
+                        })
+                    );
+        
+                    window.location.reload();
+                    Swal.fire("Payment successful", "Your transaction was successful");
+        
+                    setCartNum(0);
+                } else {
+                    // Ako transakcija nije uspela, ne kreiraj porudžbinu
+                    Swal.fire("Payment failed", "The transaction was rejected");
+                }
             } catch (error) {
                 console.error("Greška:", error.response ? error.response.data : error);
                 Swal.fire("Payment failed", "An error occurred while processing your transaction");
             }
-
         }
     };
-
-    const testing = async () => {
-        console.log("Restaurant ID:", restaurantId);  // Dodaj ovo pre axios poziva
-
-    }
+    
+    
 
     return (
         <div>
@@ -150,7 +150,7 @@ function OrderDetails({ cartNum, setCartNum, restaurantId, cart, items, converte
 
                 </>
             )}
-            <Button text="Pay upon delivery" onClick={testing} />
+
             <hr style={{ borderTop: "5px solid black" }}></hr>
             <p> You can pay right now in Ether (ETH) by using your MetaMask digital wallet.</p>
             <b><p> Current ETH-EUR rate: 1 ETH = {ethSepoliaRate} EUR</p></b>

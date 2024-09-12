@@ -59,6 +59,24 @@ function Items({ cartNum, setCartNum }) {
 
   // Funkcija za placanje pri dostavi
   const payUponDelivery = async () => {
+    if(isConverted){
+      if(totalPrice < 4){
+        Swal.fire({
+          icon: "error",
+          title: "Order price must be larger than 4 EUR!",
+        });
+        return;
+      }
+    }
+    if(!isConverted){
+      if(totalPrice < 400){
+        Swal.fire({
+          icon: "error",
+          title: "Order price must be larger than 400 RSD!",
+        });
+        return;
+      }
+    }
     try {
       // Ruta za kreiranje nove porudžbine na backend-u
       const orderResponse = await axios.post(
@@ -247,7 +265,6 @@ function Items({ cartNum, setCartNum }) {
                 onChange={handleCurrencyChange}
               >
                 <option value="EUR">EUR</option>
-                <option value="USD">USD</option>
               </select>
             </>
           )}
