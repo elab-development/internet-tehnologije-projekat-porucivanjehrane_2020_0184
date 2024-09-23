@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 //import { ethers } from ethers;
+import { connectMetaMaskWallet, payForOrder } from '../utils/ethereum';
 import Swal from "sweetalert2";
 import Button from "./Button";
-import { connectMetaMaskWallet, interactWithContract, sendTransaction } from "../utils/ethereum";
 import { useNavigate, useParams } from "react-router-dom";
 
 function OrderDetails({ cartNum, setCartNum, restaurantId, cart, items, converted, totalPrice, exchangeRateEUR }) {
@@ -11,7 +11,6 @@ function OrderDetails({ cartNum, setCartNum, restaurantId, cart, items, converte
 
     const [ethSepoliaRate, setEthSepoliaRate] = useState(null);
     const [ethPrice, setEthPrice] = useState(0);
-
     const [signer, setSigner] = useState(null);
 
     const role = window.sessionStorage.getItem("role_id");
@@ -68,18 +67,24 @@ function OrderDetails({ cartNum, setCartNum, restaurantId, cart, items, converte
 
 
     const handlePayWithMetaMask = async () => {
+        if(ethPrice < 0.0018){
+            Swal.fire({
+                icon: "error",
+                title: "Order price must be larger than 0.0018 Ether!",
+              });
+              return;
+        }
+        // Povezivanje sa MetaMask novcanikom
         if (!signer) {
             const connectedSigner = await connectMetaMaskWallet();
             setSigner(connectedSigner);
         }
-    
+        // Povezivanje sa MetaMask novcanikom
         if (signer) {
             try {
-                // Prvo izvrši transakciju i dobije receipt
-                const receipt = await sendTransaction(signer, ethPrice);
+                const receipt = await payForOrder(signer, ethPrice);
     
-                // Provera statusa transakcije
-                if (receipt.status === 1) {
+                if (receipt.status === 1) {  // ako je korisnik potvrdio transakciju
                     // Transakcija je uspešna, kreiraj porudžbinu
                     const orderResponse = await axios.post(
                         "http://127.0.0.1:8000/api/orders/store",
@@ -90,12 +95,8 @@ function OrderDetails({ cartNum, setCartNum, restaurantId, cart, items, converte
                         },
                         config
                     );
-        
-                    // Dobijanje ID nove porudžbine iz odgovora
-                    const newOrderId = orderResponse.data[1].id;
-                    console.log("Porudžbina kreirana sa ID:", newOrderId);
-        
-                    // Slanje proizvoda u korpu na backend koristeći dobijeni ID porudžbine
+    
+                    const newOrderId = orderResponse.data[1].id;    
                     await Promise.all(
                         cart.map(async (item) => {
                             const response = await axios.post(
@@ -109,17 +110,18 @@ function OrderDetails({ cartNum, setCartNum, restaurantId, cart, items, converte
                             );
                             console.log(response.data.message);
                         })
-                    );
-        
-                    window.location.reload();
-                    Swal.fire("Payment successful", "Your transaction was successful");
-        
-                    setCartNum(0);
+                    );   
+                    Swal.fire("Success", "Order has been placed!", "success").then(() => {
+                        window.location.reload();
+                    });
+                    
+                    setCartNum(0); 
                 } else {
-                    // Ako transakcija nije uspela, ne kreiraj porudžbinu
+                    // Ako transakcija nije uspela
                     Swal.fire("Payment failed", "The transaction was rejected");
                 }
             } catch (error) {
+                // Ako dodje do greske tokom transakcije
                 console.error("Greška:", error.response ? error.response.data : error);
                 Swal.fire("Payment failed", "An error occurred while processing your transaction");
             }

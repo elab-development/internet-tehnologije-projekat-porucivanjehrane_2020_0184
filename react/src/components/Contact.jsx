@@ -1,20 +1,37 @@
 import React from "react";
 import Map from "./Map";
+import Swal from "sweetalert2";
+import withReactContent from 'sweetalert2-react-content';
+
+const MySwal = withReactContent(Swal);
+
 
 const Contact = () => {
   const handleSendMessage = (event) => {
-    event.preventDefault();
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
+    try{
+      event.preventDefault();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
+  
+      sessionStorage.setItem("name", name);
+      sessionStorage.setItem("email", email);
+      sessionStorage.setItem("message", message);
+  
+      document.getElementById("name").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("message").value = "";
 
-    sessionStorage.setItem("name", name);
-    sessionStorage.setItem("email", email);
-    sessionStorage.setItem("message", message);
+      Swal.fire({
+        icon: "success",
+        title: "Your message has been sent!",
+      });
+      
+    }catch(error){
 
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    document.getElementById("message").value = "";
+    }
+
+
   };
   return (
     <div>

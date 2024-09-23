@@ -1,39 +1,39 @@
 import {ethers} from "ethers";
-import {contractABI} from "./contractABI";
+import {contractABI} from "./contractABI"; 
 
-const CONTRACT_ADDRESS = "0x540d7E428D5207B30EE03F2551Cbb5751D3c7569";
+const CONTRACT_ADDRESS = "0x0498B7c793D7432Cd9dB27fb02fc9cfdBAfA1Fd3";
 
-export const connectMetaMaskWallet = async() =>{
-    if(window.ethereum){
+export const connectMetaMaskWallet = async() => {
+    if(window.ethereum) {
         try {
             await window.ethereum.request({method: 'eth_requestAccounts'});
             const provider = new ethers.BrowserProvider(window.ethereum);
-            const signer = provider.getSigner();
+            const signer = provider.getSigner();  
             return signer;
-        }catch(error){
+        } catch(error) {
             console.error("User rejected the request");
             return null;
         }
-    }else{
+    } else {
         console.error("MetaMask not installed");
         return null;
     }
 }
 
-export const sendTransaction = async(signer, amountInEther) => {
-    console.log("Iznos ",amountInEther);
-    const tx = {
-        to: CONTRACT_ADDRESS,
-        value: ethers.parseEther(amountInEther)
-    };
-
+export const payForOrder = async(signer, amountInEther) => {
     try {
-        const transaction = await signer.sendTransaction(tx);
-        const receipt = await transaction.wait(); // Čekanje potvrde transakcije
-        console.log("Transaction successful", receipt);
-        return receipt; // Vraća receipt kao povratnu vrednost
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI, signer);
+        
+        console.log("Iznos: ", amountInEther);
+        const transaction = await contract.payForOrder({
+            value: ethers.parseEther(amountInEther)  
+        });
+
+        const receipt = await transaction.wait();
+        console.log("Payment successful", receipt);
+        return receipt; 
     } catch (error) {
-        console.error("Transaction failed: ", error);
-        throw error; // Bacanje greške da bi pozivalac mogao da je uhvati
+        console.error("Payment failed: ", error);
+        throw error; 
     }
 }
