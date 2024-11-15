@@ -29,6 +29,7 @@ This application is a decentralized platform for ordering food, combining the po
    ~~~
 ### 4. Database setup
 - Start your XAMPP server and ensure MySQL is running.
+- Import laravel.sql to database with the same name in phpmyadmin
 - Run the migrations to create the necessary database tables:
    ~~~
     php artisan migrate
