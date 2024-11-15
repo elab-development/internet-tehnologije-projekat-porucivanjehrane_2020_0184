@@ -48,8 +48,8 @@ This application is a decentralized platform for ordering food, combining the po
 - Ensure you have installed digital wallet (MetaMask etc.) in order to make transactions
 
 ## Documentation
-- [Laravel and React.js](https://github.com/user-attachments/files/17759805/Dokumentacija.pdf): Documentation on backend and frontend usage and configuration
-- [Blockchain](https://github.com/user-attachments/files/17759810/Zavrsni.rad.Ana.Pavlovic.pdf): Documentation on how Ethereum and Solidity integrate within the app and handle transactions
+- [Laravel and React.js](https://github.com/user-attachments/files/17759805/Dokumentacija.pdf): Documentation in Serbian on backend and frontend usage and configuration
+- [Blockchain](https://github.com/user-attachments/files/17759810/Zavrsni.rad.Ana.Pavlovic.pdf): Documentation in Serbian on how Ethereum and Solidity integrate within the app and handle transactions
 
 
 
