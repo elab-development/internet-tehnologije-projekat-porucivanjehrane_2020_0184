@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CacheController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MetricsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/metrics', [\App\Http\Controllers\MetricsController::class, 'metrics']);
+Route::get('/metrics', [MetricsController::class, 'metrics']);
 
