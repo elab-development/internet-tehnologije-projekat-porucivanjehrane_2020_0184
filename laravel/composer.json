@@ -9,6 +9,7 @@
         "doctrine/dbal": "^3.8",
         "endclothing/prometheus_client_php": "^0.6.0",
         "guzzlehttp/guzzle": "^7.2",
+        "jimdo/prometheus_client_php": "^0.6.0",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
